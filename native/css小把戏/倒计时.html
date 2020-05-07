@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .clear-fix::before,
+      .clear-fix::after {
+        content: "";
+        display: table;
+      }
+      clear-fix::after {
+        clear: both;
+      }
+      .container {
+        width: 400px;
+        height: 400px;
+        background: #f4f4f4;
+        overflow: hidden;
+      }
+      .container .item {
+        display: block;
+        position: relative;
+        width: 30px;
+        height: 30px;
+        float: left;
+        line-height: 30px;
+        text-align: center;
+        color: #ffffff;
+        background: #000000;
+        margin-right: 20px;
+      }
+      .container .item:not(:first-child)::before {
+        content: ":";
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: -20px;
+        width: 20px;
+        height: 30px;
+        font-size: 16px;
+        background: #000000;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container clear-fix">
+      <div class="timer">
+        <span class="item">18</span>
+        <span class="item">08</span>
+        <span class="item">08</span>
+      </div>
+    </div>
+  </body>
+</html>

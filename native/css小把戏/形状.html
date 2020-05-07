@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .circle {
+        width: 100px;
+        height: 50px;
+        border: 1px solid blue;
+        border-radius: 100px 100px 0 0;
+      }
+      .circleI {
+        width: 50px;
+        height: 100px;
+        border: 1px solid blue;
+        border-radius: 100px 0 0 100px;
+      }
+      .delta {
+        width: 0px;
+        height: 0px;
+        border: 40px solid;
+        border-color: red green blue black;
+      }
+      .deltaI {
+        width: 0px;
+        height: 0px;
+        border: 40px solid;
+        border-color: transparent transparent green transparent;
+      }
+      .message {
+        position: relative;
+        width: 200px;
+        height: 100px;
+        border: 1px solid rgb(165, 164, 164);
+        box-sizing: border-box;
+        box-shadow: 3px 3px 5px rgba(85, 83, 83, 0.5);
+      }
+      .message::before,
+      .message::after {
+        position: absolute;
+        content: "";
+        border: 10px solid;
+      }
+      /* 做边框 */
+      .message::before{
+          right: -20px;
+          top: 20px;
+          border-color:transparent transparent transparent rgb(165, 164, 164);
+      }
+      /* 做三角 */
+      .message::after{
+          right: -18px;
+          top: 20px;
+          border-color: transparent transparent transparent #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="circle"></div>
+    <br />
+    <div class="circleI"></div>
+    <br />
+    <div class="delta"></div>
+    <br />
+    <div class="deltaI"></div>
+    <br />
+    <div class="message"></div>
+  </body>
+</html>

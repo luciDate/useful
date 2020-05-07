@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .clear-fix::before,
+      .clear-fix::after {
+        content: "";
+        display: table;
+      }
+      .clear-fix::after {
+        clear: both;
+      }
+      .container {
+        background: #f4f4f4;
+        width: 300px;
+        height: 300px;
+      }
+      .container .example {
+        width: 160px;
+        height: 24px;
+        position: relative;
+        border: 1px solid #e1251b;
+        overflow: hidden;
+        line-height: 24px;
+        background: #e1251b;
+      }
+      .container .example .item-1{
+          width: 92px;
+          height: 100%;
+          text-align: center;
+          color: #ffffff;
+          font-weight: 700;
+          line-height: 22px;
+          float: left;
+      }
+      .container .example .item-1::before{
+          content: "";
+          width: 0;
+          height: 0;
+          border-color: transparent white transparent transparent;
+          border-style: solid;
+          border-width: 22px 8px 0 0;
+          position: absolute;
+          top: 0;
+          left: 84px;
+      }
+      .container .example .item-2{
+          width: 66px;
+          height: 100%;
+          float: right;
+          background: #ffffff;
+          text-align: center;
+          color: #999;
+          font-size: 12px;
+          line-height: 22px;
+          text-decoration: line-through;
+          vertical-align: top;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="example">
+          <span class="item-1"><i>￥</i>99.00</span>
+          <span class="item-2"><i>￥</i>999</span>
+      </div>
+    </div>
+  </body>
+</html>
