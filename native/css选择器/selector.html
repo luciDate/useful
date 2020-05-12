@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      #example1 * {
+        color: #d62c2c;
+      }
+
+      #example2 li + li {
+        color: #d62c2c;
+      }
+
+      /* 等于 */
+      a[href="https://www.baidu.com"]
+      {
+        color: green;
+      }
+
+      /* 包含 */
+      a[href*="https://www.bilibili.com/"]
+      {
+        color: rgb(238, 166, 32);
+      }
+
+      #example3:hover {
+        background-color: hotpink;
+      }
+
+      #example4:focus {
+        background-color: indigo;
+      }
+
+      input[type="text"]:disabled {
+        border: 1px solid greenyellow;
+      }
+
+      #example5 li:first-child {
+        color: blue;
+      }
+
+      #example5 li:last-child {
+        color: red;
+      }
+
+      #example5 :nth-child(2) {
+        color: rgb(17, 114, 17);
+      }
+
+      /* dom第一个字符 */
+      span p::first-letter {
+        color: blue;
+      }
+
+      #example6::before {
+        content: "嘻嘻:";
+      }
+
+      #example6::after {
+        content: ":哈哈";
+      }
+
+      #example7 {
+        width: 100px;
+        height: 50px;
+        border: 1px solid red;
+        border-radius: 100px 100px 0 0;
+      }
+
+      #example8 .item:not(:first-child) {
+        color: #d62c2c;
+      }
+
+      #example9 :nth-child(odd) {
+        color: red;
+      }
+      #example9 :nth-child(even) {
+        color: blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <ul id="example1">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+    <br />
+    <ul id="example2">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+    <br />
+    <a href="https://www.baidu.com">go to 垃圾场</a>
+    <a href="https://www.bilibili.com/">go to 幼儿园</a>
+    <div id="example3">划过我!</div>
+    <br />
+    <input type="text" id="example4" />
+    <input type="text" disabled />
+    <ul id="example5">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+    </ul>
+    <br />
+    <span>
+      <p>Ryan Dahl</p>
+    </span>
+    <div id="example6">前前后后AABB</div>
+    <div id="example7"></div>
+    <ul id="example8">
+      <li class="item">1</li>
+      <li class="item">2</li>
+      <li class="item">3</li>
+    </ul>
+    <br />
+    <ul id="example9">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+  </body>
+</html>
