@@ -572,7 +572,6 @@
   line-height: 63px;
   position: relative;
   overflow: hidden;
-  border: 1px solid blue;
 }
 #main .container .special-offer .item-l .title .info,
 #main .container .special-offer .item-r .title .info {
@@ -839,7 +838,7 @@
 #main .container .special-offer .item-r .goods-wrapper .goods-l {
   width: 270px;
   height: 265px;
-  background: #ffffff;
+  background: #f4f5f6;
   margin-left: 10px;
   text-align: center;
   line-height: 25px;
@@ -851,8 +850,9 @@
 #main .container .special-offer .item-r .goods-wrapper .goods-r .goods-item {
   position: relative;
   width: 155px;
-  height: 132.5px;
+  height: 88.33px;
   text-align: center;
+  font-size:12px;
 }
 #main
   .container
@@ -862,9 +862,9 @@
   .goods-r
   .goods-item
   img {
-  width: 80px;
-  height: 40px;
-  margin: 30px auto 10px auto;
+  width: 100px;
+  height: 50px;
+  margin: 5px auto 5px auto;
 }
 #main
   .container
@@ -877,19 +877,10 @@
   position: absolute;
   display: inline-block;
   width: 1px;
-  height: 70px;
-  background: #ddd;
-  top: 30px;
+  height: 50px;
+  background: linear-gradient(180deg, white, #eeeeee, white);
+  top: 18px;
   right: 0;
-}
-#main .container .special-offer .item-r .goods-wrapper .goods-l::after {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  content: "";
-  z-index: 2;
 }
 #main .container .special-offer .item-r .goods-wrapper .goods-l .logo {
   width: 70px;
