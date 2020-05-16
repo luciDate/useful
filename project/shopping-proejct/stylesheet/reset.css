@@ -167,6 +167,10 @@ img {
   width: 1190px;
   margin: 0 auto;
 }
+.container-hd {
+  width: 1200px;
+  margin: 0 auto;
+}
 .icon {
   width: 1em;
   height: 1em;
@@ -180,6 +184,6 @@ img {
 .full-h {
   height: 100%;
 }
-.over-f{
+.over-f {
   overflow: hidden;
 }
