@@ -36,12 +36,12 @@
   height: 120px;
   overflow: hidden;
 }
-#search-bar .container .search-icon-1{
+#search-bar .container .search-icon-1 {
   position: absolute;
   top: -16px;
   left: 50px;
 }
-#search-bar .container .search-icon-2{
+#search-bar .container .search-icon-2 {
   position: absolute;
   top: -14px;
   right: -18px;
@@ -132,12 +132,12 @@
   width: 770px;
   margin: 19px auto 0 auto;
 }
-#search-bar .container .recommend-list li a{
+#search-bar .container .recommend-list li a {
   color: #333;
   font-size: 15px;
   margin: 0 11px;
 }
-#search-bar .container .recommend-list li a.active{
+#search-bar .container .recommend-list li a.active {
   color: #e1251b;
   font-weight: 700;
 }
