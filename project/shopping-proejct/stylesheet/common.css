@@ -38,13 +38,13 @@
 }
 #search-bar .container .search-icon-1{
   position: absolute;
-  top: -14px;
+  top: -16px;
   left: 50px;
 }
 #search-bar .container .search-icon-2{
   position: absolute;
   top: -14px;
-  right: -20px;
+  right: -18px;
   box-shadow: 2px 2px 2px 1px rgba(175, 175, 175, 0.5);
 }
 #search-bar .container .bar-wrapper {
