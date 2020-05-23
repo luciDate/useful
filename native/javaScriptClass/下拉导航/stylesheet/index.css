@@ -21,9 +21,6 @@
 .nav-bar .container .right {
   display: inline-block;
 }
-#static{
-  margin-top: 100px;
-}
 #fixed {
   position: fixed;
   top: -65px;
