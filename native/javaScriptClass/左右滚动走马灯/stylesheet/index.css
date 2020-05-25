@@ -1,0 +1,130 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.carousel {
+  width: 1000px;
+  height: 500px;
+  box-shadow: 0px 0px 3px 1px #00000078;
+  margin: 30px auto 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+.carousel .item {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  user-select: none;
+  opacity: 0;
+}
+.carousel .pre-btn {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: #999999;
+  left: 0;
+  top: 190px;
+  text-align: center;
+  line-height: 80px;
+  user-select: none;
+  cursor: pointer;
+}
+.carousel .next-btn {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background: #999999;
+  right: 0;
+  top: 190px;
+  text-align: center;
+  line-height: 80px;
+  user-select: none;
+  cursor: pointer;
+}
+.carousel .move-left-current-slide {
+  animation-name: moveLeftCurrent;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+.carousel .move-left-next-slide {
+  animation-name: moveLeftNext;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes moveLeftCurrent {
+  from {
+    margin-left: 0;
+    opacity: 1;
+  }
+  to {
+    margin-left: -100%;
+    opacity: 1;
+  }
+}
+@keyframes moveLeftNext {
+  from {
+    margin-left: 100%;
+    opacity: 1;
+  }
+  to {
+    margin-left: 0%;
+    opacity: 1;
+  }
+}
+.carousel .move-right-current-slide {
+  animation-name: moveRightCurrent;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+.carousel .move-right-next-slide {
+  animation-name: moveRightNext;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes moveRightCurrent {
+  from {
+    margin-left: 0;
+    opacity: 1;
+  }
+  to {
+    margin-left: 100%;
+    opacity: 1;
+  }
+}
+@keyframes moveRightNext {
+  from {
+    margin-left: -100%;
+    opacity: 1;
+  }
+  to {
+    margin-left: 0%;
+    opacity: 1;
+  }
+}
+.carousel .dots-container {
+  position: absolute;
+  width: 100%;
+  height: 40px;
+  bottom: 0;
+  text-align: center;
+  line-height: 40px;
+}
+.carousel .dots-container .dot {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  margin-left: 10px;
+  background-color: #bbb;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+.carousel .dots-container .dot:hover,
+.carousel .dots-container .dot.active {
+  background: #717171;
+}
