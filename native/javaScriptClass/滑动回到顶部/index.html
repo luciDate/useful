@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body style="height: 2000px; background: #999999;">
+    <button style="margin-top: 600px;" id="test">back to top</button>
+    <script>
+      const test = document.querySelector("#test");
+
+      class ScrollTo {
+        constructor(dom) {
+          this.dom = dom;
+          this.setTop = dom.offsetTop;
+        }
+        init() {
+          this.dom.addEventListener("click", () => {
+            let interval = setInterval(() => {
+              this.setTop -= 10;
+              window.scrollTo(0, this.setTop);
+              if (this.setTop <= 0) {
+                clearInterval(interval);
+                this.setTop = this.dom.offsetTop
+              }
+            }, 10);
+          });
+        }
+      }
+
+      const s = new ScrollTo(test);
+      s.init()
+    </script>
+  </body>
+</html>
