@@ -1,9 +1,3 @@
-let items = document.querySelectorAll(".item");
-let points = document.querySelector(".point-list");
-const goPreBtn = document.querySelector("#goPre");
-const goNextBtn = document.querySelector("#goNext");
-const container = document.querySelector(".carousel");
-
 class CarouselMaker {
   constructor(container, pointList, imgList, preBtn, nextBtn) {
     this.container = container;
@@ -94,5 +88,7 @@ class CarouselMaker {
   }
 }
 
-const c = new CarouselMaker(container, points, items, goPreBtn, goNextBtn);
-c.init();
+
+document.addEventListener("DOMContentLoaded",()=>{
+    alert("233")
+})

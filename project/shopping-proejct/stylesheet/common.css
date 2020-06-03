@@ -43,7 +43,7 @@
 }
 #search-bar .container .search-icon-2 {
   position: absolute;
-  top: -14px;
+  top: -12px;
   right: -18px;
   box-shadow: 2px 2px 2px 1px rgba(175, 175, 175, 0.5);
 }
@@ -87,10 +87,10 @@
 }
 #search-bar .container .cart-wrapper .cart {
   width: 180px;
-  height: 36px;
+  height: 37px;
   text-align: center;
-  line-height: 36px;
-  border: 1px solid #f4f4f4;
+  line-height: 37px;
+  border: 1px solid #ececec;
   font-size: 14px;
   color: #e1251b;
 }
