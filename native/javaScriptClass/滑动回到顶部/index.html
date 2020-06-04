@@ -22,7 +22,7 @@
               window.scrollTo(0, this.setTop);
               if (this.setTop <= 0) {
                 clearInterval(interval);
-                this.setTop = this.dom.offsetTop
+                this.setTop = this.dom.offsetTop;
               }
             }, 10);
           });
@@ -30,7 +30,7 @@
       }
 
       const s = new ScrollTo(test);
-      s.init()
+      s.init();
     </script>
   </body>
 </html>

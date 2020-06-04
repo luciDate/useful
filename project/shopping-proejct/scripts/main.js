@@ -10,7 +10,7 @@ class CarouselMaker {
 
   clearActive() {
     for (let i = 0; i < this.imgList.length; i++) {
-      this.imgList[i].className = "item";
+      this.imgList[i].className = "carousel-img-item";
     }
     for (let i = 0; i < this.pointList.children.length; i++) {
       this.pointList.children[i].className = "point";
@@ -20,7 +20,7 @@ class CarouselMaker {
   goIndex() {
     this.clearActive();
     this.pointList.children[this.index].className = "point active";
-    this.imgList[this.index].className = "item active";
+    this.imgList[this.index].className = "carousel-img-item active";
   }
 
   goPre() {
@@ -74,7 +74,7 @@ class CarouselMaker {
 
     let interval = setInterval(() => {
       this.goNext();
-    }, 3000);
+    }, 12000);
 
     this.container.addEventListener("mouseover", () => {
       clearInterval(interval);
@@ -83,12 +83,65 @@ class CarouselMaker {
     this.container.addEventListener("mouseout", () => {
       interval = setInterval(() => {
         this.goNext();
-      }, 3000);
+      }, 12000);
     });
   }
 }
 
+class ScrollTo {
+  constructor(dom) {
+    this.dom = dom;
+    this.setTop = dom.offsetTop;
+  }
+  init() {
+    this.dom.addEventListener("click", () => {
+      let interval = setInterval(() => {
+        this.setTop -= 10;
+        window.scrollTo(0, this.setTop);
+        if (this.setTop <= 0) {
+          clearInterval(interval);
+          this.setTop = this.dom.offsetTop;
+        }
+      }, 10);
+    });
+  }
+}
 
-document.addEventListener("DOMContentLoaded",()=>{
-    alert("233")
-})
+document.addEventListener("DOMContentLoaded", () => {
+  const carouselContainer = document.querySelector("#carousel-container");
+  const carouselPointList = document.querySelector("#carousel-point-list");
+  const carouselImgList = document.querySelectorAll(".carousel-img-item");
+  const carouselPreBtn = document.querySelector("#carousel-pre-btn");
+  const carouselNextBtn = document.querySelector("#carousel-next-btn");
+
+  const fixedBar = document.querySelector(".fixed-bar");
+  let fixedFlag = false;
+
+  const toTop = document.querySelector("#to-top");
+
+  const nzCarousel = new CarouselMaker(
+    carouselContainer,
+    carouselPointList,
+    carouselImgList,
+    carouselPreBtn,
+    carouselNextBtn
+  );
+
+  window.addEventListener("scroll", () => {
+    if (document.documentElement.scrollTop >= 500 && fixedFlag === false) {
+      fixedBar.classList.add("fixed-active");
+      fixedFlag = !fixedFlag;
+    } else if (
+      document.documentElement.scrollTop <= 300 &&
+      fixedFlag === true
+    ) {
+      fixedBar.classList.remove("fixed-active");
+      fixedFlag = !fixedFlag;
+    }
+  });
+
+  const nzScrollTo = new ScrollTo(toTop);
+
+  nzCarousel.init();
+  nzScrollTo.init();
+});

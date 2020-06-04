@@ -213,7 +213,19 @@
             </ul>
           </div>
           <div class="m-wrapper float-l clear-fix">
-            <div class="m-l float-l">1</div>
+            <div class="m-l float-l" id="carousel-container">
+              <div id="carousel-pre-btn"><</div>
+              <div id="carousel-next-btn">></div>
+              <div id="img-wrapper">
+                <img src="./images/carousel-l-1.png" alt="" class="carousel-img-item active">
+                <img src="./images/carousel-l-2.png" alt="" class="carousel-img-item">
+                <img src="./images/carousel-l-3.png" alt="" class="carousel-img-item">
+                <img src="./images/carousel-l-4.png" alt="" class="carousel-img-item">
+                <img src="./images/carousel-l-5.png" alt="" class="carousel-img-item">
+                <img src="./images/carousel-l-6.png" alt="" class="carousel-img-item">
+              </div>
+              <ul id="carousel-point-list"></ul>
+            </div>
             <div class="m-r float-l">
               <div class="item">
                 <a href="">
@@ -1251,7 +1263,7 @@
         </div>
       </div>
     </div>
-    <div id="fixed-bar">
+    <div class="fixed-bar">
       <ul>
         <li class="item">
           <a href="">
@@ -1289,8 +1301,8 @@
             <div>反馈</div>
           </a>
         </li>
-        <li class="item">
-          <a href="">
+        <li class="item" id="to-top">
+          <a href="javascript:void(0)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-huidaodingbu"></use>
             </svg>

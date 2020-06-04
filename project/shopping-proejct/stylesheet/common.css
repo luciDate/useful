@@ -208,27 +208,32 @@
   vertical-align: middle;
   margin-top: -2px;
 }
-#fixed-bar {
-  position: absolute;
+.fixed-bar {
+  position: fixed;
   right: 8px;
-  top: 200px;
+  top: 140px;
   width: 58px;
   height: 406px;
   background: #ffffff;
+  opacity: 0;
+  transition: all 0.3s;
 }
-#fixed-bar ul .item {
+.fixed-active {
+  opacity: 1;
+}
+.fixed-bar ul .item {
   width: 58px;
   height: 58px;
   text-align: center;
   position: relative;
 }
-#fixed-bar ul .item a {
+.fixed-bar ul .item a {
   display: block;
   width: 58px;
   height: 58px;
 }
 
-#fixed-bar ul .item span {
+.fixed-bar ul .item span {
   display: inline-block;
   width: 28px;
   height: 38px;
@@ -236,7 +241,7 @@
   margin-top: 10px;
   line-height: 18px;
 }
-#fixed-bar ul .item:not(:last-child)::after {
+.fixed-bar ul .item:not(:last-child)::after {
   position: absolute;
   bottom: -1px;
   left: 14px;
@@ -246,28 +251,28 @@
   height: 1px;
   background: #eeeeee;
 }
-#fixed-bar ul .item svg {
+.fixed-bar ul .item svg {
   margin-top: 8px;
 }
-#fixed-bar ul .item a {
+.fixed-bar ul .item a {
   color: #3c3c3c;
   transition: all 0.1s;
 }
-#fixed-bar ul .item:last-child a {
+.fixed-bar ul .item:last-child a {
   color: #e1251b;
 }
-#fixed-bar ul .item a:hover {
+.fixed-bar ul .item a:hover {
   background: #e1251b;
   color: #ffffff;
 }
-#fixed-bar ul .item div {
+.fixed-bar ul .item div {
   font-size: 14px;
   margin-top: 8px;
   line-height: 18px;
 }
-#fixed-bar ul .item div a {
+.fixed-bar ul .item div a {
   color: #3c3c3c;
 }
-#fixed-bar ul .item:last-child svg {
+.fixed-bar ul .item:last-child svg {
   font-size: 20px;
 }

@@ -11,14 +11,14 @@
   margin: 20px auto 0 auto;
   overflow: hidden;
 }
-.carousel .img-wrapper .item {
+.carousel .img-wrapper .carousel-img-item {
   position: absolute;
   opacity: 0;
   width: 100%;
   height: 100%;
   transition: all 0.3s;
 }
-.carousel .img-wrapper .item.active {
+.carousel .img-wrapper .carousel-img-item.active {
   opacity: 1;
   z-index: 2;
 }
@@ -45,20 +45,31 @@
 .point-list .point.active {
   background: #ffffff;
 }
-.btn {
+
+#goPre {
   width: 50px;
   height: 100px;
   position: absolute;
   top: 140px;
   z-index: 100;
-}
-
-#goPre {
   left: 0px;
+  text-align: center;
+  line-height: 100px;
+  background: #d9d9d9;
+  cursor: pointer;
 }
 
 #goNext {
+  width: 50px;
+  height: 100px;
+  position: absolute;
+  top: 140px;
+  z-index: 100;
   right: 0px;
+  text-align: center;
+  line-height: 100px;
+  background: #d9d9d9;
+  cursor: pointer;
 }
 .clear-fix::before,
 .clear-fix::after {

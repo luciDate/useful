@@ -1,4 +1,4 @@
-let items = document.querySelectorAll(".item");
+let items = document.querySelectorAll(".carousel-img-item");
 let points = document.querySelector(".point-list");
 const goPreBtn = document.querySelector("#goPre");
 const goNextBtn = document.querySelector("#goNext");
@@ -16,7 +16,7 @@ class CarouselMaker {
 
   clearActive() {
     for (let i = 0; i < this.imgList.length; i++) {
-      this.imgList[i].className = "item";
+      this.imgList[i].className = "carousel-img-item";
     }
     for (let i = 0; i < this.pointList.children.length; i++) {
       this.pointList.children[i].className = "point";
@@ -26,7 +26,7 @@ class CarouselMaker {
   goIndex() {
     this.clearActive();
     this.pointList.children[this.index].className = "point active";
-    this.imgList[this.index].className = "item active";
+    this.imgList[this.index].className = "carousel-img-item active";
   }
 
   goPre() {
@@ -80,7 +80,7 @@ class CarouselMaker {
 
     let interval = setInterval(() => {
       this.goNext();
-    }, 3000);
+    }, 8000);
 
     this.container.addEventListener("mouseover", () => {
       clearInterval(interval);
@@ -89,7 +89,7 @@ class CarouselMaker {
     this.container.addEventListener("mouseout", () => {
       interval = setInterval(() => {
         this.goNext();
-      }, 3000);
+      }, 8000);
     });
   }
 }
