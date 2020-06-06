@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .little-container {
+        width: 300px;
+        height: 300px;
+        margin-top: 100px;
+        border: 1px solid #dddddd;
+      }
+      .little-container .test {
+        width: 100px;
+        height: 30px;
+        background: #e2151b;
+        margin-top: 100px;
+        transform: translateX(-120px);
+        transition: all 0.3s;
+      }
+      .little-container:hover .test {
+        transform: translateX(0px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="little-container">
+      固定与绝对定位用left属性来控制就好
+      <div class="test"></div>
+    </div>
+    <script>
+      0;
+    </script>
+  </body>
+</html>

@@ -98,7 +98,7 @@
   height: 50px;
   position: absolute;
   top: 225px;
-  z-index: 100;
+  z-index: 3;
   left: 0px;
   text-align: center;
   line-height: 50px;
@@ -115,7 +115,7 @@
   height: 50px;
   position: absolute;
   top: 225px;
-  z-index: 100;
+  z-index: 3;
   right: 0px;
   text-align: center;
   line-height: 50px;
@@ -124,7 +124,7 @@
   user-select: none;
   color: #ffffff;
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
   border-radius: 8px 0px 0px 8px;
 }
 #main .container .carousel .m-wrapper .m-l #carousel-pre-btn:hover {
@@ -569,14 +569,6 @@
   width: 1px;
   height: 200px;
   transform: translateY(-50%);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(white),
-    color-stop(#eeeeee),
-    to(white)
-  );
   background: linear-gradient(180deg, white, #eeeeee, white);
 }
 #main .container .countdown .item-wrapper .item img {
@@ -1387,7 +1379,6 @@
   width: 25px;
   height: 20px;
   margin: 0 20px 0 0;
-  left: 0;
 }
 #main .container-hd .square .title::after,
 #main .container:nth-child(3) .recommend-list .title::after {
@@ -1398,7 +1389,6 @@
   width: 25px;
   height: 20px;
   margin: 0 0 0 20px;
-  right: 0;
 }
 #main .container-hd .square .item-row .item-1 {
   width: 290px;

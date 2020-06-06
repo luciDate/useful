@@ -113,11 +113,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const carouselImgList = document.querySelectorAll(".carousel-img-item");
   const carouselPreBtn = document.querySelector("#carousel-pre-btn");
   const carouselNextBtn = document.querySelector("#carousel-next-btn");
+  const fixedTop = document.querySelector(".fixed-top")
 
   const fixedBar = document.querySelector(".fixed-bar");
   let fixedFlag = false;
 
   const toTop = document.querySelector("#to-top");
+
+  window.addEventListener("scroll", () => {
+    if (document.documentElement.scrollTop >= 500 && fixedFlag === false) {
+      fixedBar.classList.add("fixed-active");
+      fixedTop.classList.add("active")
+      fixedFlag = !fixedFlag;
+    } else if (
+      document.documentElement.scrollTop <= 300 &&
+      fixedFlag === true
+    ) {
+      fixedBar.classList.remove("fixed-active");
+      fixedTop.classList.remove("active")
+      fixedFlag = !fixedFlag;
+    }
+  });
 
   const nzCarousel = new CarouselMaker(
     carouselContainer,
@@ -127,21 +143,8 @@ document.addEventListener("DOMContentLoaded", () => {
     carouselNextBtn
   );
 
-  window.addEventListener("scroll", () => {
-    if (document.documentElement.scrollTop >= 500 && fixedFlag === false) {
-      fixedBar.classList.add("fixed-active");
-      fixedFlag = !fixedFlag;
-    } else if (
-      document.documentElement.scrollTop <= 300 &&
-      fixedFlag === true
-    ) {
-      fixedBar.classList.remove("fixed-active");
-      fixedFlag = !fixedFlag;
-    }
-  });
-
   const nzScrollTo = new ScrollTo(toTop);
-
+  
   nzCarousel.init();
   nzScrollTo.init();
 });
