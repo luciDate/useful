@@ -491,6 +491,7 @@
   height: 260px;
   background: #ddd;
   margin-top: 10px;
+  overflow: hidden;
 }
 #main .container .countdown .countdown-hd {
   width: 190px;

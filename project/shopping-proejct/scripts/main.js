@@ -107,30 +107,72 @@ class ScrollTo {
   }
 }
 
+class Countdown {
+  constructor(deadLine, hoursDOM, minutesDOM, secondsDOM) {
+    this.hoursDOM = hoursDOM;
+    this.minutesDOM = minutesDOM;
+    this.secondsDOM = secondsDOM;
+    this.deadLine = new Date(`${deadLine}`).getTime();
+  }
+  init() {
+    const timer = setInterval(() => {
+      let now = new Date().getTime();
+      let differ = this.deadLine - now;
+
+      let hours = Math.floor(
+        (differ % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      let minutes = Math.floor((differ % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((differ % (1000 * 60)) / 1000);
+
+      this.hoursDOM.innerHTML = hours;
+      this.minutesDOM.innerHTML = minutes;
+      this.secondsDOM.innerHTML = seconds;
+
+      if (differ < 0) {
+        clearInterval(timer);
+        this.hoursDOM.innerHTML = "0";
+        this.minutesDOM.innerHTML = "0";
+        this.secondsDOM.innerHTML = "0";
+      }
+    }, 1000);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const carouselContainer = document.querySelector("#carousel-container");
   const carouselPointList = document.querySelector("#carousel-point-list");
   const carouselImgList = document.querySelectorAll(".carousel-img-item");
   const carouselPreBtn = document.querySelector("#carousel-pre-btn");
   const carouselNextBtn = document.querySelector("#carousel-next-btn");
-  const fixedTop = document.querySelector(".fixed-top")
+  const fixedTop = document.querySelector(".fixed-top");
+  const timerHours = document.querySelector("#timer-hours");
+  const timerMinutes = document.querySelector("#timer-minutes");
+  const timerSeconds = document.querySelector("#timer-seconds");
 
   const fixedBar = document.querySelector(".fixed-bar");
   let fixedFlag = false;
 
   const toTop = document.querySelector("#to-top");
 
+  const dtObj = new Date();
+  const nzYear = dtObj.getFullYear();
+  const nzMonth = dtObj.getMonth() + 1;
+  const nzDay = dtObj.getDate();
+  const nzHours = dtObj.getHours();
+  const nzMinutes = dtObj.getMinutes();
+
   window.addEventListener("scroll", () => {
     if (document.documentElement.scrollTop >= 500 && fixedFlag === false) {
       fixedBar.classList.add("fixed-active");
-      fixedTop.classList.add("active")
+      fixedTop.classList.add("active");
       fixedFlag = !fixedFlag;
     } else if (
       document.documentElement.scrollTop <= 300 &&
       fixedFlag === true
     ) {
       fixedBar.classList.remove("fixed-active");
-      fixedTop.classList.remove("active")
+      fixedTop.classList.remove("active");
       fixedFlag = !fixedFlag;
     }
   });
@@ -144,7 +186,15 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   const nzScrollTo = new ScrollTo(toTop);
-  
+
+  const nzCountdown = new Countdown(
+    `${nzMonth} ${nzDay},${nzYear} 23:30:59`,
+    timerHours,
+    timerMinutes,
+    timerSeconds
+  );
+
   nzCarousel.init();
   nzScrollTo.init();
+  nzCountdown.init();
 });
