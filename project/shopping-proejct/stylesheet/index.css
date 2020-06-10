@@ -561,7 +561,7 @@
 #main .container .countdown .item-wrapper .item img:hover {
   opacity: 0.7;
 }
-#main .container .countdown .item-wrapper .item::after {
+#main .container .countdown .item-wrapper .item:not(:last-child)::after {
   content: "";
   display: block;
   position: absolute;
@@ -630,6 +630,142 @@
   font-size: 12px;
   line-height: 22px;
   text-decoration: line-through;
+}
+#main .container .countdown .countdown-carousel {
+  width: 200px;
+  height: 100%;
+  background: #ffffff;
+  overflow: hidden;
+  position: relative;
+}
+#main .container .countdown .countdown-carousel .countdown-img-wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+#main .container .countdown .countdown-carousel .countdown-img-wrapper p:nth-child(2){
+  font-weight: 600;
+}
+#main .container .countdown .countdown-carousel .countdown-img-wrapper img {
+  width: 120px;
+  height: 120px;
+  margin: 15px auto 0 auto;
+}
+#main
+  .container
+  .countdown
+  .countdown-carousel
+  .countdown-img-wrapper
+  .item-info {
+  margin: 10px 0 0 0;
+  height: 115px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(220, 224, 236, 0.5)
+  );
+  text-align: center;
+  line-height: 25px;
+}
+#main
+  .container
+  .countdown
+  .countdown-carousel
+  .countdown-img-wrapper
+  .item-info
+  .circle {
+  width: 90px;
+  border: 1px solid #e1251b;
+  margin: 5px auto 0 auto;
+  border-radius: 15px;
+}
+#main .container .countdown .countdown-carousel .dots {
+  position: absolute;
+  width: 200px;
+  bottom: 0px;
+  height: 25px;
+  line-height: 24px;
+  text-align: center;
+  
+}
+#main .container .countdown .countdown-carousel .dots .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-left: 2px;
+  background: #c9c9c9;
+  cursor: pointer;
+  transition: all 0.5s;
+  z-index: 5;
+}
+#main .container .countdown .countdown-carousel .dots .dot.active {
+  background: #e1251b;
+}
+#main .container .countdown .countdown-carousel .move-left-current-slide {
+  animation-name: moveLeftCurrent;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+#main .container .countdown .countdown-carousel .move-left-next-slide {
+  animation-name: moveLeftNext;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes moveLeftCurrent {
+  from {
+    margin-left: 0;
+    opacity: 1;
+  }
+  to {
+    margin-left: -100%;
+    opacity: 1;
+  }
+}
+@keyframes moveLeftNext {
+  from {
+    margin-left: 100%;
+    opacity: 1;
+  }
+  to {
+    margin-left: 0%;
+    opacity: 1;
+  }
+}
+#main .container .countdown .countdown-carousel .move-right-current-slide {
+  animation-name: moveRightCurrent;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+#main .container .countdown .countdown-carousel .move-right-next-slide {
+  animation-name: moveRightNext;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+@keyframes moveRightCurrent {
+  from {
+    margin-left: 0;
+    opacity: 1;
+  }
+  to {
+    margin-left: 100%;
+    opacity: 1;
+  }
+}
+@keyframes moveRightNext {
+  from {
+    margin-left: -100%;
+    opacity: 1;
+  }
+  to {
+    margin-left: 0%;
+    opacity: 1;
+  }
 }
 #main .container .special-offer {
   margin-top: 10px;

@@ -139,6 +139,78 @@ class Countdown {
   }
 }
 
+class Gallery {
+  constructor(slides, dotsContainer, container) {
+    this.slideIndex = 0;
+    this.slides = slides;
+    this.dots = [];
+    this.dotsContainer = dotsContainer;
+    this.container = container;
+  }
+
+  init() {
+    this.slides[this.slideIndex].style.opacity = 1;
+
+    for (let i = 0; i < this.slides.length; i++) {
+      let dot = document.createElement("span");
+      dot.classList.add("dot");
+      dot.addEventListener("click", () => {
+        this.moveSlide(i);
+      });
+      this.dotsContainer.append(dot);
+      this.dots.push(dot);
+    }
+    this.dots[this.slideIndex].classList.add("active");
+
+    let timer = null;
+    timer = setInterval(() => {
+      this.plusSlide(1);
+    }, 10000);
+
+    this.container.addEventListener("mouseover", () => {
+      clearInterval(timer);
+    });
+    this.container.addEventListener("mouseout", () => {
+      timer = setInterval(() => {
+        this.plusSlide(1);
+      }, 10000);
+    });
+  }
+  plusSlide(n) {
+    this.moveSlide(this.slideIndex + n);
+  }
+  moveSlide(n) {
+    let moveSlideAnimClass = {
+      forCurrent: "",
+      forNext: "",
+    };
+    if (n > this.slideIndex) {
+      if (n >= this.slides.length) n = 0;
+      moveSlideAnimClass.forCurrent = "move-left-current-slide";
+      moveSlideAnimClass.forNext = "move-left-next-slide";
+    } else if (n < this.slideIndex) {
+      if (n < 0) n = this.slides.length - 1;
+
+      moveSlideAnimClass.forCurrent = "move-right-current-slide";
+      moveSlideAnimClass.forNext = "move-right-next-slide";
+    }
+    if (n != this.slideIndex) {
+      let next = this.slides[n];
+      let current = this.slides[this.slideIndex];
+      for (let i = 0; i < this.slides.length; i++) {
+        // 如果初始类名不同需要自己改动
+        this.slides[i].className = "countdown-img-wrapper";
+        this.slides[i].style.opacity = 0;
+        this.dots[i].classList.remove("active");
+      }
+      current.classList.add(moveSlideAnimClass.forCurrent);
+      next.classList.add(moveSlideAnimClass.forNext);
+      this.dots[n].classList.add("active");
+      this.slideIndex = n;
+    }
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const carouselContainer = document.querySelector("#carousel-container");
   const carouselPointList = document.querySelector("#carousel-point-list");
@@ -159,8 +231,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const nzYear = dtObj.getFullYear();
   const nzMonth = dtObj.getMonth() + 1;
   const nzDay = dtObj.getDate();
-  const nzHours = dtObj.getHours();
-  const nzMinutes = dtObj.getMinutes();
+
+  const countDownSlides = document.querySelectorAll(".countdown-img-wrapper");
+  const countDownDotsContainer = document.querySelector(".dots");
+  const countDownContainer = document.querySelector(".countdown-carousel");
 
   window.addEventListener("scroll", () => {
     if (document.documentElement.scrollTop >= 500 && fixedFlag === false) {
@@ -194,7 +268,14 @@ document.addEventListener("DOMContentLoaded", () => {
     timerSeconds
   );
 
+  const nzGallery = new Gallery(
+    countDownSlides,
+    countDownDotsContainer,
+    countDownContainer
+  );
+
   nzCarousel.init();
   nzScrollTo.init();
   nzCountdown.init();
+  nzGallery.init();
 });

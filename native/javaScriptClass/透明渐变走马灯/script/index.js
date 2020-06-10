@@ -16,6 +16,7 @@ class CarouselMaker {
 
   clearActive() {
     for (let i = 0; i < this.imgList.length; i++) {
+      // 如果初始类名不同需要自己改动
       this.imgList[i].className = "carousel-img-item";
     }
     for (let i = 0; i < this.pointList.children.length; i++) {

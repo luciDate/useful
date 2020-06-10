@@ -227,16 +227,19 @@
   margin-top: -2px;
 }
 .fixed-bar {
-  position: fixed;
+  position: absolute;
   right: 8px;
-  top: 130px;
+  top: 600px;
   width: 58px;
   height: 406px;
   background: #ffffff;
   opacity: 0;
-  transition: all 0.3s;
+  transition: opacity 0.9s;
 }
 .fixed-active {
+  position: fixed;
+  transition: opacity 0.3s;
+  top: 80px;
   opacity: 1;
 }
 .fixed-bar ul .item {
@@ -304,7 +307,7 @@
   border-bottom: 1px solid #ff0000;
   z-index: 4;
   opacity: 0.97;
-  transition: all .3s linear;
+  transition: all 0.3s linear;
 }
 .fixed-top.active {
   top: 0;

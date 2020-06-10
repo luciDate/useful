@@ -71,6 +71,7 @@ class Gallery {
       let next = this.slides[n];
       let current = this.slides[this.slideIndex];
       for (let i = 0; i < this.slides.length; i++) {
+        // 如果初始类名不同需要自己改动
         this.slides[i].className = "item";
         this.slides[i].style.opacity = 0;
         this.dots[i].classList.remove("active");
