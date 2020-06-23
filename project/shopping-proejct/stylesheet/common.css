@@ -234,7 +234,6 @@
   height: 406px;
   background: #ffffff;
   opacity: 0;
-  transition: opacity 0.9s;
 }
 .fixed-active {
   position: fixed;

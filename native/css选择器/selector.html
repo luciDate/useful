@@ -10,7 +10,13 @@
         color: #d62c2c;
       }
 
+      /* li 下一个兄弟元素 */
       #example2 li + li {
+        color: #d62c2c;
+      }
+
+      /* li 下一个所有兄弟元素 */
+      #example2 li ~ li {
         color: #d62c2c;
       }
 
@@ -94,6 +100,7 @@
     <ul id="example2">
       <li>1</li>
       <li>2</li>
+      <div>233</div>
       <li>3</li>
       <li>4</li>
     </ul>

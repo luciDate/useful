@@ -112,7 +112,8 @@ class Countdown {
     this.hoursDOM = hoursDOM;
     this.minutesDOM = minutesDOM;
     this.secondsDOM = secondsDOM;
-    this.deadLine = new Date(`${deadLine}`).getTime();
+    // 正则替换解决不同兼容性问题
+    this.deadLine = new Date(`${deadLine}`.replace(/-/g, "/")).getTime();
   }
   init() {
     const timer = setInterval(() => {
@@ -211,6 +212,29 @@ class Gallery {
   }
 }
 
+class SingleCarusel {
+  constructor(imgItems,info) {
+    this.imgItems = imgItems;
+    this.flag = 0;
+    this.info = info;
+  }
+  itemMove() {
+    for (let i = 0; i < this.imgItems.length; i++) {
+      this.info[i].classList.remove("active");
+      this.imgItems[i].checked = false;
+    }
+    if (this.flag >= this.imgItems.length) this.flag = 0;
+    this.imgItems[this.flag].checked = true;
+    this.info[this.flag].classList.add("active");
+    this.flag += 1;
+  }
+  init() {
+    setInterval(() => {
+      this.itemMove();
+    }, 6000);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const carouselContainer = document.querySelector("#carousel-container");
   const carouselPointList = document.querySelector("#carousel-point-list");
@@ -236,15 +260,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const countDownDotsContainer = document.querySelector(".dots");
   const countDownContainer = document.querySelector(".countdown-carousel");
 
+  const singleCaruselItems = document.querySelectorAll(".core-l-img-item");
+  const singleCaruselInfos = document.querySelectorAll(".core-radio-info");
+  console.log(singleCaruselInfos)
+
   window.addEventListener("scroll", () => {
-    if (document.documentElement.scrollTop >= 500 && fixedFlag === false) {
+    // 解决不同浏览器之间距离顶部偏移量的兼容写法
+    let nztop =
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      window.pageYOffset;
+    if (nztop >= 500 && fixedFlag === false) {
       fixedBar.classList.add("fixed-active");
       fixedTop.classList.add("active");
       fixedFlag = !fixedFlag;
-    } else if (
-      document.documentElement.scrollTop <= 300 &&
-      fixedFlag === true
-    ) {
+    } else if (nztop <= 300 && fixedFlag === true) {
       fixedBar.classList.remove("fixed-active");
       fixedTop.classList.remove("active");
       fixedFlag = !fixedFlag;
@@ -262,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const nzScrollTo = new ScrollTo(toTop);
 
   const nzCountdown = new Countdown(
-    `${nzMonth} ${nzDay},${nzYear} 23:30:59`,
+    `${nzYear}-${nzMonth}-${nzDay} 23:30:59`,
     timerHours,
     timerMinutes,
     timerSeconds
@@ -274,8 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
     countDownContainer
   );
 
+  const nzSingleCarusel = new SingleCarusel(singleCaruselItems,singleCaruselInfos);
+
   nzCarousel.init();
   nzScrollTo.init();
   nzCountdown.init();
   nzGallery.init();
+  nzSingleCarusel.init();
 });
