@@ -213,7 +213,7 @@ class Gallery {
 }
 
 class SingleCarusel {
-  constructor(imgItems,info) {
+  constructor(imgItems, info) {
     this.imgItems = imgItems;
     this.flag = 0;
     this.info = info;
@@ -229,6 +229,11 @@ class SingleCarusel {
     this.flag += 1;
   }
   init() {
+    for (let i = 0; i < this.imgItems.length; i++) {
+      this.imgItems[i].addEventListener("click", () => {
+        this.itemMove();
+      });
+    }
     setInterval(() => {
       this.itemMove();
     }, 6000);
@@ -262,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const singleCaruselItems = document.querySelectorAll(".core-l-img-item");
   const singleCaruselInfos = document.querySelectorAll(".core-radio-info");
-  console.log(singleCaruselInfos)
+  console.log(singleCaruselInfos);
 
   window.addEventListener("scroll", () => {
     // 解决不同浏览器之间距离顶部偏移量的兼容写法
@@ -304,7 +309,10 @@ document.addEventListener("DOMContentLoaded", () => {
     countDownContainer
   );
 
-  const nzSingleCarusel = new SingleCarusel(singleCaruselItems,singleCaruselInfos);
+  const nzSingleCarusel = new SingleCarusel(
+    singleCaruselItems,
+    singleCaruselInfos
+  );
 
   nzCarousel.init();
   nzScrollTo.init();

@@ -1259,11 +1259,11 @@
   position: relative;
   perspective: 2500px;
   transform-style: preserve-3d;
-  margin: 30px auto 0 auto;
+  margin: 20px auto 0 auto;
 }
 #main .container .core .core-item-1 .core-carusel .slider input[type="radio"] {
   position: relative;
-  top: 140%;
+  top: 147%;
   left: 50%;
   width: 15px;
   height: 15px;
@@ -1292,13 +1292,18 @@
 }
 #main .container .core .core-item-1 .core-carusel .slider .core-radio-info {
   width: 290px;
-  height: 30px;
-  background: red;
+  height: 40px;
   position: relative;
-  top: 110%;
+  top: 112%;
   transform: translateX(-66px);
   opacity: 0;
   transition: opacity 0.3s linear;
+  text-align: center;
+  line-height: 23px;
+}
+#main .container .core .core-item-1 .core-carusel .slider .core-radio-info p:nth-child(2){
+  font-size: 16px;
+  color: #e1251b;
 }
 #main .container .core .core-item-1 .core-carusel .slider .core-radio-info.active{
   opacity: 1;
