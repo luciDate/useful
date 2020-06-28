@@ -240,6 +240,32 @@ class SingleCarusel {
   }
 }
 
+class IndexTransition {
+  constructor(container, numbers) {
+    this.container = container;
+    this.numbers = numbers;
+  }
+  init() {
+    this.container.addEventListener("mouseover", (event) => {
+      // 类名不同需要改
+      if (event.target.classList.contains("nz-carusel-list") || event.target.classList.contains("nz-carusel-item") || event.target.classList.contains("main-line")) {
+        const flag = event.target.getAttribute("data-index");
+        for (let i = 0; i < this.numbers.length; i++) {
+          this.numbers[i].classList.remove("active");
+        }
+        this.numbers[flag].classList.add("active");
+      }
+    });
+    this.container.addEventListener("mouseout", (event) => {
+      if (event.target.classList.contains("nz-carusel-list") || event.target.classList.contains("nz-carusel-item")) {
+        for (let i = 0; i < this.numbers.length; i++) {
+          this.numbers[i].classList.remove("active");
+        }
+      }
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const carouselContainer = document.querySelector("#carousel-container");
   const carouselPointList = document.querySelector("#carousel-point-list");
@@ -267,7 +293,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const singleCaruselItems = document.querySelectorAll(".core-l-img-item");
   const singleCaruselInfos = document.querySelectorAll(".core-radio-info");
-  console.log(singleCaruselInfos);
+  const listContainer = document.querySelector(".carusel-list-container");
+  const minorNumber = document.querySelectorAll(".minor-number");
 
   window.addEventListener("scroll", () => {
     // 解决不同浏览器之间距离顶部偏移量的兼容写法
@@ -314,9 +341,12 @@ document.addEventListener("DOMContentLoaded", () => {
     singleCaruselInfos
   );
 
+  const nzIndexTransition = new IndexTransition(listContainer, minorNumber);
+
   nzCarousel.init();
   nzScrollTo.init();
   nzCountdown.init();
   nzGallery.init();
   nzSingleCarusel.init();
+  nzIndexTransition.init();
 });
