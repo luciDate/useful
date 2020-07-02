@@ -86,6 +86,20 @@
       #example9 :nth-child(even) {
         color: blue;
       }
+      /* 子元素选择器 包括子孙元素 */
+      /* #example10 li{
+        color: darkred;
+      } */
+      /* 子元素选择器 不包括子孙元素  */
+      #example10 > li{
+        background-color: blue;
+      }
+      #example11{
+        width: 0;
+        height: 0;
+        border: 40px solid;
+        border-color: transparent transparent red transparent;
+      }
     </style>
   </head>
 
@@ -136,5 +150,15 @@
       <li>3</li>
       <li>4</li>
     </ul>
+    <ul id="example10">
+      <li>
+        1
+      </li>
+      <ul>
+        <li>233</li>
+      </ul>
+      <li>2</li>
+    </ul>
+    <div id="example11"></div>
   </body>
 </html>

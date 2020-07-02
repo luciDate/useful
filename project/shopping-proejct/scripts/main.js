@@ -248,7 +248,11 @@ class IndexTransition {
   init() {
     this.container.addEventListener("mouseover", (event) => {
       // 类名不同需要改
-      if (event.target.classList.contains("nz-carusel-list") || event.target.classList.contains("nz-carusel-item") || event.target.classList.contains("main-line")) {
+      if (
+        event.target.classList.contains("nz-carusel-list") ||
+        event.target.classList.contains("nz-carusel-item") ||
+        event.target.classList.contains("main-line")
+      ) {
         const flag = event.target.getAttribute("data-index");
         for (let i = 0; i < this.numbers.length; i++) {
           this.numbers[i].classList.remove("active");
@@ -257,10 +261,8 @@ class IndexTransition {
       }
     });
     this.container.addEventListener("mouseout", (event) => {
-      if (event.target.classList.contains("nz-carusel-list") || event.target.classList.contains("nz-carusel-item")) {
-        for (let i = 0; i < this.numbers.length; i++) {
-          this.numbers[i].classList.remove("active");
-        }
+      for (let i = 0; i < this.numbers.length; i++) {
+        this.numbers[i].classList.remove("active");
       }
     });
   }
