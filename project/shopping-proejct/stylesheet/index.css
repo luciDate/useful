@@ -30,15 +30,15 @@
   position: relative;
 }
 #main .container .carousel .l-wrapper ul li ul{
-  width: 710px;
+  width: 730px;
   height: 490px;
   border: 1px solid #dddddd;
   background: #ffffff;
   z-index: 11;
   position: absolute;
   left: 190px;
-  transition: all 0.3s;
-  visibility: hidden;
+  transition: all 0.5s;
+  display: none;
   opacity: 0;
   box-shadow: 3px 3px 5px 1px rgba(0, 0, 0, 0.3);
 }
@@ -119,7 +119,7 @@
 }
 #main .container .carousel .l-wrapper ul li:hover > ul,
 #main .container .carousel .l-wrapper ul li a:hover + ul{
-  visibility: visible;
+  display: block;
   opacity: 1;
 }
 #main .container .carousel .l-wrapper ul li ul .list-wrapper .item{
