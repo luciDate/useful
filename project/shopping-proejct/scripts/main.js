@@ -213,10 +213,11 @@ class Gallery {
 }
 
 class SingleCarusel {
-  constructor(imgItems, info) {
+  constructor(imgItems, info, container) {
     this.imgItems = imgItems;
     this.flag = 0;
     this.info = info;
+    this.container = container;
   }
   itemMove() {
     for (let i = 0; i < this.imgItems.length; i++) {
@@ -234,9 +235,19 @@ class SingleCarusel {
         this.itemMove();
       });
     }
-    setInterval(() => {
+    // 暂存timer变化的值
+     let timer = null
+     timer = setInterval(() => {
       this.itemMove();
     }, 6000);
+    this.container.addEventListener("mouseover",()=>{
+      clearInterval(timer)
+    })
+    this.container.addEventListener("mouseout",()=>{
+       timer = setInterval(() => {
+        this.itemMove();
+      }, 6000);
+    })
   }
 }
 
@@ -267,6 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const singleCaruselItems = document.querySelectorAll(".core-l-img-item");
   const singleCaruselInfos = document.querySelectorAll(".core-radio-info");
+  const singleCaruselSlider = document.querySelector("#radio-slider");
 
   window.addEventListener("scroll", () => {
     // 解决不同浏览器之间距离顶部偏移量的兼容写法
@@ -310,7 +322,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const nzSingleCarusel = new SingleCarusel(
     singleCaruselItems,
-    singleCaruselInfos
+    singleCaruselInfos,
+    singleCaruselSlider
   );
 
   nzCarousel.init();

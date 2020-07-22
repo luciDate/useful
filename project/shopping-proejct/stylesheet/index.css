@@ -30,7 +30,7 @@
   position: relative;
 }
 #main .container .carousel .l-wrapper ul li ul{
-  width: 730px;
+  width: 760px;
   height: 490px;
   border: 1px solid #dddddd;
   background: #ffffff;
@@ -48,7 +48,11 @@
   background: #333;
   color: #ffffff;
   font-size: 12px;
-  margin:10px 0 0 10px;
+  margin:10px 0 0 9px;
+  cursor: pointer;
+}
+#main .container .carousel .l-wrapper ul li ul .title-wrapper span:hover{
+  background: #e1251b;
 }
 #main .container .carousel .l-wrapper ul li ul .title-wrapper span svg{
   font-size: 10px;
@@ -128,6 +132,9 @@
   color: #999;
   cursor: pointer;
   text-align: right;
+}
+#main .container .carousel .l-wrapper ul li ul .list-wrapper .item:hover{
+  color: #e1251b;
 }
 #main .container .carousel .l-wrapper ul li ul .list-wrapper .item:first-child{
   font-weight: 800;
