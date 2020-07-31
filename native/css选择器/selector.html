@@ -100,6 +100,31 @@
         border: 40px solid;
         border-color: transparent transparent red transparent;
       }
+      .search-bar{
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+      }
+      .example12{
+        width: 200px;
+        height: 50px;
+      }
+      .example12:focus{
+        outline: 1px solid blue;
+      }
+      .example12:focus + .search-info{
+        display: none;
+      }
+      .search-info{
+        position: absolute;
+        /* 海市蜃楼效果 */
+        pointer-events: none;
+      }
+      /* 合法输入 */
+      .example12:valid{
+        background-color: coral;
+      }
     </style>
   </head>
 
@@ -160,5 +185,10 @@
       <li>2</li>
     </ul>
     <div id="example11"></div>
+    <br>
+    <div class="search-bar">
+      <input type="text" class="example12" value="">
+      <div class="search-info">i am pleceholder</div>
+    </div>
   </body>
 </html>
