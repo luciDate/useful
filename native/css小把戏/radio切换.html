@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #black,
+      #white {
+        cursor: pointer;
+        position: relative;
+        width: 18px;
+        height: 18px;
+        font-size: 14px;
+        top: 20px;
+        left: 20px;
+      }
+      #black::after,
+      #white::after {
+        position: absolute;
+        top: 0;
+        background-color: rgb(236, 236, 236, 0.9);
+        color: #1890ff;
+        width: 20px;
+        height: 20px;
+        display: inline-block;
+        visibility: visible;
+        padding-left: 0px;
+        text-align: center;
+        content: " ";
+        line-height: 20px;
+      }
+
+      #black:checked::after,
+      #white:checked::after {
+        content: "✓";
+        font-size: 12px;
+        font-weight: bold;
+      }
+      #lab {
+        display: block;
+        width: 42px;
+        height: 42px;
+        position: relative;
+        box-shadow: 0 1px 3px 0px rgba(32, 33, 36, 0.28);
+        border-color: rgba(223, 225, 229, 0);
+      }
+      .block {
+        width: 15px;
+        height: 42px;
+        background: #555555;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- radio设置的name一样的话，radio的复数选中会来回切换 -->
+    <label for="black" id="lab" title="黑色">
+      <div class="block"></div>
+      <input type="radio" name="color" id="black" />
+    </label>
+    <label for="white" id="lab" title="黑色">
+      <div class="block"></div>
+      <input type="radio" name="color" id="white" />
+    </label>
+    <br />
+    <div data-index="3" id="test-3">3</div>
+  </body>
+  <script>
+    const test = document.querySelector("#test-3")
+    test.addEventListener("click",(e)=>{
+      alert(e.target.getAttribute('data-index'))
+    })
+  </script>
+</html>
