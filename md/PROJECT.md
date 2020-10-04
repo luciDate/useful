@@ -1414,6 +1414,17 @@ npm install -g serve
 serve -s
 ```
 
+vue-router的取值问题。
+
+fullpath = 全路径
+
+path = /fool
+
+params = /fool/12 里面的12
+
+query = ?name=aza&pw=666 里面的aza和666
+
+meta = 路由配置的原信息
 
 
 
