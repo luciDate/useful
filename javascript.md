@@ -18,4 +18,10 @@ parentNode
 
 change事件和input事件的区别
 
+设置或获取 网页地址跟在问号后面的部分
+
+parse(location.search).locale
+
+
+
 

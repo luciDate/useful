@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./reset.css" />
+    <style>
+      body {
+        padding: 50px 0px;
+      }
+      .box-1 > ul > li:not(:last-child)::after {
+        content: "";
+        display: inline-block;
+        width: 1px;
+        height: 10px;
+        background: #3c3c3c;
+        /* 行元素是以基线对齐 设置vertical-align 可以使用margintop */
+        vertical-align: middle;
+        margin: -4px 10px 0 10px;
+      }
+      .box-2 > ul > li {
+        width: 100px;
+        height: 100px;
+        background: gray;
+        /* 利用position可以操作更多空间 */
+        position: relative;
+        text-align: center;
+      }
+      .box-2 > ul > li:not(:last-child)::after {
+        content: "";
+        display: inline-block;
+        width: 1px;
+        height: 30px;
+        background: #3c3c3c;
+        position: absolute;
+        right: 0;
+        top: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box-1">
+      <ul class="clear-fix">
+        <li class="float-l">1</li>
+        <li class="float-l">2</li>
+        <li class="float-l">3</li>
+      </ul>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="box-2">
+      <ul class="clear-fix">
+        <li class="float-l">
+          <div>
+            <p>name</p>
+            <p>aza</p>
+          </div>
+        </li>
+        <li class="float-l">
+          <div>
+            <p>phone</p>
+            <p>188</p>
+          </div>
+        </li>
+        <li class="float-l">
+          <div>
+            <p>id</p>
+            <p>undefine</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
