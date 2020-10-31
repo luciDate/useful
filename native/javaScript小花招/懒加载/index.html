@@ -38,7 +38,7 @@
 
       function check() {
         // Array.from()方法就是将一个类数组对象或者可遍历对象转换成一个真正的数组
-        Array.from(imgs).forEach((el) => {
+        imgs.forEach((el) => {
           if (isIn(el)) {
             loadImg(el);
           }
