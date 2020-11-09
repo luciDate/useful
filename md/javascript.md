@@ -154,6 +154,109 @@ A :
 ```javascript
 //JSON和Math都是内置的对象，但不是函数
 //JSON是内置对象JSON.parse(),JSON.stringify()也是一种数据格式{name:aza}
+
+//对象JSON
+//键一般为字符串名称。值为指定值或者变量
+const obj = { a: 100 };
+//字符串JSON
+const obji = '{"aza":888}';
+```
+
+表达式收集
+
+```javascript
+const i = 100;
+//二元表达式
+i && console.log("bingo");
+//三元表达式
+i ? console.log("233") : console.log("666");
+
+//while 循环
+let ii = 0;
+while (ii <= 10) {
+  console.log(ii);
+  ii++;
+}
+
+//do while循环 先执行一次代码块。再按条件真假决定是否继续
+let iii = 0;
+do {
+  console.log(iii);
+  iii++;
+} while (iii <= 5);
+
+// i++ 和 ++i的区别
+let iv = 10;
+// 先赋值iv = 10 ,再进行运算. iv = 0 , iv = 11
+iv++;
+
+let v = 100;
+// 先运算，再赋值。 v = 101 , v = 101
+++v;
+
+//展开符
+function test(name, age) {
+  return (...args) => {
+    console.log(name);
+  };
+}
+
+const result = test("aza", 10);
+result();
+
+const arr = [1, 2, 3];
+const arri = [4, 5, 6];
+const remixArr = [...arr, ...arri];
+console.log(remixArr);
+
+//形参默认值
+
+class People {
+  constructor(name, age, aka = "dahl") {
+    this.name = name;
+    this.age = age;
+    this.aka = aka;
+  }
+  eat() {
+    console.log(`${this.name} is eating`);
+  }
+  speak() {
+    console.log(
+      `my name is ${this.name} , i am ${this.age} year old , aka ${this.aka}`
+    );
+  }
+}
+
+const x = new People("aza", 18);
+x.eat();
+x.speak();
+
+const i = 0;
+//只返回一行，可以省略花括号
+if (i === 0) console.log("233");
+
+//箭头函数只有一个形参可以省略()
+//只有一行可以省略{} 和 return
+const test = (x) => x;
+console.log(test("6"));
+
+//函数返回对象一些情况需要()包起来
+const a = (x) => ({ x: 100 });
+console.log(a("number"));
+
+//动态命名
+const name = "azai";
+const aza = { [name]: 100 };
+console.log(aza.azai);
+
+//捕获异常
+try {
+  // 尝试可能出现错误的代码。 捕获它让它不至于干扰程序运行
+  // 也可以运用于一些开源库。不让一些错误提示显示
+  test();
+} catch (error) {
+  console.log(error);
+}
 ```
 
 ---
@@ -523,7 +626,7 @@ d.getTime(); //返回当前时间戳
 d.getFullYear();
 d.getMonth() + 1;
 d.getDate();
-d.getHours;
+d.getHours();
 d.getMinutes();
 d.getSeconds();
 ```
@@ -579,11 +682,11 @@ arr.forEach((item, index) => {
 });
 
 //打断遍历
-for (item of arr) {
-  if (item >= 2) {
-    break;
-  }
-  console.log(`${item}`);
+const arr = [1, 2, 3, 4, 5, 6];
+
+for (let index = 0; index < arr.length; index++) {
+  if (arr[index] == 5) break;
+  console.log(arr[index]);
 }
 
 //item检查
@@ -625,6 +728,18 @@ arrFilter = arr.filter((item, index) => {
   }
 });
 console.log(arrFilter);
+
+//找到符合条件的并返回第一个
+const arr = [1, 2, 3, 4, 5, 6];
+const result = arr.find((item) => {
+  return item > 4;
+});
+console.log(result);
+
+//检查数组是否包含item
+const arr = [1, 2, 3, 4, 5, 6];
+const resolve = arr.includes(6);
+console.log(resolve);
 
 //数组深拷贝
 
@@ -982,12 +1097,21 @@ Q : 事件代理
 3. 有三个标签可以允许跨域`<img>`,`<link>`,`<script>`
 4. JSONP 也可以利用回调函数允许跨域
 
-```javascript
-window.callback(data){
-  //这里是我门获取的跨域信息
-  console.log(data)
-}
+```html
+<script>
+  window.callback(data){
+    //这里是我门获取的跨域信息
+    console.log(data)
+  }
+</script>
+
+<script src="xxx.com/api.js">
+  //通过script标签跨域加载js文件 js文件返回一个函数
+  //callback({a:100,b:200})
+</script>
 ```
+
+服务器设置 http header 也是解决跨域问题的趋势
 
 本地存储
 
@@ -1001,6 +1125,32 @@ localStorage.removeItem("name");
 console.log(localStorage.getItem("phone"));
 
 localStorage.clear();
+```
+
+手写一个 ajax
+
+```javascript
+//创建 XMLHttpRequest 对象
+const xhr = new XMLHttpRequest();
+//method：请求的类型；GET 或 POST
+//url：文件在服务器上的位置
+//async：true（异步）或 false（同步）
+xhr.open("GET", "http://jsonplaceholder.typicode.com/posts/1", true);
+//onreadystatechange是异步的
+xhr.onreadystatechange = function () {
+  //存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。
+  //每次readyState变化都会触发onreadystatechange
+  if (xhr.readyState == 4) {
+    //200: "OK"
+    //404: 未找到页面
+    if (xhr.status == 200) {
+      //获得字符串形式的响应数据。
+      console.log(xhr.responseText);
+    }
+  }
+};
+//发送请求
+xhr.send(null);
 ```
 
 ---
@@ -1106,6 +1256,7 @@ document.body.appendChild(frag);
       };
     }
 
+    //这里的闭包不需要用变量接结果，是因为addEventListener需要的就是fn
     const b = document.querySelector("#myid");
     b.addEventListener(
       "click",
