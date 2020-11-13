@@ -257,6 +257,89 @@ try {
 } catch (error) {
   console.log(error);
 }
+
+//多重数组遍历;
+const arr = [1, 2, [1, 2, 3]];
+
+for (let index = 0; index < arr.length; index++) {
+  if (arr[index] instanceof Array) {
+    for (let indexaza = 0; indexaza < arr[index].length; indexaza++) {
+      console.log(arr[index][indexaza]);
+    }
+    break;
+  }
+  console.log(arr[index]);
+}
+
+//递归
+const routes = [
+  { name: "user", path: "/user", hide: true },
+  {
+    name: "home",
+    path: "/home",
+    children: [{ name: "admin", path: "/admin" }],
+  },
+  {
+    name: "details",
+    path: "/details",
+    children: [
+      { name: "id-1", path: "/id-1" },
+      { name: "id-2", path: "/id-2" },
+      { name: "id-3", path: "/id-3" },
+      {
+        name: "id-4",
+        path: "/id-4",
+        hide: true,
+        children: [{ name: "id-4-1" }],
+      },
+    ],
+  },
+];
+
+function formatData(routes) {
+  const arr = [];
+  routes.forEach((item) => {
+    if (item.name && item.children && !item.hide) {
+      let newItem = { ...item };
+      delete newItem.children;
+      if (item.children && !item.children.hide) {
+        newItem.children = formatData(item.children);
+      }
+      arr.push(newItem);
+    } else if (!item.children && !item.hide) {
+      arr.push(item);
+    }
+  });
+  return arr;
+}
+
+console.log(formatData(routes));
+
+//条件判断
+const a = 100;
+//视条件是否发生
+function aza(num) {
+  if (num === 100) console.log(666);
+  console.log("still happend");
+}
+//条件2选1
+function azai(num) {
+  if (num === 100) {
+    console.log(666);
+  } else {
+    console.log(000);
+  }
+}
+//条件3选1
+function azaii(num) {
+  if (num === 100) {
+    console.log(100);
+  } else if (num === 200) {
+    console.log(200);
+  } else {
+    console.log(300);
+  }
+}
 ```
 
 ---

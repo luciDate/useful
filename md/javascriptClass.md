@@ -18,6 +18,8 @@
 
 [状态模式](#tip-8)
 
+[面试题收集](#tip-9)
+
 ---
 
 ## <a id="tip-1">Class 基础</a>
@@ -453,7 +455,7 @@ dec.draw();
 
 每次状态变化都会触发一个逻辑
 
-不能总是使用if...else判断
+不能总是使用 if...else 判断
 
 ```javascript
 //状态 红灯，绿灯，黄灯
@@ -490,4 +492,120 @@ green.handle(context);
 console.log(context.getState());
 red.handle(context);
 console.log(context.getState());
+```
+
+---
+
+## <a id="tip-9">面试题收集</a>
+
+第一题
+
+1. 打车时，可以打专场或者快车。任何车都有车牌和名称
+2. 不同车价格不同。快车每公里 1 元，专车每公里 2 元
+3. 开始行程时，显示车辆信息
+4. 行程结束时，显示打车金额(假定行程就 5 公里)
+
+```javascript
+class QueryCar {
+  constructor() {
+    this.name = "queryCar";
+    this.num = "100";
+    this.price = 1;
+  }
+}
+
+class CustomCar {
+  constructor() {
+    this.name = "customCar";
+    this.num = "200";
+    this.price = 2;
+  }
+}
+
+class Go {
+  constructor(car) {
+    this.car = car;
+  }
+  begin() {
+    console.log(this.car.name);
+  }
+  over(num) {
+    console.log(this.car.price * num);
+  }
+}
+
+const q = new QueryCar();
+const c = new CustomCar();
+const a = new Go(q);
+a.begin();
+a.over(5);
+```
+
+第二题
+
+1. 某个停车场，分 3 层，每层 100 车位
+2. 每个车位都能监控到车辆的进入和离开
+3. 车辆进入前，显示每层空余车位数量
+4. 车辆进入时，显示可识别的车牌号和时间
+5. 车辆出来时，出口显示器车牌号和停车时长
+
+```javascript
+class Park {
+  constructor() {
+    this.floor1 = 100;
+    this.floor2 = 100;
+    this.floor3 = 100;
+    this.collection = [];
+  }
+  after() {
+    console.log(`一号停车场有 ${this.floor1} 车位`);
+    console.log(`二号停车场有 ${this.floor2} 车位`);
+    console.log(`三号停车场有 ${this.floor3} 车位`);
+  }
+  in(num, floor) {
+    console.log(`车牌为${num},登记时间为${new Date()}`);
+    const now = new Date().getTime();
+    const obj = { num: num, time: now, floor: floor };
+    this.collection.push(obj);
+    this[floor] -= 1;
+    console.log(`一号停车场有 ${this.floor1} 车位`);
+    console.log(`二号停车场有 ${this.floor2} 车位`);
+    console.log(`三号停车场有 ${this.floor3} 车位`);
+  }
+  out(num) {
+    let tempObj;
+    for (let index = 0; index < this.collection.length; index++) {
+      if (this.collection[index].num === num) {
+        tempObj = this.collection[index];
+        this[this.collection[index].floor] += 1;
+        this.collection.splice(index, 1);
+        break;
+      }
+    }
+    const now = new Date().getTime();
+    const diff = now - tempObj.time;
+    console.log(diff);
+    console.log(`一号停车场有 ${this.floor1} 车位`);
+    console.log(`二号停车场有 ${this.floor2} 车位`);
+    console.log(`三号停车场有 ${this.floor3} 车位`);
+  }
+}
+
+Park.init = (() => {
+  let instance;
+  return () => {
+    if (!instance) instance = new Park();
+    return instance;
+  };
+})();
+
+const p = Park.init();
+const x = Park.init();
+
+p.after();
+p.in("100", "floor1");
+x.after();
+x.in("200", "floor1");
+
+p.out("100");
 ```

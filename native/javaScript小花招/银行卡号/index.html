@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #test-1 {
+        width: 300px;
+        height: 300px;
+        background: #000000;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" id="test" />
+    <br />
+    <br />
+    <br />
+    <div id="test-1"></div>
+    <script>
+      function azaScope() {
+        const i = document.querySelector("#test");
+        const ii = document.querySelector("#test-1");
+        let str = "";
+        return () => {
+          i.addEventListener("input", (e) => {
+            const value = e.target.value;
+            str = `${value}`;
+            if (str.length >= 4 && str.length <= 8) {
+              let newStr = str.split("");
+              newStr.splice(4, 0, "&nbsp&nbsp");
+              let temp = newStr.join("");
+              ii.innerHTML = temp;
+            } else if (str.length > 8 && str.length <= 12) {
+              let newStr = str.split("");
+              newStr.splice(4, 0, "&nbsp&nbsp");
+              newStr.splice(9, 0, "&nbsp&nbsp");
+              let temp = newStr.join("");
+              ii.innerHTML = temp;
+            } else if (str.length > 12 && str.length <= 16) {
+              let newStr = str.split("");
+              newStr.splice(4, 0, "&nbsp&nbsp");
+              newStr.splice(9, 0, "&nbsp&nbsp");
+              newStr.splice(14, 0, "&nbsp&nbsp");
+              let temp = newStr.join("");
+              ii.innerHTML = temp;
+            } else if (str.length > 16 && str.length <= 19) {
+              let newStr = str.split("");
+              newStr.splice(4, 0, "&nbsp&nbsp");
+              newStr.splice(9, 0, "&nbsp&nbsp");
+              newStr.splice(14, 0, "&nbsp&nbsp");
+              newStr.splice(19, 0, "&nbsp&nbsp");
+              let temp = newStr.join("");
+              ii.innerHTML = temp;
+            } else {
+              ii.innerHTML = str;
+            }
+          });
+        };
+      }
+
+      const aza = azaScope()();
+    </script>
+  </body>
+</html>
