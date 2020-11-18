@@ -821,11 +821,9 @@ console.log(result);
 
 //检查数组是否包含item
 const arr = [1, 2, 3, 4, 5, 6];
-const resolve = arr.includes(6);
-console.log(resolve);
+console.log(arr[arr.indexOf(3);]);
 
 //数组深拷贝
-
 const arr = [1, 2, 3, 4, 5];
 let arri = arr;
 arri[0] = 11;

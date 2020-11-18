@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="test" />
+    <div>
+      <label for="jack">jack</label>
+      <input type="checkbox" name="" class="checks" value="jack" />
+      <label for="john">john</label>
+      <input type="checkbox" name="" class="checks" value="john" />
+      <br />
+      <br />
+      <button id="getc">get checkbox</button>
+      <div>
+        <!-- radio设置的name一样的话，radio的复数选中会来回切换 -->
+        <label for="one">one</label>
+        <input
+          type="radio"
+          name="boolean"
+          id="one"
+          class="radios"
+          value="one"
+        />
+        <label for="two">two</label>
+        <input
+          type="radio"
+          name="boolean"
+          id="two"
+          class="radios"
+          value="two"
+        />
+        <br />
+        <button id="getrad">get radio</button>
+      </div>
+      <label for="select">select</label>
+      <select name="" id="select">
+        <option value="100" class="ops">100</option>
+        <option value="200" class="ops">200</option>
+        <option value="300" class="ops">300</option>
+      </select>
+      <button id="gets">get options</button>
+    </div>
+    <script>
+      const t = document.querySelector("#test");
+      const getc = document.querySelector("#getc");
+      const checks = document.querySelectorAll(".checks");
+      const radios = document.querySelectorAll(".radios");
+      const ops = document.querySelectorAll(".ops");
+      const getr = document.querySelector("#getrad");
+      const gets = document.querySelector("#gets");
+      const arr = [];
+      let radio = null;
+      let option = null;
+
+      t.addEventListener("input", (e) => {
+        console.log(e.target.value);
+      });
+
+      getc.addEventListener("click", (e) => {
+        for (let index = 0; index < checks.length; index++) {
+          if (checks[index].checked === true) {
+            if (arr.indexOf(checks[index].value) === -1) {
+              arr.push(checks[index].value);
+            }
+          }
+        }
+        console.log(arr);
+      });
+
+      getr.addEventListener("click", (e) => {
+        for (let index = 0; index < radios.length; index++) {
+          if (radios[index].checked) {
+            radio = radios[index].value;
+          }
+        }
+        console.log(radio);
+      });
+
+      gets.addEventListener("click", (e) => {
+        for (let index = 0; index < ops.length; index++) {
+          if (ops[index].selected === true) {
+            option = ops[index].value;
+          }
+        }
+        console.log(option)
+      });
+    </script>
+  </body>
+</html>
