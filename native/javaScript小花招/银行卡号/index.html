@@ -54,7 +54,10 @@
               newStr.splice(19, 0, "&nbsp&nbsp");
               let temp = newStr.join("");
               ii.innerHTML = temp;
-            } else {
+            }else if (str.length > 16 && str.length > 19){
+              i.onfocus = blur()
+            } 
+            else {
               ii.innerHTML = str;
             }
           });

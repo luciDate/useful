@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        margin: 0;
+      }
+      .grass,
+      .sky,
+      .road {
+        position: relative;
+      }
+      .sky {
+        height: 40%;
+        background: skyblue;
+      }
+      .grass {
+        height: 30%;
+        background: seagreen;
+      }
+      .road {
+        height: 30%;
+        background: dimgrey;
+        box-sizing: border-box;
+        border-top: 10px solid grey;
+        border-bottom: 10px solid grey;
+        width: 100%;
+      }
+      .lines {
+        box-sizing: border-box;
+        border: 5px dashed #fff;
+        height: 0px;
+        width: 100%;
+        position: absolute;
+        top: 45%;
+      }
+      /* 定制动画的名称与定制动画的过渡时间 */
+      /* animation-fill-mode可以定制forward和backward就是前进和后退 */
+      /* forwards	当动画完成后，保持to最后一个属性值（在最后一个关键帧中定义）。 */
+      /* backwards	在 animation-delay 所指定的一段时间内，在动画显示之前，应用from开始属性值 */
+      /* animation-delay定制动画延时 */
+      /* animation-iteration-count定制动画执行次数无限或者数字 */
+      /* animation-direction定制方向可选normal和reverse  alternate(from到to,to到from)和alternate-reverse */
+      /* animation-timing-function 可定制linear和ease-in,ease-out之类的也可以定制贝塞尔曲线 到cubic-bezier.com定制上是快，下是慢 */
+      /* 一个类可以定制多段动画 */
+      .mario {
+        position: absolute;
+        top: -55px;
+        left: 0px;
+        animation: drive 3s both infinite linear,jump 0.3s 1.2s ease;
+      }
+      .luigi {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        animation-name: drive;
+        animation-duration: 5s;
+        animation-fill-mode: both;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+      }
+      /* animation提供缩写 对应 name duration fill-mode delay timing-function iteration-count direction */
+      .cloud {
+        position: absolute;
+      }
+      .cloud:nth-child(1) {
+        width: 200px;
+        top: 120px;
+        opacity: 0.5;
+        animation: wind 80s linear infinite reverse;
+      }
+      .cloud:nth-child(2) {
+        width: 300px;
+        top: 0;
+        animation: wind 50s linear infinite reverse;
+      }
+      /* from定制开始，to定制结束 */
+      @keyframes drive {
+        from {
+          transform: translate(-200px);
+        }
+        to {
+          transform: translateX(1500px);
+        }
+      }
+      /* 绝对定位可以定制100%偏移 */
+      @keyframes wind {
+        from {
+          left: -300px;
+        }
+        to {
+          left: 100%;
+        }
+      }
+      /* animation可以使用百分比定义 */
+      @keyframes jump{
+        0%{top: -55px;}
+        50%{top: -100px;}
+        100%{top: -55px;}
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sky">
+      <img src="./img/cloud.png" alt="" class="cloud" />
+      <img src="./img/cloud.png" alt="" class="cloud" />
+    </div>
+    <div class="grass"></div>
+    <div class="road">
+      <div class="lines"></div>
+      <img src="./img/mario.png" alt="" class="mario" />
+      <img src="./img/luigi.png" alt="" class="luigi" />
+    </div>
+  </body>
+</html>

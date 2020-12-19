@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: lightblue;
+        text-align: center;
+      }
+      .wrapper {
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .circle {
+        width: 100px;
+        padding: 50px 0px;
+        line-height: 0;
+        margin: 60px auto;
+        background: pink;
+        color: white;
+        border-radius: 50px;
+        cursor: pointer;
+        /* transition可以第一个参数定制属性，第二个参数定制渐变时间，第三个参数定制延时时间，第四个参数定制渐变形式 */
+        transition: background 1s, transform 0.3s 1s linear;
+      }
+      .circle:hover {
+        background: rgb(250, 128, 114);
+        transform: rotateZ(360deg);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <p>ease:由快到慢到更慢 默认</p>
+    <p>linear:均速</p>
+    <p>ease-in:越来越快</p>
+    <p>ease-out:越来越慢</p>
+    <p>ease-in-out:先加速后减速</p> -->
+    <div class="wrapper"></div>
+    <img src="./img/cloud.png" alt="" />
+    <div class="circle">hover me</div>
+  </body>
+</html>

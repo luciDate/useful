@@ -18,6 +18,8 @@
 
 [安全性](#tip-8)
 
+[var 变量](#tip-9)
+
 ---
 
 ## <a id="tip-1">值类型和表达式</a>
@@ -731,6 +733,11 @@ console.log(hh);
 const url = "/api/dashboard/chart";
 const name = url.split("/api/")[1].split("/").join("_");
 console.log(name);
+
+//字母转小写
+const str = "XIxi";
+const newStr = str.toLowerCase();
+console.log(newStr);
 ```
 
 数字
@@ -973,6 +980,21 @@ Q : DOM 节点操作
     c.removeChild(i);
   </script>
 </body>
+```
+
+获取 tagName
+
+```html
+<span id="test">666</span>
+<button id="iclick">click me</button>
+<script>
+  const i = document.querySelector("#test");
+  const iclick = document.querySelector("#iclick");
+
+  iclick.addEventListener("click", () => {
+    if (i.tagName === "SPAN") console.log("233");
+  });
+</script>
 ```
 
 Q : BOM 操作
@@ -1388,3 +1410,81 @@ window.addEventListener("DOMCoentLoaded", () => {
 XSS 不信任用户的输入。检查用户的特殊字符
 
 XSRF 敏感的网络请求。要添加手机，邮箱验证码
+
+## <a id="tip-9">var 变量</a>
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul class="list">
+      <li class="item">1</li>
+      <li class="item">2</li>
+      <li class="item">3</li>
+      <li class="item">4</li>
+      <li class="item">5</li>
+      <li class="item">6</li>
+    </ul>
+    <script>
+      // 闭包只能在函数里面return function
+      //自执行函数 (function(){}())
+
+      const items = document.querySelectorAll(".item");
+      for (var i = 0; i < items.length; i++) {
+        items[i].addEventListener(
+          "click",
+          ((n) => {
+            return () => {
+              console.log(n);
+            };
+          })(i)
+        );
+      }
+    </script>
+  </body>
+</html>
+```
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //普通函数的this指向window。绑定self为this
+      const video = {
+        title: "a",
+        tags: ["a", "b", "c"],
+        showTags() {
+          var self = this;
+          this.tags.forEach(function (tag) {
+            console.log(self.title, tag);
+          });
+        },
+      };
+
+      const list = {
+        title: "a",
+        tags: ["1", "2", "3"],
+        showTags() {
+          this.tags.forEach(
+            function (tag) {
+              console.log(this.title, tag);
+            }.bind(this)
+          );
+        },
+      };
+      list.showTags();
+    </script>
+  </body>
+</html>
+```

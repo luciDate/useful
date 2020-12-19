@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: lightblue;
+        text-align: center;
+      }
+      .wrapper {
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      img {
+        /* 第一个参数对应x轴（左），第二个参数对应y轴（下） */
+        /* transform: translate(100px, 200px); */
+
+        /* 第一个参数x轴拉伸，第二个参数y轴拉伸 */
+        /* transform: scale(3,0.5); */
+
+        /* z轴旋转90度 整数往左边旋转 负数往右边旋转 */
+        /* transform: rotate(100deg) */
+
+        /* 图像发生旋转x轴和y轴会根据原来的图像发生改变 */
+        transform: rotate(-90deg) translateY(200px) scale(2);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <img src="./img/cloud.png" alt="" />
+    </div>
+  </body>
+</html>

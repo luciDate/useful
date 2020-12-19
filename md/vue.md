@@ -24,6 +24,16 @@ vueCdn : `<script src="https://cdn.jsdelivr.net/npm/vue"></script>`
 
 [表单输入](#tip-10)
 
+[组件基础](#tip-11)
+
+[组件深入](#tip-12)
+
+[插槽](#tip-13)
+
+[边界情况](#tip-14)
+
+[动画](#tip-15)
+
 ---
 
 ## <a id="tip-1">vue 基础</a>
@@ -64,7 +74,6 @@ vueCdn : `<script src="https://cdn.jsdelivr.net/npm/vue"></script>`
       <input type="text" v-model="message" />
       <!-- 双向绑定与单向绑定不冲突 -->
       <input type="text" :value="message" @input="changeMessage" />
-
       <hr />
       <ul>
         <todo-item
@@ -73,8 +82,25 @@ vueCdn : `<script src="https://cdn.jsdelivr.net/npm/vue"></script>`
           :key="item.id"
         ></todo-item>
       </ul>
+      <hr />
+      <!-- 子组件传值给父组件 -->
+      {{test}}
+      <base-button :test="test" @sign="handleNewTest"></base-button>
     </div>
     <script>
+      Vue.component("base-button", {
+        props: {
+          test: String,
+        },
+        template: `
+        <button @click="handleTest">click me</button>
+        `,
+        methods: {
+          handleTest() {
+            this.$emit("sign", this.test + "i");
+          },
+        },
+      });
       Vue.component("todo-item", {
         props: ["todo"],
         template: `
@@ -98,6 +124,7 @@ vueCdn : `<script src="https://cdn.jsdelivr.net/npm/vue"></script>`
             { id: 1, text: "奶酪" },
             { id: 2, text: "随便其它什么人吃的东西" },
           ],
+          test: "test",
         },
         methods: {
           reverseMessage() {
@@ -105,6 +132,9 @@ vueCdn : `<script src="https://cdn.jsdelivr.net/npm/vue"></script>`
           },
           changeMessage(e) {
             this.message = e.target.value;
+          },
+          handleNewTest(newTest) {
+            this.test = newTest;
           },
         },
       });
@@ -153,6 +183,23 @@ vueCdn : `<script src="https://cdn.jsdelivr.net/npm/vue"></script>`
   </div>
   <script>
     // 生命周期不能使用箭头函数，因为箭头函数没有this
+    /*
+    beforeCreate（创建前）: 在数据观测和初始化事件还未开始,data、watcher、methods都还不存在，但是$route已存在，可以根据路由信息进行重定向等操作。
+
+created(创建后)：在实例创建之后被调用，该阶段可以访问data，使用watcher、events、methods，也就是说 数据观测(data observer) 和event/watcher 事件配置 已完成。但是此时dom还没有被挂载。该阶段允许执行http请求操作。
+
+beforeMount （挂载前）：将HTML解析生成AST节点，再根据AST节点动态生成渲染函数。相关render函数首次被调用(划重点)。
+
+mounted (挂载后)：在挂载完成之后被调用，执行render函数生成虚拟dom，创建真实dom替换虚拟dom，并挂载到实例。可以操作dom，比如事件监听
+
+beforeUpdate：vm.data更新之后，虚拟dom重新渲染之前被调用。在这个钩子可以修改vm.data更新之后，虚拟dom重新渲染之前被调用。在这个钩子可以修改vm.data更新之后，虚拟dom重新渲染之前被调用。在这个钩子可以修改vm.data，并不会触发附加的冲渲染过程。
+
+updated：虚拟dom重新渲染后调用，若再次修改$vm.data，会再次触发beforeUpdate、updated，进入死循环。
+
+beforeDestroy：实例被销毁前调用，也就是说在这个阶段还是可以调用实例的。
+
+destroyed：实例被销毁后调用，所有的事件监听器已被移除，子实例被销毁
+    */
     var app = new Vue({
       el: "#app",
       beforeCreate: function () {},
@@ -595,13 +642,45 @@ vueCdn : `<script src="https://cdn.jsdelivr.net/npm/vue"></script>`
       <!-- 如果要自动过滤用户输入的首尾空白字符，可以给 v-model 添加 trim 修饰符 -->
       <input v-model.trim="msg" />
       <hr />
+      <!-- 子组件定制数据lovingVue会替代子组件的checked，其值会随着checked改变 -->
+      <base-checkbox v-model="lovingVue"></base-checkbox>
+      <hr />
+      <!-- 子组件需要双向绑定的时候,使用v-bind.sync="doc"把对象传进去。通过消费事件把newTitle传出来 -->
+      <!-- $event 访问到子组件被抛出的这个值在htmldom -->
+      <base-input v-bind.sync="doc" @update="doc.title = $event"></base-input>
     </div>
     <script>
-      Vue.component('base-checkbox',{})
+      Vue.component("base-input", {
+        template: `
+        <input type="text" @input="test" :value="title">
+        `,
+        props: ["title"],
+        methods: {
+          test(e) {
+            let newTitle = e.target.value;
+            this.$emit("update", newTitle);
+          },
+        },
+      });
+      Vue.component("base-checkbox", {
+        model: {
+          //定制属性
+          props: "checked",
+          //定制model事件
+          event: "change",
+        },
+        props: {
+          checked: Boolean,
+        },
+        template: `
+        <input type="checkbox" :checked="checked" @change="$emit('change',$event.target.checked)" />
+        `,
+      });
       const app = new Vue({
         el: "#app",
         data() {
           return {
+            doc: { title: "i am aza" },
             age: null,
             msg: "",
             checkboxs: [],
@@ -614,7 +693,598 @@ vueCdn : `<script src="https://cdn.jsdelivr.net/npm/vue"></script>`
               { text: "Three", value: "C" },
             ],
             toggle: false,
+            lovingVue: false,
           };
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+---
+
+## <a id="tip-11">组件基础</a>
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+      .tab-button {
+        padding: 6px 10px;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        background: #f0f0f0;
+        margin-bottom: -1px;
+        margin-right: -1px;
+      }
+      .tab-button:hover {
+        background: #e0e0e0;
+      }
+      .tab-button.active {
+        background: #e0e0e0;
+      }
+      .tab {
+        border: 1px solid #ccc;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div :style="{fontSize:postFontSize + 'em'}">
+        <blog-post
+          v-for="post in posts"
+          :key="post.id"
+          :post="post"
+          @enlarge-text="onEnlargeText"
+        ></blog-post>
+      </div>
+      <hr />
+      <base-input :vlaue="searchText" @input="searchText = $event"></base-input>
+      <hr />
+      <button
+        v-for="tab in tabs"
+        :key="tab"
+        :class="['tab-button',{active:currentTab === tab}]"
+        @click="currentTab = tab"
+      >
+        {{tab}}
+      </button>
+      <component :is="currentTabComponent" class="tab"></component>
+    </div>
+    <script>
+      Vue.component("tab-home", {
+        template: "<div>Home component</div>",
+      });
+      Vue.component("tab-posts", {
+        template: "<div>Posts component</div>",
+      });
+      Vue.component("tab-archive", {
+        template: "<div>Archive component</div>",
+      });
+      Vue.component("base-input", {
+        props: ["value"],
+        template: `
+        <input type="text" :value="value" @input="$emit('input',$event.target.value)">
+        `,
+      });
+      Vue.component("blog-post", {
+        props: ["post"],
+        template: `
+        <div class="blog-post">
+        <h3>{{post.title}}</h3>
+        <button @click="$emit('enlarge-text',0.1)">
+        Enlarge text
+        </button>
+        <div v-html="post.content"></div>
+        </div>
+        `,
+      });
+      const app = new Vue({
+        el: "#app",
+        data() {
+          return {
+            posts: [
+              { id: 1, title: "My journey with Vue" },
+              { id: 2, title: "Blogging with Vue" },
+              { id: 3, title: "Why Vue is so fun" },
+            ],
+            postFontSize: 1,
+            searchText: "",
+            currentTab: "Home",
+            tabs: ["Home", "Posts", "Archive"],
+          };
+        },
+        methods: {
+          onEnlargeText(size) {
+            this.postFontSize += size;
+          },
+        },
+        computed: {
+          currentTabComponent() {
+            return "tab-" + this.currentTab.toLowerCase();
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+---
+
+## <a id="tip-12">组件深入</a>
+
+父组件 prototype 深拷贝
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  </head>
+  <body>
+    <!-- JavaScript 中对象和数组是通过引用传入的，
+      所以对于一个数组或对象类型的 prop 来说，
+      在子组件中改变变更这个对象或数组本身将会影响到父组件的状态。 -->
+    <div id="app">
+      <base-button :obj="obj"></base-button>
+    </div>
+    <script>
+      Vue.component("base-button", {
+        props: {
+          obj: Object,
+        },
+        //深拷贝父组件的prototype
+        data() {
+          return {
+            name: this.obj.name,
+          };
+        },
+        template: `
+        <button @click="foo">{{name}}</button>
+        `,
+        methods: {
+          foo() {
+            this.name = "dahl";
+          },
+        },
+        //计算转换父组件的prototype
+        computed: {
+          fixObj() {
+            return this.obj.name + " :p";
+          },
+        },
+      });
+      const app = new Vue({
+        el: "#app",
+        data: {
+          obj: {
+            name: "aza",
+            num: 0,
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+组件标签属性按需继承
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <base-input
+        v-model="username"
+        required
+        placeholder="Enter your username"
+      ></base-input>
+    </div>
+    <script>
+      //inheritAttrs: false 否认继承
+      //$attrs包含标签的原生属性attribute{required: true,placeholder: 'Enter your username'}
+      Vue.component("base-input", {
+        inheritAttrs: false,
+        props: ["label", "value"],
+        template: `
+    <label>
+      {{ label }}
+      <input
+        v-bind="$attrs.required"
+        v-bind:value="value"
+        v-on:input="$emit('input', $event.target.value)"
+      >
+    </label>
+  `,
+      });
+      const app = new Vue({
+        el: "#app",
+        data: {
+          aza: "aza",
+          username: "",
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+动态组件
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .tab-button {
+      margin-right: 5px;
+    }
+    .tab-button.active {
+      background: rgb(190, 190, 190);
+    }
+    .tab {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px 0 0 0;
+    }
+    .posts-tab {
+      display: flex;
+    }
+    .posts-sidebar {
+      width: 60px;
+      list-style-type: none;
+      border-right: 1px solid #ccc;
+    }
+    .posts-sidebar li {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      cursor: pointer;
+    }
+    .posts-sidebar li:hover {
+      background: #eee;
+    }
+    .posts-sidebar li.selected {
+      background: lightblue;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <button
+        v-for="tab in tabs"
+        :key="tab"
+        @click="currentTab = tab"
+        :class="['tab-button',{active:currentTab === tab}]"
+      >
+        {{tab}}
+      </button>
+      <keep-alive>
+        <component :is="currentTabComponent" class="tab"></component>
+      </keep-alive>
+    </div>
+    <script>
+      Vue.component("tab-posts", {
+        data() {
+          return {
+            posts: [
+              { id: 1, title: "100", content: "100" },
+              { id: 2, title: "200", content: "200" },
+              { id: 3, title: "300", content: "300" },
+            ],
+            selectedPost: null,
+          };
+        },
+        template: `
+        <div class="posts-tab">
+          <ul class="posts-sidebar">
+            <li v-for="post in posts" :key="post.id" :class="{selected:post === selectedPost}" @click="selectedPost = post">{{post.title}}</li>
+          </ul>
+          <div class="select-post-container">
+            <div v-if="selectedPost" class="selected-post">
+              <h3>{{selectedPost.title}}<h3>
+              <div v-html="selectedPost.content"></div>
+            </div>
+            <div v-else>
+              Click on a blog title to the left to view it.
+            <div>
+          </div>
+        </div>
+        `,
+      });
+      Vue.component("tab-archive", {
+        template: `
+        <div>Archive component</div>
+        `,
+      });
+      const app = new Vue({
+        el: "#app",
+        data: {
+          currentTab: "Posts",
+          tabs: ["Posts", "Archive"],
+        },
+        computed: {
+          currentTabComponent() {
+            return "tab-" + this.currentTab.toLowerCase();
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+---
+
+## <a id="tip-13">插槽</a>
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 插槽：分发内容 -->
+      <base-layout>
+        <template v-slot:header>
+          <h1>here might be a page title</h1>
+        </template>
+        <template v-slot:default>
+          <p>a paragraph for the main content</p>
+          <p>and another one</p>
+        </template>
+        <template v-slot:footer>
+          <p>heres some contact info</p>
+        </template>
+      </base-layout>
+      <hr />
+      <!-- 作用域插槽：父组件调用子组件props -->
+      <current-user>
+        <template v-slot:default="slotProps">
+          {{slotProps.user.firstname}}
+        </template>
+      </current-user>
+    </div>
+    <script>
+      Vue.component("current-user", {
+        template: `
+        <span>
+        <slot :user="user">
+        {{user.lastname}}
+        </slot>
+        </span>
+        `,
+        data() {
+          return {
+            user: { firstname: "aza", lastname: "zaz" },
+          };
+        },
+      });
+      Vue.component("base-layout", {
+        template: `
+      <div class="container">
+      <header>
+        <slot name="header"></slot>
+      </header>
+      <main>
+        <slot></slot>
+      </main>
+      <footer>
+        <slot name="footer"></slot>
+      </footer>
+      </div>
+      `,
+      });
+      const app = new Vue({
+        el: "#app",
+      });
+    </script>
+  </body>
+</html>
+```
+
+---
+
+## <a id="tip-14">边界情况</a>
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+      .test {
+        width: 300px;
+        height: 100px;
+        background: blue;
+        transition: all 0.3s;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 操作dom只能通过html模板 -->
+    <div id="app">
+      <div class="test" ref="testDom"></div>
+      <br />
+      <button @click="callTest">call dom</button>
+      <hr />
+      <base-input ref="input"></base-input>
+      <br />
+      <!-- 父组件调用子组件实列 -->
+      <button @click="callRef">click me</button>
+      <hr />
+      <!-- 这个组件包含了大量静态内容。在这种情况下，
+      你可以在根元素上添加 v-once 
+      attribute 以确保这些内容只计算一次然后缓存起来 -->
+      <static-content></static-content>
+    </div>
+    <script>
+      Vue.component("static-content", {
+        template: `
+        <div v-once>
+      <h1>Terms of Service</h1>
+      ... a lot of static content ...
+      </div>
+        `,
+      });
+      Vue.component("base-input", {
+        template: `
+        <input />
+        `,
+        methods: {
+          focus() {
+            console.log("azaRef");
+          },
+        },
+      });
+      const app = new Vue({
+        el: "#app",
+        methods: {
+          callTest() {
+            this.$refs.testDom.style.width = "600px";
+          },
+          callRef() {
+            this.$refs.input.focus();
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+---
+
+## <a id="tip-15">动画</a>
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/animate.css@3.5.1"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      .fade-enter-active,
+      .fade-leave-active {
+        transition: opacity 0.5s;
+      }
+      .fade-enter,
+      .fade-leave-to {
+        opacity: 0;
+      }
+      /* show为true激活enter过渡 */
+      .slide-fade-enter-active {
+        transition: all 0.3s ease;
+      }
+      /* show为false激活leave过渡 */
+      .slide-fade-leave-active {
+        transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+      }
+      .slide-fade-enter,
+      .slide-fade-leave-to {
+        transform: translateX(10px);
+        opacity: 0;
+      }
+      .bounce-enter-active {
+        animation: bounce-in 0.5s;
+      }
+      .bounce-leave-active {
+        animation: bounce-in 0.5s reverse;
+      }
+      @keyframes bounce-in {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.5);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="show = !show">Toggle show</button>
+      <transition name="fade">
+        <p v-if="show">hello</p>
+      </transition>
+      <hr />
+      <button @click="flag = !flag">Toggle flag</button>
+      <transition name="slide-fade">
+        <p v-if="flag">hello</p>
+      </transition>
+      <hr />
+      <button @click="show = !show">Toggle show</button>
+      <transition name="bounce">
+        <p v-if="show">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+          facilisis enim libero, at lacinia diam fermentum id. Pellentesque
+          habitant morbi tristique senectus et netus.
+        </p>
+      </transition>
+      <hr />
+      <!-- 自定义类名，配合动画库使用 -->
+      <button @click="show = !show">Toggle render</button>
+      <transition
+        name="custom-classes-transition"
+        enter-active-class="animated tada"
+        leave-active-class="animated bounceOutRight"
+      >
+        <p v-if="show">hello</p>
+      </transition>
+    </div>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          show: true,
+          flag: true,
         },
       });
     </script>
