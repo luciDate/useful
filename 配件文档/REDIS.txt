@@ -1,0 +1,35 @@
+开启服务：
+power-shell
+cd C:\redis
+redis-server.exe redis.windows.conf
+
+然后再开一个power-shell
+redis-cli.exe -h 127.0.0.1 -p 6379
+// auth 123312323
+
+命令行
+设置
+set myName dahl
+获取
+get myName
+获取全部
+keys *
+删除
+del myName
+删除所有
+flushall
+
+windows下安装Redis第一次启动报错：
+
+[2368] 21 Apr 02:57:05.611 # Creating Server TCP listening socket 127.0.0.1:6379: bind: No error
+
+解决方法：在命令行中运行
+
+redis-cli.exe
+
+127.0.0.1:6379>shutdown
+
+not connected>exit
+
+然后重新运行redis-server.exe redis.windows.conf，启动成功！
+

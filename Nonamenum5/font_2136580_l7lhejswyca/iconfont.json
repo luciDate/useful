@@ -1,0 +1,93 @@
+{
+  "id": "2136580",
+  "name": "10-17",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6691937",
+      "name": "微博",
+      "font_class": "weibo2",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "2703310",
+      "name": "淘宝",
+      "font_class": "taobao",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "7307394",
+      "name": "支付宝",
+      "font_class": "zhifubao1",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "7585453",
+      "name": "支付宝",
+      "font_class": "zhifubao2",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "14768567",
+      "name": "淘宝",
+      "font_class": "taobao1",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "18502399",
+      "name": "微博",
+      "font_class": "weibo1",
+      "unicode": "e713",
+      "unicode_decimal": 59155
+    },
+    {
+      "icon_id": "6496024",
+      "name": "Angular",
+      "font_class": "Angular",
+      "unicode": "e798",
+      "unicode_decimal": 59288
+    },
+    {
+      "icon_id": "6817777",
+      "name": "react",
+      "font_class": "react",
+      "unicode": "e71d",
+      "unicode_decimal": 59165
+    },
+    {
+      "icon_id": "7861708",
+      "name": "Vue",
+      "font_class": "Vue",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "11349486",
+      "name": "bootstrap",
+      "font_class": "bootstrap",
+      "unicode": "e6a8",
+      "unicode_decimal": 59048
+    },
+    {
+      "icon_id": "12096682",
+      "name": "小程序",
+      "font_class": "xiaochengxu",
+      "unicode": "e742",
+      "unicode_decimal": 59202
+    },
+    {
+      "icon_id": "15933089",
+      "name": "支付宝",
+      "font_class": "zhifubao",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    }
+  ]
+}

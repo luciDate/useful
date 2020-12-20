@@ -1,0 +1,278 @@
+﻿开启DB服务：
+开启管理员CMD
+net start MongoDB
+net stop MongoDB
+
+打开命令行
+mongo -u admin -p 123123
+
+查看数据库
+show dbs
+
+使用/创建数据库
+use itying
+
+删除数据库
+use itying
+db.dropDatabase()
+
+新建集合
+db.user.insert({name:"xiaoming",age:12})
+
+删除集合
+db.user.drop()
+
+查看集合
+show colletions
+
+插入数据
+db.user.insert({name:"xiaohong",age:12})
+
+修改数据
+db.user.update({name:"dahl"},{$set:{name:"dahl-of-real"}})
+
+删除数据
+db.blog.remove({"_id": ObjectId("5e5f615401e877112c1786bc")})
+
+查看集合所有内容
+db.user.find()
+
+条件产看集合内容
+db.user.find({age:12})
+大小于
+db.user.find({age:{$gt:11}})
+db.user.find({age:{$lt:13}})
+大小等于
+db.user.find({age:{$gte:12}})
+db.user.find({age:{$lte:12}})
+并且查询
+db.user.find({name:"xiaoming",age:12})
+范围查询
+db.user.find({age:{$gte:12,$lte:18}})
+模糊查询
+db.article.find({title:/文章/})
+db.user.find({name:/xiao/})
+开头查询
+db.user.find({name:/^xiao/})
+字段查询
+第一个花括号代表条件，第二个花括号代表字段
+db.user.find({},{name:1})
+条件字段查询
+db.user.find({age:{$gt:12}},{name:1})
+db.user.find({age:{$gt:12}},{name:1,age:1})
+排序查询
+db.user.find().sort({age:1})
+db.user.find().sort({age:-1})
+限制查询
+db.user.find().limit(2)
+略过查询与分页
+第一页
+skip表示跳过的页数
+limit代表显示的数量
+db.user.find().skip(0).limit(2);
+第二页
+db.user.find().skip(2).limit(2); //2-1*2
+第三页
+db.user.find().skip(4).limit(2); //3-1*2
+第四页
+db.user.find().skip(6).limit(2); //4-1*2
+或者查询
+db.user.find({$or:[{age:12},{age:18}]})
+数量查询
+db.user.find({age:{$gt:12}}).count()
+
+查看查询速度
+db.user.find({name:"dahl233"}).explain("executionStats") //查看executionTimeMillis
+
+查看索引
+db.user.getIndexes()
+
+设置索引
+db.user.ensureIndex({"name":1})
+
+设置复合索引
+db.user.ensureIndex({"name":1,"age":-1}) //经常同时使用的两个字段
+
+设置唯一索引
+db.user.ensureIndex({"name":1},{"unique":true}) //键的值无法重复
+
+删除索引
+db.user.dropIndexes({"name":1})
+
+分析语句执行速度
+db.tableName.find({name:"dahl"}).explain("executionStats") //查看executionTimeMillis
+
+root管理员与设置权限
+use admin
+-
+show users
+-
+db.dropUser("admin")
+-
+db.createUser({
+  user:"admin",
+  pwd:"123123",
+  roles:[{role:"root",db:"admin"}]
+})
+-找到mongoDB下的mongod.cfg,编辑（编辑时备份）
+security:
+  authorization: enabled
+-用命令登陆
+mongo -u admin -p 123123
+-
+show dbs
+
+给用户指定数据库权限
+use user
+-
+db.createUser({
+  user:"normal",
+  pwd:"123123",
+  roles:[{role:"dbOwner",db:"user"}]
+})
+-命令登陆
+mongo user -u normal -p 123123
+
+一对一关系
+两个表留个uid，通过uid的方式找到对方
+设计用户的文章与文章详情，文章表留userId，通过userId关联两表
+
+一对多关系
+比如分类，一个分类对应多个文章。或者一个订单有个多商品
+设计商品表里留订单表的id就能关联一对多关系
+
+多对多关系
+多种商品能被多个用户关注
+设计商品表，中间表，用户表。中间表留pid和uid
+
+管道操作符
+$project 增加，删除，重命名字段
+$math 条件匹配，满足条件才能进入下一阶段
+$limit 限制结果的数量
+$skip 跳过文档的数量
+$sort 条件排序
+$group 条件组合结果，统计
+$lookup 引入其它合计的数据，表关联查询
+
+管道表达式
+$sum 计算总和
+$avg 计算平均值
+$min 取文档对应值的最小值
+$max 取文档对应值的最大值
+$first 根据文档排序获取第一个数据
+$last 根据文档排序获取最后一个数据
+
+-聚合管道组合（多表查询）
+
+创建一对多关系
+use user
+
+创建主表
+db.order.insert({order_id:"1",uid:10,trade_no:"111",all_price:100,all_num:2})
+db.order.insert({order_id:"2",uid:7,trade_no:"222",all_price:90,all_num:2})
+db.order.insert({order_id:"3",uid:9,trade_no:"333",all_price:20,all_num:6})
+
+创建附表
+use user
+db.order_item.insert({order_id:"1",title:"商品鼠标1",price:50,num:1})
+db.order_item.insert({order_id:"1",title:"商品键盘2",price:50,num:1})
+db.order_item.insert({order_id:"1",title:"商品耳机3",price:0,num:1})
+-
+db.order_item.insert({order_id:"2",title:"牛奶",price:50,num:1})
+db.order_item.insert({order_id:"2",title:"酸奶",price:40,num:1})
+-
+db.order_item.insert({order_id:"3",title:"矿泉水",price:2,num:5})
+db.order_item.insert({order_id:"3",title:"毛巾",price:10,num:1})
+
+查询字段，并支持链式操作
+db.order.aggregate([
+  {
+  $project:{trade_no:1,all_price:1}
+  }
+])
+
+查询字段,并且匹配条件
+db.order.aggregate([
+  {
+  $project:{trade_no:1,all_price:1}
+  },
+  {
+    $match:{all_price:{$gte:90}}
+  }
+])
+
+group新建一个对象，以_id的值为分组，并计算数量
+db.order_item.aggregate([
+  {
+    $group:{_id:$order_id,total:{$sum:1}}
+  }
+])
+
+group新建一个对象，以_id的值为分组，并计算数量,再统计num的和得到总分组总数量
+db.order_item.aggregate([
+  {
+    $group:{_id:"$order_id",total:{$sum:"$num"}}
+  }
+])
+
+group新建一个对象，以_id的值为分组，并计算数量,再统计price的和得到总分组总数量
+db.order_item.aggregate([
+  {
+    $group:{_id:"$order_id",total:{$sum:"$price"}}
+  }
+])
+-
+db.order_item.find({order_id:"1"})
+
+-数组中的对象组合为第一要查询的字段，第二要查询的条件,第三显示降序,第四限制一条,跳过第一条
+db.order.aggregate([
+  {$project:{order_id:1,trade_no:1,all_price:1}},
+  {$match:{all_price:{$gte:20}}},
+  {$sort:{all_price:-1}},
+  {$limit:3},
+  {$skip:1}
+])
+
+-按条件分组聚合
+-以$order_id作为分组，以$num相加
+db.order_item.aggregate([
+  {$group:{_id:"$order_id",total:{$sum:"$num"}}}
+])
+
+-一对多查询 localField主表的id等于foreignField附表的id,pretty()格式化JSON
+db.order.aggregate([
+  {
+    $lookup:
+    {
+      from:"order_item",
+      localField:"order_id",
+      foreignField:"order_id",
+      as:"items"
+    }
+  }
+])
+- 或者主表带条件查询
+db.order.aggregate([
+  {
+    $lookup:
+    {
+      from:"order_item",
+      localField:"order_id",
+      foreignField:"order_id",
+      as:"items"
+    }
+  },
+  {
+    $project:{trade_no:1,all_price:1,items:1}
+  },
+  {
+    $match:{"all_price":{$gte:90}}
+  },
+  {
+    $sort:{all_price:-1}
+  }
+]).pretty()
+
+
+
+
