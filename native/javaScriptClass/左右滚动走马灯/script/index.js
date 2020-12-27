@@ -72,7 +72,9 @@ class Gallery {
       let current = this.slides[this.slideIndex];
       for (let i = 0; i < this.slides.length; i++) {
         // 如果初始类名不同需要自己改动
+        //重置类名 去掉动画类名
         this.slides[i].className = "item";
+        //重置透明
         this.slides[i].style.opacity = 0;
         this.dots[i].classList.remove("active");
       }

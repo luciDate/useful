@@ -1282,7 +1282,7 @@ A :
 Q : widnow.onload 和 DOMContentLoaded 的区别
 
 1. 页面全部资源加载才执行，包括图片，视频
-2. DOM 渲染即可执行
+2. DOM 渲染后即可执行
 
 页面性能优化主要方案
 
