@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 10px;
+        background: #20b2aa;
+      }
+      .pagination ul {
+        display: flex;
+        background: #fff;
+        padding: 8px;
+        border-radius: 50px;
+      }
+      .pagination ul li {
+        color: #20b2aa;
+        list-style: none;
+        line-height: 45px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .pagination ul li.numb {
+        height: 45px;
+        width: 45px;
+        border-radius: 50%;
+        margin: 0 3px;
+      }
+      .pagination ul li.dots {
+        font-size: 22px;
+        cursor: default;
+      }
+      .pagination ul li.btn {
+        padding: 0 20px;
+      }
+      .pagination ul li.prev {
+        border-radius: 25px 5px 5px 25px;
+      }
+      .pagination ul li.next {
+        border-radius: 5px 25px 25px 5px;
+      }
+      .pagination ul li.active,
+      .pagination ul li.numb:hover,
+      .pagination ul li.btn:hover {
+        color: #fff;
+        background: #20b2aa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="pagination">
+      <ul>
+        <!-- <li class="btn prev">
+          <span><i class="fas fa-angle-left"></i> Prev</span>
+        </li>
+        <li class="numb active"><span>1</span></li>
+        <li class="numb"><span>2</span></li>
+        <li class="dots"><span>...</span></li>
+        <li class="numb"><span>4</span></li>
+        <li class="numb"><span>5</span></li>
+        <li class="dots"><span>...</span></li>
+        <li class="numb"><span>7</span></li>
+        <li class="btn next">
+          <span>Next <i class="fas fa-angle-right"></i></span>
+        </li> -->
+      </ul>
+    </div>
+    <script>
+      const ulTag = document.querySelector("ul");
+      // 设定最大码数
+      let totalPages = 20;
+
+      function element(totalPages, page) {
+        let liTag = "";
+        let activeLi;
+        let beforePages = page - 1;
+        let afterPages = page + 1;
+        // 生成prevDOM
+        if (page > 1) {
+          liTag += `<li class="btn prev" onclick="element(totalPages,${
+            page - 1
+          })"><span><i class="fas fa-angle-left"></i> Prev</span></li>`;
+        }
+        if (page > 2) {
+          liTag += `<li class="numb" onclick="element(totalPages, 1)"><span>1</span></li>`;
+          if (page > 3) {
+            liTag += `<li class="dots"><span>...<span></li>`;
+          }
+        }
+
+        // 参数兼容
+        if (page == totalPages) {
+          beforePages = beforePages - 2;
+        } else if (page == totalPages - 1) {
+          beforePages = beforePages - 1;
+        }
+
+        if (page == 1) {
+          afterPages = afterPages + 2;
+        } else if (page == 2) {
+          afterPages = afterPages + 1;
+        }
+
+        // 生成页码DON
+        for (
+          let pageLength = beforePages;
+          pageLength <= afterPages;
+          pageLength++
+        ) {
+          if (pageLength > totalPages) {
+            continue;
+          }
+          if (pageLength == 0) {
+            pageLength = pageLength + 1;
+          }
+          if (page == pageLength) {
+            activeLi = "active";
+          } else {
+            activeLi = "";
+          }
+          liTag += `<li class="numb ${activeLi}" onclick="element(totalPages,${pageLength})"><span>${pageLength}</span></li>`;
+        }
+
+        // 生成nextDOM
+        if (page < totalPages - 1) {
+          if (page < totalPages - 2) {
+            liTag += `<li class="dots"><span>...<span></li>`;
+          }
+          liTag += `<li class="numb" onclick="element(totalPages,${totalPages})"><span>${totalPages}</span></li>`;
+        }
+
+        if (page < totalPages) {
+          liTag += `<li class="btn next" onclick="element(totalPages,${
+            page + 1
+          })"><span>Next <i class="fas fa-angle-right"></i></span></li>`;
+        }
+        ulTag.innerHTML = liTag;
+      }
+      element(totalPages, 1);
+    </script>
+  </body>
+</html>
