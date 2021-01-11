@@ -6,7 +6,7 @@
     <title>Document</title>
   </head>
   <body style="height: 2000px; background: #999999;">
-    <button style="margin-top: 600px;" id="test">back to top</button>
+    <button style="margin-top: 1000px;" id="test">back to top</button>
     <script>
       const test = document.querySelector("#test");
 
@@ -17,8 +17,9 @@
         }
         init() {
           this.dom.addEventListener("click", () => {
+            console.log(this.setTop)
             let interval = setInterval(() => {
-              this.setTop -= 10;
+              this.setTop -= 25;
               window.scrollTo(0, this.setTop);
               if (this.setTop <= 0) {
                 clearInterval(interval);
