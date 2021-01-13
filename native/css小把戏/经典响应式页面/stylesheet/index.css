@@ -9,6 +9,26 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* custom scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* all similar content styling codes */
+section{
+  padding: 100px 0;
+}
 .max-width {
   max-width: 1300px;
   padding: 0 80px;
@@ -26,16 +46,12 @@ footer {
 }
 .about .about-content,
 .services .serv-content,
-.skills,
 .skills .skills-content,
 .contact .contact-content {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-}
-section {
-  padding: 100px 0;
 }
 section .title {
   position: relative;
@@ -58,11 +74,11 @@ section .title::before {
 }
 section .title::after {
   position: absolute;
-  bottom: -13px;
+  bottom: -8px;
   left: 50%;
   font-size: 20px;
   color: crimson;
-  padding: 5px;
+  padding: 0 5px;
   background: #fff;
   transform: translateX(-50%);
 }
@@ -161,10 +177,12 @@ section .title::after {
   height: 100vh;
   color: #fff;
   min-height: 500px;
+  background-size: cover;
+  background-attachment: fixed;
   font-family: "Ubuntu", sans-serif;
 }
 .home .max-width {
-  margin: auto 0 auto 40px;
+  margin: auto 0 auto 30px;
 }
 .home .home-content .text-1 {
   font-size: 27px;
@@ -172,7 +190,7 @@ section .title::after {
 .home .home-content .text-2 {
   font-size: 75px;
   font-weight: 600;
-  margin: 0 0 0 -3px;
+  margin-left: -3px;
 }
 .home .home-content .text-3 {
   font-size: 40px;
@@ -189,6 +207,7 @@ section .title::after {
   font-size: 25px;
   padding: 12px 36px;
   margin-top: 20px;
+  font-weight: 400;
   border-radius: 6px;
   border: 2px solid crimson;
   transition: all 0.3s ease;
@@ -340,7 +359,7 @@ section .title::after {
 .skills .skills-content .right .line {
   height: 5px;
   width: 100%;
-  background: lightgray;
+  background: lightgrey;
   position: relative;
 }
 .skills .skills-content .right .line::before {
@@ -377,6 +396,7 @@ section .title::after {
   border-radius: 6px;
   padding: 25px 35px;
   text-align: center;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
 .teams .carousel .card:hover {
@@ -400,7 +420,7 @@ section .title::after {
 .teams .carousel .card img {
   height: 150px;
   width: 150px;
-  object-fit: 50%;
+  object-fit: cover;
   border-radius: 50%;
   border: 5px solid crimson;
   transition: all 0.3s ease;
@@ -416,9 +436,9 @@ section .title::after {
   height: 13px;
   width: 13px;
   margin: 0 5px;
-  outline: none !important;
+  outline: none!important;
   border-radius: 50%;
-  border: 2px solid crimson !important;
+  border: 2px solid crimson!important;
   transition: all 0.3s ease;
 }
 .owl-dot.active {
@@ -427,7 +447,7 @@ section .title::after {
 }
 .owl-dot.active,
 .owl-dot:hover {
-  background: crimson !important;
+  background: crimson!important;
 }
 /* teams section end */
 
@@ -496,6 +516,15 @@ section .title::after {
   padding: 0 15px;
   font-size: 17px;
   font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+}
+.contact .right form .field input:focus,
+.contact .right form .textarea textarea:focus{
+    border-color: #b3b3b3;
+}
+.contact .right form .textarea textarea{
+    padding-top: 10px;
+    resize: none;
 }
 .contact .right form .button {
   height: 47px;
@@ -507,6 +536,7 @@ section .title::after {
   border: 2px solid crimson;
   background: crimson;
   color: #fff;
+  outline: none;
   font-size: 20px;
   font-weight: 500;
   border-radius: 6px;
@@ -538,7 +568,7 @@ footer span a:hover {
 /* responsive media start */
 @media (max-width: 1300px) {
   .home .max-width {
-    margin-left: 0;
+    margin-left: 0px;
   }
 }
 
@@ -596,7 +626,7 @@ footer span a:hover {
     padding: 10px 30px;
   }
   .max-width {
-    max-width: 800px;
+    max-width: 930px;
   }
   .about .about-content .column {
     width: 100%;
@@ -634,11 +664,6 @@ footer span a:hover {
   }
   .services .serv-content .card {
     width: 100%;
-    margin-bottom: 20px;
-  }
-  .services .serv-content .card,
-  .skills .skills-content .column {
-    width: 100%;
   }
 }
 @media (max-width: 500px) {
@@ -647,6 +672,25 @@ footer span a:hover {
   }
   .home .home-content .text-3 {
     font-size: 27px;
+  }
+  .about .about-content .right .text,
+  .skills .skills-content .left .text{
+      font-size: 19px;
+  }
+  .contact .right form .fields{
+      flex-direction: column;
+  }
+  .contact .right form .name,
+  .contact .right form .email{
+      margin: 0;
+  }
+  .scroll-up-btn{
+      right: 15px;
+      bottom: 15px;
+      height: 38px;
+      width: 35px;
+      font-size: 23px;
+      line-height: 38px;
   }
 }
 /* responsive media end */
