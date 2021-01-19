@@ -1,0 +1,663 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+html{
+  scroll-behavior: smooth;
+}
+li {
+  list-style: none;
+}
+.max-width {
+  max-width: 1300px;
+  padding: 0 80px;
+  margin: auto;
+}
+
+/* custom scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* scorll up button */
+.scroll-up-btn{
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  right: 30px;
+  bottom: 10px;
+  border-radius: 3px;
+  /* 下边框的高度 */
+  border-bottom-width: 2px;
+  background: rgb(255, 29, 29);
+  /* 阻止css和js触发事件 阻止指针显示 阻止用户点击 */
+  pointer-events: none;
+  z-index: 999;
+  transition: all .3s ease;
+  opacity: 0;
+}
+.scroll-up-btn.active{
+  opacity: 1;
+  pointer-events: auto;
+}
+.scroll-up-btn > .icon-top{
+  width: 0;
+  height: 0;
+  border: 15px solid;
+  border-color: transparent transparent #fff transparent;
+}
+
+
+/* icon common */
+.icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+/* all section */
+section {
+  padding: 100px 0;
+}
+
+.about > .max-width > .about-content,
+.services > .max-width > .services-content,
+.skills > .max-width > .skills-content,
+.contact > .max-width > .contact-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+section > .max-width > .title {
+  position: relative;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 500;
+  margin-bottom: 60px;
+  padding-bottom: 20px;
+}
+section > .max-width > .title::before {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  width: 180px;
+  height: 3px;
+  background: #111;
+  transform: translateX(-50%);
+}
+section > .max-width > .title::after {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  font-size: 20px;
+  color: rgb(255, 29, 29);
+  padding: 0 5px;
+  background: #fff;
+  transform: translateX(-50%);
+}
+
+/* header */
+header {
+  /* fixed会脱离文档流 */
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  padding: 20px 0;
+  transition: all 0.3s ease;
+}
+header.active {
+  background: rgb(255, 29, 29);
+  color: #fff;
+}
+header.active > .max-width > .logo > a > span {
+  color: #fff;
+}
+header.active > .max-width > .menu > li > a:hover {
+  color: #fff;
+}
+header > .max-width {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header > .max-width > .logo > a {
+  color: #fff;
+  font-size: 35px;
+  font-weight: 600;
+}
+header > .max-width > .logo > a > span {
+  color: rgb(255, 29, 29);
+  transition: all 0.3s ease;
+}
+header .max-width > .menu > li {
+  display: inline-block;
+}
+header > .max-width > .menu > li > a {
+  display: block;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-left: 25px;
+  transition: color 0.3s ease;
+}
+header > .max-width > .menu > li > a:hover {
+  color: rgb(255, 29, 29);
+}
+header > .max-width > .menu-btn {
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+}
+
+/* home */
+.wallpaper {
+  display: flex;
+  /* 背景图片自适应居中 */
+  background: url(../asset/roses-wallpapers-37660-62425.png) no-repeat center;
+  background-size: cover;
+  /* 背景图片不跟随滚动条滚动 */
+  background-attachment: fixed;
+  height: 100vh;
+  min-height: 500px;
+  color: #fff;
+}
+.wallpaper > .max-width {
+  /* 上下auto达到y轴居中 */
+  margin: auto 0 auto 30px;
+}
+.wallpaper > .max-width > .wallpaper-content > .text-1 {
+  font-size: 27px;
+}
+.wallpaper > .max-width > .wallpaper-content > .text-2 {
+  font-size: 75px;
+  font-weight: 600;
+  margin-left: -3px;
+}
+.wallpaper > .max-width > .wallpaper-content > .text-3 {
+  font-size: 27px;
+}
+.wallpaper > .max-width > .wallpaper-content > a {
+  display: inline-block;
+  background: rgb(255, 29, 29);
+  color: #fff;
+  font-size: 25px;
+  padding: 12px 36px;
+  margin-top: 20px;
+  font-weight: 400;
+  border-radius: 6px;
+  border: solid 2px rgb(255, 29, 29);
+  transition: all 0.3s ease;
+}
+.wallpaper > .max-width > .wallpaper-content > a:hover {
+  color: rgb(255, 29, 29);
+  background: none;
+}
+
+/* about */
+.about > .max-width > .title::after {
+  content: "who i am";
+}
+.about > .max-width > .about-content > .left {
+  width: 45%;
+}
+.about > .max-width > .about-content > .left > img {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+.about > .max-width > .about-content > .right {
+  width: 55%;
+}
+.about > .max-width > .about-content > .right > .text {
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.about > .max-width > .about-content > .right > .text span {
+  color: rgb(255, 29, 29);
+}
+.about > .max-width > .about-content > .right > p {
+  /* 实现两端对齐文本效果 */
+  text-align: justify;
+}
+.about > .max-width > .about-content > .right > a {
+  display: inline-block;
+  background: rgb(255, 29, 29);
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  /* 按钮这种场景一般指定内边距，不需要宽高了 */
+  padding: 10px 30px;
+  margin-top: 20px;
+  border-radius: 6px;
+  border: solid 2px rgb(255, 29, 29);
+  transition: all 0.3s ease;
+}
+.about > .max-width > .about-content > .right > a:hover {
+  color: rgb(255, 29, 29);
+  background: none;
+}
+
+/* services */
+.services {
+  color: #fff;
+  background: #111;
+}
+.services > .max-width > .title::before {
+  background: #fff;
+}
+.services > .max-width > .title::after {
+  background: #111;
+  content: "what i provide";
+}
+.services > .max-width > .services-content > .card {
+  /* 这个函数非常有意思，配合justify-content:space-btween 实现3栏带外间距的布局 */
+  width: calc(33% - 20px);
+  background: #222;
+  text-align: center;
+  border-radius: 6px;
+  padding: 20px 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.services > .max-width > .services-content > .card > .box > .text {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 10px 0 10px 0;
+}
+.services > .max-width > .services-content > .card > .box {
+  transition: all 0.3s ease;
+}
+.services > .max-width > .services-content > .card:hover .box {
+  transform: scale(1.05);
+}
+
+/* skills */
+.skills > .max-width > .title::after {
+  content: "what i konw";
+}
+.skills > .max-width > .skills-content > .column {
+  width: calc(50% - 30px);
+}
+.skills > .max-width > .skills-content > .left > .text {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.skills > .max-width > .skills-content > .left > p {
+  text-align: justify;
+}
+.skills > .max-width > .skills-content > .left > a {
+  display: inline-block;
+  background: rgb(255, 29, 29);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 8px 16px;
+  margin-top: 20px;
+  border-radius: 6px;
+  border: solid 2px rgb(255, 29, 29);
+  transition: all 0.3s ease;
+}
+.skills > .max-width > .skills-content > .left > a:hover {
+  color: rgb(255, 29, 29);
+  background: none;
+}
+.skills > .max-width > .skills-content > .right > .bars {
+  margin-bottom: 15px;
+}
+.skills > .max-width > .skills-content > .right > .bars > .info {
+  margin-bottom: 5px;
+  width: 100%;
+  height: 30px;
+  clear: both;
+}
+.skills > .max-width > .skills-content > .right > .bars > .info > span {
+  font-size: 18px;
+  font-weight: 500;
+}
+.skills > .max-width > .skills-content > .right > .bars > .info > span:nth-child(1){
+  float: left;
+}
+.skills > .max-width > .skills-content > .right > .bars > .info > span:nth-child(2){
+  float: right;
+}
+.skills > .max-width > .skills-content > .right > .bars > .info > span:nth-child(3){
+  float: right;
+}
+.skills > .max-width > .skills-content > .right > .bars > .line {
+  height: 5px;
+  width: 100%;
+  background: rgb(211, 211, 211);
+  position: relative;
+}
+.skills > .max-width > .skills-content > .right > .bars > .line::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 0%;
+  background: rgb(255, 29, 29);
+  transition: all 1s ease;
+}
+.skills > .max-width > .skills-content > .right > .bars > .html::before {
+  width: 90%;
+}
+.skills > .max-width > .skills-content > .right > .bars > .css.active::before {
+  width: 60%;
+}
+.skills > .max-width > .skills-content > .right > .bars > .js::before {
+  width: 80%;
+}
+.skills > .max-width > .skills-content > .right > .bars > .java.active::before {
+  width: 50%;
+}
+.skills > .max-width > .skills-content > .right > .bars > .mysql::before {
+  width: 70%;
+}
+
+/* contact */
+.contact > .max-width > .title::after {
+  content: "get in touch";
+}
+.contact > .max-width > .contact-content > .column {
+  width: calc(50% - 30px);
+}
+.contact > .max-width > .contact-content > .left > .text,
+.contact > .max-width > .contact-content > .right > .text {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.contact > .max-width > .contact-content > .left > p {
+  text-align: justify;
+}
+.contact > .max-width > .contact-content > .left > .icons {
+  margin: 10px 0;
+}
+.contact > .max-width > .contact-content > .left > .icons > .row {
+  display: flex;
+  height: 65px;
+  align-items: center;
+}
+.contact > .max-width > .contact-content > .left > .icons > .row > .info {
+  margin-left: 20px;
+}
+.contact
+  > .max-width
+  > .contact-content
+  > .left
+  > .icons
+  > .row
+  > .info
+  > .head {
+  font-weight: 600;
+}
+.contact
+  > .max-width
+  > .contact-content
+  > .left
+  > .icons
+  > .row
+  > .info
+  > .sub-title {
+  color: #333;
+}
+.contact > .max-width > .contact-content > .right > form > .fields {
+  display: flex;
+}
+.contact > .max-width > .contact-content > .right > form > .fields > .field,
+.contact > .max-width > .contact-content > .right > form .field {
+  width: 100%;
+  height: 45px;
+  margin-bottom: 15px;
+}
+.contact > .max-width > .contact-content > .right > form > .fields > .name {
+  margin-right: 5px;
+}
+.contact > .max-width > .contact-content > .right > form > .fields > .email {
+  margin-left: 5px;
+}
+.contact > .max-width > .contact-content > .right > form .textarea {
+  width: 100%;
+  height: 80px;
+}
+.contact > .max-width > .contact-content > .right > form .textarea textarea {
+  padding-top: 10px;
+  /* 不让用户自由调整dom尺寸 */
+  resize: none;
+}
+.contact > .max-width > .contact-content > .right > form .field input,
+.contact > .max-width > .contact-content > .right > form .field textarea {
+  height: 100%;
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 6px;
+  outline: none;
+  padding: 0 15px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+.contact > .max-width > .contact-content > .right > form .field input:focus,
+.contact > .max-width > .contact-content > .right > form .field textarea:focus {
+  border: 1px solid rgb(255, 29, 29);
+}
+.contact > .max-width > .contact-content > .right > form > .button {
+  width: 170px;
+  height: 55px;
+}
+.contact > .max-width > .contact-content > .right > form > .button > button {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgb(255, 29, 29);
+  background: rgb(255, 29, 29);
+  color: #fff;
+  outline: none;
+  font-size: 20px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.contact
+  > .max-width
+  > .contact-content
+  > .right
+  > form
+  > .button
+  > button:hover {
+  color: rgb(255, 29, 29);
+  background: none;
+}
+.contact
+  > .max-width
+  > .contact-content
+  > .left
+  > .icons
+  > .row
+  > .contact-icon {
+  font-size: 32px;
+  color: rgb(255, 29, 29);
+}
+
+/* footer */
+footer {
+  background: #111;
+  padding: 15px 23px;
+  color: #fff;
+  text-align: center;
+}
+footer a {
+  color: rgb(255, 29, 29);
+}
+/* responsive media */
+/* 字体随着设备大小变化，不然字体太大太拥挤会破坏页面布局 */
+
+@media (max-width: 1100px) {
+  .max-width {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 1104px) {
+  .about > .max-width > .about-content > .left img {
+    width: 350px;
+    height: 350px;
+  }
+}
+
+@media (max-width: 991px) {
+  .max-width {
+    padding: 0 50px;
+  }
+}
+
+@media (max-width: 947px) {
+  header > .max-width > .menu-btn {
+    display: block;
+    z-index: 999;
+  }
+  header > .max-width > .menu {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    left: -100%;
+    top: 0;
+    background: #111;
+    text-align: center;
+    padding-top: 80px;
+    transition: all 0.3s ease;
+  }
+  header > .max-width > .menu.active {
+    left: 0;
+  }
+  header > .max-width > .menu > li {
+    display: block;
+  }
+  header > .max-width > .menu > li > a {
+    font-size: 25px;
+    margin: 40px 0;
+  }
+  .wallpaper > .max-width > .wallpaper-content > .text-2 {
+    font-size: 70px;
+  }
+  .wallpaper > .max-width > .wallpaper-content > .text-3 {
+    font-size: 35px;
+  }
+  .wallpaper > .max-width > .wallpaper-content > a {
+    font-size: 23px;
+    padding: 10px 30px;
+  }
+  .max-width {
+    max-width: 930px;
+  }
+  .about > .max-width > .about-content > .column {
+    width: 100%;
+  }
+  .about > .max-width > .about-content > .left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+  }
+  .about > .max-width > .about-content > .right {
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+    text-align: center;
+  }
+  .services > .max-width > .services-content > .card {
+    width: calc(50% - 10px);
+    margin-bottom: 20px;
+  }
+  .skills > .max-width > .skills-content > .column,
+  .contact > .max-width > .contact-content > .column {
+    width: 100%;
+    margin-bottom: 35px;
+  }
+  .skills > .max-width > .skills-content > .left,
+  .contact > .max-width > .contact-content > .left {
+    text-align: center;
+  }
+  .contact > .max-width > .contact-content > .left > .icons > .row {
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 20px;
+    height: 100px;
+  }
+  .contact
+    > .max-width
+    > .contact-content
+    > .left
+    > .icons
+    > .row
+    > .contact-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+  }
+  .contact > .max-width > .contact-content > .left > .icons > .row .info {
+    margin-left: 0;
+  }
+}
+@media (max-width: 690px) {
+  .max-width {
+    padding: 0 25px;
+  }
+  .wallpaper > .max-width > .wallpaper-content > .text-2 {
+    font-size: 60px;
+  }
+  .wallpaper > .max-width > .wallpaper-content > .text-3 {
+    font-size: 32px;
+  }
+  .wallpaper > .max-width > .wallpaper-content > a {
+    font-size: 20px;
+  }
+  .services > .max-width > .services-content > .card {
+    width: 100%;
+  }
+}
+@media (max-width: 500px) {
+  .wallpaper > .max-width > .wallpaper-content > .text-2 {
+    font-size: 50px;
+  }
+  .wallpaper > .max-width > .wallpaper-content > .text-3 {
+    font-size: 25px;
+  }
+  .about > .max-width > .about-content > .right > .text,
+  .skills > .max-width > .skills-content > .left > .text {
+    font-size: 19px;
+  }
+  .contact > .max-width > .contact-content > .right > .text {
+    text-align: center;
+  }
+  .contact > .max-width > .contact-content > .right > form > .fields {
+    flex-direction: column;
+  }
+  .contact > .max-width > .contact-content > .right > form > .button{
+    margin: 0 auto;
+  }
+}
