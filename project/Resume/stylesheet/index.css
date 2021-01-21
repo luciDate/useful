@@ -4,7 +4,7 @@
   box-sizing: border-box;
   text-decoration: none;
 }
-html{
+html {
   scroll-behavior: smooth;
 }
 li {
@@ -32,13 +32,13 @@ li {
 }
 
 /* scorll up button */
-.scroll-up-btn{
+.scroll-up-btn {
   position: fixed;
   display: flex;
   justify-content: center;
   width: 45px;
   height: 45px;
-  right: 30px;
+  right: 10px;
   bottom: 10px;
   border-radius: 3px;
   /* 下边框的高度 */
@@ -47,20 +47,19 @@ li {
   /* 阻止css和js触发事件 阻止指针显示 阻止用户点击 */
   pointer-events: none;
   z-index: 999;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   opacity: 0;
 }
-.scroll-up-btn.active{
+.scroll-up-btn.active {
   opacity: 1;
   pointer-events: auto;
 }
-.scroll-up-btn > .icon-top{
+.scroll-up-btn > .icon-top {
   width: 0;
   height: 0;
   border: 15px solid;
   border-color: transparent transparent #fff transparent;
 }
-
 
 /* icon common */
 .icon {
@@ -79,7 +78,8 @@ section {
 .about > .max-width > .about-content,
 .services > .max-width > .services-content,
 .skills > .max-width > .skills-content,
-.contact > .max-width > .contact-content {
+.contact > .max-width > .contact-content,
+.teams > .max-width > .teams-content {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -337,13 +337,31 @@ header > .max-width > .menu-btn {
   font-size: 18px;
   font-weight: 500;
 }
-.skills > .max-width > .skills-content > .right > .bars > .info > span:nth-child(1){
+.skills
+  > .max-width
+  > .skills-content
+  > .right
+  > .bars
+  > .info
+  > span:nth-child(1) {
   float: left;
 }
-.skills > .max-width > .skills-content > .right > .bars > .info > span:nth-child(2){
+.skills
+  > .max-width
+  > .skills-content
+  > .right
+  > .bars
+  > .info
+  > span:nth-child(2) {
   float: right;
 }
-.skills > .max-width > .skills-content > .right > .bars > .info > span:nth-child(3){
+.skills
+  > .max-width
+  > .skills-content
+  > .right
+  > .bars
+  > .info
+  > span:nth-child(3) {
   float: right;
 }
 .skills > .max-width > .skills-content > .right > .bars > .line {
@@ -378,6 +396,45 @@ header > .max-width > .menu-btn {
   width: 70%;
 }
 
+/* teams */
+.teams {
+  color: #fff;
+  background: #111;
+}
+.teams > .max-width > .title::before {
+  background: #fff;
+}
+.teams > .max-width > .title::after {
+  background: #111;
+  content: "my team";
+}
+.teams > .max-width > .teams-content {
+  display: flex;
+}
+.teams > .max-width > .teams-content > .column {
+  width: calc(25% - 20px);
+  background: #333;
+  height: 270px;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 3px;
+}
+.teams > .max-width > .teams-content > .column > div {
+  margin-top: 10px;
+}
+.teams > .max-width > .teams-content > .column > img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  transition: all 2s ease;
+}
+.teams > .max-width > .teams-content > .column:hover .item{
+  transform: rotate(-360deg);
+}
 /* contact */
 .contact > .max-width > .title::after {
   content: "get in touch";
@@ -622,6 +679,10 @@ footer a {
   .contact > .max-width > .contact-content > .left > .icons > .row .info {
     margin-left: 0;
   }
+  .teams > .max-width > .teams-content > .column{
+    width: calc(50% - 10px);
+    margin-bottom: 10px;
+  }
 }
 @media (max-width: 690px) {
   .max-width {
@@ -637,6 +698,9 @@ footer a {
     font-size: 20px;
   }
   .services > .max-width > .services-content > .card {
+    width: 100%;
+  }
+  .teams > .max-width > .teams-content > .column{
     width: 100%;
   }
 }
@@ -657,7 +721,12 @@ footer a {
   .contact > .max-width > .contact-content > .right > form > .fields {
     flex-direction: column;
   }
-  .contact > .max-width > .contact-content > .right > form > .button{
+  .contact > .max-width > .contact-content > .right > form > .button {
     margin: 0 auto;
+  }
+  .scroll-up-btn {
+    right: 10px;
+    bottom: 10px;
+    font-size: 23px;
   }
 }
