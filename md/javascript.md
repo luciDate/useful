@@ -95,11 +95,11 @@ Q : 内置函数
 A :
 
 ```javascript
-new Object();
-new Array();
-new Boolean();
-new Number();
 new String();
+new Number();
+new Boolean();
+new Array();
+new Object();
 new Function();
 new Date();
 new RegExp();
@@ -144,6 +144,7 @@ console.log({ iii: `${iii.name}`, iv: `${iv.name}` });
 
 let v = { phone: 188 };
 //let vi = JSON.parse(JSON.stringify(v));
+//对象深拷贝
 let vi = Object.assign({}, v);
 vi.phone = 100;
 console.log({ v: `${v.phone}`, vi: `${vi.phone}` });
@@ -197,11 +198,13 @@ let v = 100;
 ++v;
 
 //展开符
-function test(name, age) {
+function i(name, age) {
   return (...args) => {
     console.log(name);
   };
 }
+const ii = i("aza", 99);
+ii();
 
 const result = test("aza", 10);
 result();
@@ -246,31 +249,37 @@ console.log(test("6"));
 const a = (x) => ({ x: 100 });
 console.log(a("number"));
 
-//动态命名
-const name = "azai";
-const aza = { [name]: 100 };
-console.log(aza.azai);
+//动态键名
+const i = "name";
+const ii = {};
+ii[i] = "aza";
+console.log(ii);
 
 //捕获异常
+// 尝试可能出现错误的代码。 捕获它让它不至于干扰程序运行
+// 也可以运用于一些开源库。不让一些错误提示显示
+function i() {
+  const i = new Error("233");
+  console.log(i);
+}
 try {
-  // 尝试可能出现错误的代码。 捕获它让它不至于干扰程序运行
-  // 也可以运用于一些开源库。不让一些错误提示显示
-  test();
+  i();
 } catch (error) {
   console.log(error);
 }
 
 //多重数组遍历;
-const arr = [1, 2, [1, 2, 3]];
-
-for (let index = 0; index < arr.length; index++) {
-  if (arr[index] instanceof Array) {
-    for (let indexaza = 0; indexaza < arr[index].length; indexaza++) {
-      console.log(arr[index][indexaza]);
+const i = [1, 2, 3, 4, 5, 6, 7, 8, [1, 2, 3]];
+//length要比index大1，所以用小于
+for (let index = 0; index < i.length; index++) {
+  if (i[index] instanceof Array) {
+    for (let k = 0; k < i[index].length; k++) {
+      console.log(i[index][k]);
     }
+    //这个break有点讲究。能防止第一重循环再打印一次下标8
     break;
   }
-  console.log(arr[index]);
+  console.log(i[index]);
 }
 
 //递归
@@ -298,20 +307,21 @@ const routes = [
   },
 ];
 
-function formatData(routes) {
+//过滤掉数组中hide:true和子数组hide:true
+function formatData(data) {
   const arr = [];
-  routes.forEach((item) => {
-    if (item.name && item.children && !item.hide) {
-      let newItem = { ...item };
+  for (let index = 0; index < data.length; index++) {
+    if (data[index].name && data[index].children && !data[index].hide) {
+      let newItem = { ...data[index] };
       delete newItem.children;
-      if (item.children && !item.children.hide) {
-        newItem.children = formatData(item.children);
+      if (data[index].children && !data[index].children.hide) {
+        newItem.children = formatData(data[index].children);
       }
       arr.push(newItem);
-    } else if (!item.children && !item.hide) {
-      arr.push(item);
+    } else if (!data[index].children && !data[index].hide) {
+      arr.push(data[index]);
     }
-  });
+  }
   return arr;
 }
 
@@ -342,6 +352,20 @@ function azaii(num) {
     console.log(300);
   }
 }
+
+//对象双重解构
+const item = { id: 1, title: "华为 Mate 20", price: 3999, inventory: 2 };
+const number = 3;
+const itemPuls = { item, number };
+console.log(itemPuls);
+
+//解构item里面的id
+function i({ item: { id }, number }) {
+  console.log(id);
+  console.log(number);
+}
+
+i(itemPuls);
 ```
 
 ---
@@ -738,6 +762,13 @@ console.log(name);
 const str = "XIxi";
 const newStr = str.toLowerCase();
 console.log(newStr);
+
+//字符串数字互转
+let i = "6";
+let ii = +6;
+console.log(typeof ii);
+let iii = ii.toString();
+console.log(typeof iii);
 ```
 
 数字
