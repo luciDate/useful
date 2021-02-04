@@ -422,27 +422,27 @@ aza.eat();
 <body>
   <div id="test"></div>
   <script>
-    class Elem {
-      constructor(id) {
-        this.elem = document.getElementById(id);
+    //改变html内容，添加链式操作，添加事件
+    class Element {
+      constructor() {
+        this.el = document.getElementById("test");
       }
       html(val) {
         if (val) {
-          this.elem.innerHTML = val;
+          this.el.innerText = val;
           return this;
         } else {
-          return this.elem.innerHTML;
+          return this.el.innerText;
         }
       }
       on(type, fn) {
-        this.elem.addEventListener(type, fn);
+        this.el.addEventListener(type, fn);
       }
     }
 
-    const d = new Elem("test");
-
-    d.html("666").on("click", () => {
-      alert("aza");
+    const e = new Element();
+    e.html("666").on("click", () => {
+      console.log("666");
     });
   </script>
 </body>
@@ -485,6 +485,7 @@ A :
 4. 为了避免死循环。`Object.__proto__` = null
 
 ```javascript
+// str --> new String() --> new Object() --> null
 class Foo {
   constructor(name) {
     this.name = name;
@@ -505,7 +506,7 @@ A :
 
 1. 创建一个新对象
 2. this 指向这个新对象
-3. 执行代码，即对 this.赋值
+3. 对 this.赋值
 4. 返回 this
 
 ```javascript
@@ -680,10 +681,11 @@ Q : 获取 2017-06-10 格式的日期
 ```javascript
 const d = new Date();
 const year = d.getFullYear();
-const month = d.getMonth();
+const month = d.getMonth() + 1;
 const day = d.getDate();
-const str = `${year}-${month}-${day}`;
-console.log(str);
+
+const dateStr = `${year}-${month}-${day}`;
+console.log(dateStr);
 ```
 
 Q : 获取随机数，要求长度是一致的字符串格式
@@ -691,9 +693,9 @@ Q : 获取随机数，要求长度是一致的字符串格式
 ```javascript
 const temp = "0000000000";
 const n = Math.random();
-const remix = n + temp;
-const remixI = remix.slice(0, 10);
-console.log(remixI);
+const tempN = n + temp;
+const i = tempN.slice(0, 10);
+console.log(i);
 ```
 
 Q : 写一个能遍历对象和数组的 forEach 函数
@@ -857,10 +859,6 @@ const result = arr.find((item) => {
 });
 console.log(result);
 
-//检查数组是否包含item
-const arr = [1, 2, 3, 4, 5, 6];
-console.log(arr[arr.indexOf(3);]);
-
 //数组深拷贝
 const arr = [1, 2, 3, 4, 5];
 let arri = arr;
@@ -888,31 +886,18 @@ console.log(arrr);
   </ul>
   <script>
     const items = document.querySelectorAll(".item");
-    const arrCopy = Array.from(items);
-    // items.forEach((item) => {
-    //   console.log(item)
-    // })
-
-    const arr = [1, 2, 3, 4, 5];
-    //下标2开始删除，删除2个包括下标2
-    arr.splice(2, 2);
-    console.log(arr);
-    //下标2开始删除0个，在下标2添加666
-    arr.splice(2, 0, 666);
-    console.log(arr);
+    const u = document.querySelector(".container");
+    const itemsCopy = Array.from(items);
 
     const l = document.createElement("li");
-    l.classList.add("item");
-    l.innerHTML = "0";
-    arrCopy.splice(0, 0, l);
-    console.log(items);
-    console.log(arrCopy);
+    l.className = "new";
+    l.innerText = "new";
+    itemsCopy.splice(2, 0, l);
+    console.log(itemsCopy);
 
-    const frag = document.createDocumentFragment();
-    arrCopy.forEach((item) => {
-      frag.appendChild(item);
-    });
-    document.body.appendChild(frag);
+    for (let index = 0; index < itemsCopy.length; index++) {
+      u.appendChild(itemsCopy[index]);
+    }
   </script>
 </body>
 ```
@@ -920,14 +905,6 @@ console.log(arrr);
 对象
 
 ```javascript
-const obj = { a: 1, b: 2, c: 3 };
-for (key in obj) {
-  //判断属性是否是对象本身的。而不是从原型中继承的属性
-  if (obj.hasOwnProperty(key)) {
-    console.log(`${key} -- ${obj[key]}`);
-  }
-}
-
 const obj = { a: 1, b: 2, c: 3 };
 for (key in obj) {
   //判断属性是否是对象本身的。而不是从原型中继承的属性
@@ -1016,16 +993,18 @@ Q : DOM 节点操作
 获取 tagName
 
 ```html
-<span id="test">666</span>
-<button id="iclick">click me</button>
-<script>
-  const i = document.querySelector("#test");
-  const iclick = document.querySelector("#iclick");
+<body>
+  <div class="test">
+    <input type="text" />
+  </div>
 
-  iclick.addEventListener("click", () => {
-    if (i.tagName === "SPAN") console.log("233");
-  });
-</script>
+  <script>
+    const i = document.querySelector(".test");
+    const ii = document.getElementsByTagName("input");
+    console.log(i.tagName);
+    console.log(ii);
+  </script>
+</body>
 ```
 
 Q : BOM 操作
@@ -1033,23 +1012,14 @@ Q : BOM 操作
 检查浏览器
 
 ```javascript
+//检查 url
 const ua = navigator.userAgent;
 const isChrome = ua.indexOf("Chrome");
 console.log(isChrome);
 ```
 
-检查 url
-
 ```html
 <body>
-  <div class="test" style="width:100px;height:100px;border:solid 1px #ff0000">
-    click me
-  </div>
-  <script>
-    const t = document.querySelector(".test");
-    const ua = navigator.userAgent;
-    const isChrome = ua.indexOf("Chrome");
-    console.log(isChrome);
 
     //返回屏幕可用的宽高
     console.log(screen.width);
@@ -1087,8 +1057,21 @@ console.log(isChrome);
     console.log(location.hash);
 
     t.addEventListener("click", () => {
-      location.href = "https://www.baidu.com";
+      location.href = "https://www.baidu.com?name=aza&password=xixi";
     });
+
+    //url字符串转对象
+    const i = location.search;
+    const temp = i.split("?")[1].split("&");
+    console.log(temp);
+
+    const obj = {};
+    for (let index = 0; index < temp.length; index++) {
+      const ii = temp[index].split("=");
+      console.log(ii);
+      obj[ii[0]] = ii[1];
+    }
+    console.log(obj);
   </script>
 </body>
 ```
@@ -1143,82 +1126,47 @@ Q : 事件代理
 </script>
 ```
 
-事件代理双向版
+事件代理双向版与通用事件绑定函数
 
 ```html
 <body>
-  <div id="div1">
-    <p id="p1">激活</p>
-    <p id="p2">取消</p>
-    <p id="p3">取消</p>
-    <div class="div2">
-      <p id="p4">取消</p>
-      <p id="p5">取消</p>
-    </div>
+  <div class="container">
+    <p class="item" id="no-proxy">激活</p>
+    <p class="item">取消</p>
+    <p class="item">取消</p>
+    <p class="item">取消</p>
+    <p class="item">取消</p>
   </div>
   <script>
-    const d = document.querySelector("#div1");
-    const b = document.body;
-    const p = document.querySelector("#p1");
+    const c = document.querySelector(".container");
+    const noProxy = document.querySelector("#no-proxy");
 
-    p.addEventListener("click", (e) => {
-      //阻止事件冒泡
-      e.stopPropagation();
-      console.log("激活");
-    });
-
-    b.addEventListener("click", () => {
-      console.log("取消");
-    });
-  </script>
-</body>
-```
-
-通用事件绑定函数
-
-```html
-<body>
-  <div id="div1">
-    <p id="p1">激活</p>
-    <p id="p2">取消</p>
-    <p id="p3">取消</p>
-    <div class="div2">
-      <p id="p4">取消</p>
-      <p id="p5">取消</p>
-    </div>
-  </div>
-  <script>
     //第三个参数选择是否代理
     function formatEvent(elem, type, proxy, fn) {
+      //参数做一下兼容
       if (fn == null) {
-        //参数做一下兼容
         fn = proxy;
         proxy = null;
       }
       elem.addEventListener(type, (e) => {
-        let target;
         if (proxy) {
-          target = e.target;
-          //检查target是否是p标签
-          if (target.matches(proxy)) {
-            fn.call(target, e);
+          //校验触发dom
+          if (e.target.classList.contains(proxy)) {
+            fn.call(e.target);
           }
         } else {
           fn(e);
         }
       });
     }
-    const d = document.querySelector("#div1");
-    const p = document.querySelector("#p1");
 
     //如果addEventListener要精准this是不能使用箭头函数的，箭头默认没this，如果使用this会向上下文去寻找
-    formatEvent(d, "click", "p", function () {
-      console.log(this.innerHTML);
+    formatEvent(c, "click", "item", function () {
+      console.log(this.innerText);
     });
-
-    formatEvent(p, "click", function (e) {
+    formatEvent(noProxy, "click", function (e) {
       e.stopPropagation();
-      console.log(p.innerHTML);
+      console.log(noProxy.innerText);
     });
   </script>
 </body>
