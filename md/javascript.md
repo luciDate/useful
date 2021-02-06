@@ -1181,9 +1181,9 @@ Q : 事件代理
 
 ```html
 <script>
-  window.callback(data){
+  function callback(data) {
     //这里是我门获取的跨域信息
-    console.log(data)
+    console.log(data);
   }
 </script>
 
@@ -1193,7 +1193,24 @@ Q : 事件代理
 </script>
 ```
 
-服务器设置 http header 也是解决跨域问题的趋势
+跨域可执行版本
+
+```html
+<body>
+  <div id="test-jsonp"></div>
+  <script>
+    //先定义函数再执行JSONP跨域。不然程序会找不到函数定义
+    function refreshPrice(data) {
+      const p = document.querySelector("#test-jsonp");
+      p.innerText = "当前价格" + data["0000001"].name + data["0000001"].price;
+    }
+  </script>
+  <script src="http://api.money.126.net/data/feed/0000001,1399001?callback=refreshPrice"></script>
+  <!-- 标签返回一个函数 refreshPrice({"0000001":{"code": "0000001", ... }) -->
+</body>
+```
+
+实现 CORS 通信的关键是服务器。只要服务器实现了 CORS 接口，就可以跨源通信
 
 本地存储
 
@@ -1219,7 +1236,7 @@ const xhr = new XMLHttpRequest();
 //async：true（异步）或 false（同步）
 xhr.open("GET", "http://jsonplaceholder.typicode.com/posts/1", true);
 //onreadystatechange是异步的
-xhr.onreadystatechange = function () {
+xhr.onreadystatechange = () => {
   //存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。
   //每次readyState变化都会触发onreadystatechange
   if (xhr.readyState == 4) {
@@ -1374,14 +1391,6 @@ document.body.appendChild(frag);
   </body>
 ```
 
-脚本尽快执行
-
-```javascript
-window.addEventListener("DOMCoentLoaded", () => {
-  // do something
-});
-```
-
 ---
 
 ## <a id="tip-8">安全性</a>
@@ -1445,24 +1454,25 @@ XSRF 敏感的网络请求。要添加手机，邮箱验证码
         tags: ["a", "b", "c"],
         showTags() {
           var self = this;
-          this.tags.forEach(function (tag) {
-            console.log(self.title, tag);
+          this.tags.forEach(function (item) {
+            console.log(`${self.title}  -- ${item}`);
           });
         },
       };
 
+      video.showTags();
+
       const list = {
-        title: "a",
-        tags: ["1", "2", "3"],
-        showTags() {
-          this.tags.forEach(
-            function (tag) {
-              console.log(this.title, tag);
-            }.bind(this)
-          );
-        },
-      };
-      list.showTags();
+        title:"a",
+        tags:["1","2","3"],
+        showTags(){
+          this.tags.forEach(function (item) {
+            console.log(`${this.title} -- ${item}`)
+          }.bind(this))
+        }
+      }
+
+      list.showTags()
     </script>
   </body>
 </html>
