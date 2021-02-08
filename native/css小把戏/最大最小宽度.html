@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    .container-1 {
+      /* 规定最大宽度，屏幕尺寸变大DOM也不会有变化 */
+      max-width: 1200px;
+      /* 规定最小宽度，屏幕尺寸变小DOM也不会有变化 */
+      min-width: 1080px;
+      height: 300px;
+      margin: 30px auto 0 auto;
+      background: red;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-1">
+    <div class="item">left</div>
+    <div class="item">right</div>
+  </div>
+</body>
+
+</html>
