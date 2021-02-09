@@ -175,10 +175,13 @@ i && console.log("bingo");
 i ? console.log("233") : console.log("666");
 
 //while 循环
-let ii = 0;
-while (ii <= 10) {
-  console.log(ii);
-  ii++;
+//一般用于不知道循环次数的情况。维持循环的是一个条件表达式，条件成立执行循环体，条件不成立退出循环。
+const c = document.querySelector(".container");
+//复数item
+const items = document.querySelectorAll(".item");
+
+while (items.length > 0) {
+  c.removeChild(c.children[0]);
 }
 
 //do while循环 先执行一次代码块。再按条件真假决定是否继续
