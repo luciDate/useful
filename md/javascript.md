@@ -877,26 +877,24 @@ console.log(arrr);
 
 ```html
 <body>
-  <ul class="container">
-    <li class="item">1</li>
-    <li class="item">2</li>
-    <li class="item">3</li>
-    <li class="item">4</li>
-    <li class="item">5</li>
-  </ul>
+  <div class="container">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+    <div class="item">5</div>
+  </div>
   <script>
-    const items = document.querySelectorAll(".item");
-    const u = document.querySelector(".container");
-    const itemsCopy = Array.from(items);
+    const c = document.querySelector(".container");
+    const items = [...document.querySelectorAll(".item")];
+    const length = items.length;
+    const item = document.createElement("div");
 
-    const l = document.createElement("li");
-    l.className = "new";
-    l.innerText = "new";
-    itemsCopy.splice(2, 0, l);
-    console.log(itemsCopy);
-
-    for (let index = 0; index < itemsCopy.length; index++) {
-      u.appendChild(itemsCopy[index]);
+    item.className = "item";
+    item.innerText = "new";
+    items.splice(2, 0, item);
+    for (let index = 0; index < items.length; index++) {
+      c.appendChild(items[index]);
     }
   </script>
 </body>
@@ -1463,16 +1461,18 @@ XSRF 敏感的网络请求。要添加手机，邮箱验证码
       video.showTags();
 
       const list = {
-        title:"a",
-        tags:["1","2","3"],
-        showTags(){
-          this.tags.forEach(function (item) {
-            console.log(`${this.title} -- ${item}`)
-          }.bind(this))
-        }
-      }
+        title: "a",
+        tags: ["1", "2", "3"],
+        showTags() {
+          this.tags.forEach(
+            function (item) {
+              console.log(`${this.title} -- ${item}`);
+            }.bind(this)
+          );
+        },
+      };
 
-      list.showTags()
+      list.showTags();
     </script>
   </body>
 </html>
