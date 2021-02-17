@@ -202,7 +202,7 @@ let v = 100;
 
 //展开符
 function i(name, age) {
-  return (...args) => {
+  return (...arguments) => {
     console.log(name);
   };
 }
@@ -369,6 +369,22 @@ function i({ item: { id }, number }) {
 }
 
 i(itemPuls);
+
+//参数集合与变量复数重新赋值
+function fib(n) {
+  if (n == 0) return;
+  console.count("调用次数");
+  console.trace();
+  let a = arguments[1] || 1;
+  let b = arguments[2] || 1;
+  console.log("fib=" + a);
+  [a, b] = [b, a + b];
+  fib(--n, a, b);
+}
+
+fib(6);
+
+// 1 2 / 2 3 / 3 5 / 5 8 / 8 13
 ```
 
 ---
@@ -874,6 +890,14 @@ const arrr = Object.assign([], arr);
 arrr[0] = 666;
 console.log(arr);
 console.log(arrr);
+
+let arr = [1, 2, 3, 4, 5];
+//下标1开始，删除一个，再添加9，也就是替换了
+arr.splice(1, 1, 9);
+console.log(arr);
+//下标0，删除0个,添加8
+arr.splice(0, 0, 8);
+console.log(arr);
 ```
 
 类数组转数组操作与数组添加删除
