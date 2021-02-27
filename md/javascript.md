@@ -728,7 +728,7 @@ function formatEach(type, fn) {
       fn(index, item);
     });
   } else {
-    for (key in type) {
+    for (let key in type) {
       fn(key, type[key]);
     }
   }
@@ -931,7 +931,7 @@ console.log(arr);
 
 ```javascript
 const obj = { a: 1, b: 2, c: 3 };
-for (key in obj) {
+for (let key in obj) {
   //判断属性是否是对象本身的。而不是从原型中继承的属性
   if (obj.hasOwnProperty(key)) {
     console.log(`${key} -- ${obj[key]}`);
