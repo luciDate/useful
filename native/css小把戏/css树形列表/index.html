@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .multi-level,
+      .item ul,
+      .nav input[type="checkbox"] {
+        display: none;
+      }
+      #menu:checked ~ .multi-level,
+      .item input:checked ~ ul {
+        display: block;
+      }
+      .arrow {
+        width: 12px;
+        height: 12px;
+        vertical-align: middle;
+        float: left;
+        z-index: 0;
+        margin: 17px 1em 0 2em;
+      }
+      .item input + .arrow{
+          transform: rotate(-90deg);
+          transition: 0.1s;
+      }
+      .item input:checked + .arrow{
+          transform: rotate(0deg);
+          transition: 0.1s;
+      }
+      label:hover {
+        cursor: pointer;
+      }
+      label {
+        width: 100%;
+        display: block;
+        z-index: 3;
+        position: relative;
+      }
+      .nav {
+        width: 100%;
+        background-color: white;
+        overflow-x: hidden;
+        border-bottom: 1px solid #cfd8dc;
+      }
+      #nav-icon{
+          font-size: 28px;
+          line-height: 50px;
+          padding-left: 1em;
+          color: white;
+          background: #F44336;
+      }
+      .nav ul, .nav li ,label{
+          line-height: 50px;
+          margin: 0;
+          padding: 0 2em;
+          list-style: none;
+          color: #90A4AE;
+          font-weight: 100;
+          width: 100%;
+      }
+      .item ul{
+          padding: 0 0.25em;
+      }
+      .nav li a{
+          line-height: 50px;
+          margin: 0;
+          padding: 0 4em;
+          list-style: none;
+          text-decoration: none;
+          color: #90A4AE;
+          font-weight: 100;
+          width: 100%;
+
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav">
+      <input type="checkbox" name="" id="menu" />
+      <img src="./Arrow.png" alt="" class="arrow" />
+      <label for="menu" id="nav-icon">&#9776;</label>
+      <div class="multi-level">
+        <div class="item">
+          <input type="checkbox" name="" id="A" />
+          <img src="./Arrow.png" alt="" class="arrow" />
+          <label for="A">Services</label>
+          <ul>
+            <li><a href="">Branding</a></li>
+            <li><a href="">Web/App Development</a></li>
+            <li><a href="">Internet Marketing and SEO</a></li>
+          </ul>
+        </div>
+        <div class="item">
+          <input type="checkbox" name="" id="B" />
+          <img src="./Arrow.png" alt="" class="arrow" />
+          <label for="B">Jobs</label>
+          <ul>
+            <li>
+              <div class="sub-item">
+                <input type="checkbox" name="" id="B-A" />
+                <img src="./Arrow.png" alt="" class="arrow" />
+                <label for="B-A">UI/UX</label>
+                <ul>
+                  <li><a href="">UI/UX Designer</a></li>
+                  <li><a href="">UI Designer</a></li>
+                  <li><a href="">UX Designer</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="sub-item">
+                <input type="checkbox" name="" id="B-B" />
+                <img src="./Arrow.png" alt="" class="arrow" />
+                <label for="B-B">Development</label>
+                <ul>
+                  <li><a href="">Front end Developer</a></li>
+                  <li><a href="">Back end Developer</a></li>
+                </ul>
+              </div>
+            </li>
+            <li><a href="">Graphic Designer</a></li>
+            <li><a href="">Logo Designer</a></li>
+          </ul>
+        </div>
+        <div class="item">
+          <input type="checkbox" name="" id="C" />
+          <img src="./Arrow.png" alt="" class="arrow" />
+          <label for="C">About Us</label>
+          <ul>
+            <li><a href="">Our Team</a></li>
+            <li><a href="">Clients</a></li>
+            <li><a href="">Our Work</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
