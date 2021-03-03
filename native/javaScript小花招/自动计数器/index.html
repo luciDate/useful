@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #8e44ad;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .counter {
+            font-size: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="counter" data-target="12000"></div>
+    <span>Twitter Follower</span>
+
+    <div class="counter" data-target="3000"></div>
+    <span>Youtobe subscribers</span>
+
+    <script>
+        const counters = document.querySelectorAll('.counter')
+        counters.forEach(counter => {
+            counter.innerHTML = '0'
+
+            const updateCounter = () => {
+                //字符串转数字
+                const target = +counter.getAttribute("data-target")
+                const c = +counter.innerText
+
+                //const increment = 1
+                //const increment = target / 1000;
+                const increment = Math.random() * 100;
+
+
+                if (c < target) {
+
+                    //counter.innerText = c + increment;
+                    counter.innerText = Math.ceil(c + increment);
+
+                    setTimeout(updateCounter, 1);
+                }else{
+                    counter.innerText = target
+                }
+
+            }
+
+            updateCounter()
+
+        })
+    </script>
+</body>
+
+</html>
