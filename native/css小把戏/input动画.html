@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        /* 以当前视窗为抓手 1vh = 1% 宽高 */
+        height: 60vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: column;
+        font-family: sans-serif;
+      }
+      .form {
+        width: 50%;
+        position: relative;
+        height: 50px;
+        overflow: hidden;
+      }
+      .form > input {
+        width: 100%;
+        height: 100%;
+        color: #595f6e;
+        padding: 20px 0 0 0;
+        border: none;
+        outline: none;
+      }
+      .form > label {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        /*
+          pointer-events: none； 可以让某个元素实现类似于海市蜃楼的效果，具体理解为，你可以看的到某个元素，但是你无法摸的着。
+          */
+        pointer-events: none;
+        border-bottom: 1px solid #000000;
+      }
+      .form label::after {
+        content: "";
+        position: absolute;
+        left: 0px;
+        bottom: -1px;
+        height: 100%;
+        width: 100%;
+        border-bottom: 3px solid #5fa8d3;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+      }
+      .content-name {
+        position: absolute;
+        bottom: 5px;
+        left: 0px;
+        transition: all 0.3s ease;
+      }
+      .form input:focus + .label-name > .content-name,
+      /* :valid 如果 input 元素中输入的值为合法的 */
+      .form input:valid + .label-name > .content-name {
+        transform: translateY(-150%);
+        font-size: 14px;
+        color: #5fa8d3;
+      }
+      .form input:focus + .label-name::after,
+      .form input:valid + .label-name::after {
+        transform: translateY(0%);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Animation Input</h1>
+    <div class="form">
+      <input type="text" name="name" autocapitalize="off" required />
+      <label for="name" class="label-name">
+        <span class="content-name">Name</span>
+      </label>
+    </div>
+  </body>
+</html>
