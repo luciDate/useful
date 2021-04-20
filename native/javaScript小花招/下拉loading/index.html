@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            background: #f9f9f9;
+            padding: 0 0 100px 0;
+        }
+
+        .container .item {
+            height: 100px;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #dddddd;
+        }
+
+        .loading-box {
+            width: 100%;
+            height: 100px;
+            position: fixed;
+            bottom: 0px;
+            background: #dddddd;
+            opacity: 0;
+            transform: opacity .3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-box.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">6</div>
+        <div class="item">7</div>
+        <div class="item">8</div>
+        <div class="item">9</div>
+        <div class="item">10</div>
+        <div class="item">11</div>
+        <div class="item">12</div>
+        <div class="item">13</div>
+        <div class="item">14</div>
+        <div class="item">15</div>
+        <div class="item">16</div>
+        <div class="item">17</div>
+        <div class="item">18</div>
+        <div class="item">19</div>
+        <div class="item">20</div>
+    </div>
+
+    <div class="loading-box">loading...</div>
+    <script>
+        const loadingBox = document.querySelector(".loading-box")
+        const container = document.querySelector(".container")
+        let flag = false
+
+        function addItem() {
+
+            let postElement = document.createElement("div")
+            postElement.innerHTML = `
+            <div class="item">21</div>
+            <div class="item">22</div>
+            <div class="item">23</div>
+            <div class="item">24</div>
+            <div class="item">25</div>
+            <div class="item">26</div>
+            <div class="item">27</div>
+            <div class="item">28</div>
+            <div class="item">29</div>
+            <div class="item">30</div>
+        `
+
+
+            loadingBox.classList.remove("active")
+            container.appendChild(postElement)
+            flag = false
+
+        }
+
+
+
+        window.addEventListener("scroll", () => {
+            //滚动条距离顶部的距离 滚动条的总高度 网页的总高度
+            let { scrollTop, scrollHeight, clientHeight } = document.documentElement
+
+            if (clientHeight + scrollTop >= scrollHeight - 50 && flag == false) {
+                flag = true
+                loadingBox.classList.add("active");
+                setTimeout(addItem, 3000);
+            }
+
+        })
+    </script>
+</body>
+
+</html>

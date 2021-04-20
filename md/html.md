@@ -300,6 +300,7 @@ y 轴对齐 ： `align-items: flex-start | flex-end | center | baseline | stretc
   position: absolute;
   top: 50%;
   left: 50%;
+  /* 第一个参数是x轴 之后y轴 */
   transform: translate(-50%, -50%);
 }
 ```

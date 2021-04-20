@@ -1051,8 +1051,8 @@ console.log(isChrome);
     console.log(screen.height);
 
     //网页宽高
-    console.log(window.innerWidth);
-    console.log(window.innerHeight);
+    console.log(document.documentElement.clientWidth);
+    console.log(document.documentElement.clientHeight);
 
     //dom宽高
     console.log(t.clientWidth);
@@ -1353,6 +1353,7 @@ for (let i = 0; i < length; i++) {
 DOM 合并插入
 
 ```javascript
+//createDocumentFragment() 需要appendchild 一个真实的DOM不是innerHTML
 const frag = document.createDocumentFragment();
 for (let i = 0; i <= 10; i++) {
   const d = document.createElement("div");

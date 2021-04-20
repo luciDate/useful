@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 这个依赖主要处理了不同浏览器的全屏问题 -->
+    <script src="./screenfull.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <h2>this is some content</h2>
+    <button id="btnToggleFullscreen">Toogle Fullscreen</button> -->
+
+    <img src="https://dummyimage.com/300x300/ff0000/fff" alt="">
+
+    <script>
+        // document.querySelector("#btnToggleFullscreen").addEventListener("click", () => {
+        //     if (screenfull.isEnabled) {
+        //         if (screenfull.isFullscreen) {
+        //             screenfull.exit()
+        //         } else {
+        //             screenfull.request()
+        //         }
+        //     }
+        // })
+
+
+        let img = document.querySelector('img')
+        img.addEventListener('click', () => {
+            if (screenfull.isEnabled) {
+                screenfull.toggle(img)
+            }
+        })
+
+    </script>
+</body>
+
+</html>

@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const overDraw = document.querySelector(".over-draw");
     const closeBtn = document.querySelector(".close-btn");
     const themeCheck = document.querySelector("#theme-check");
+    
 
     return () => {
       featBtn.addEventListener("click", () => {
@@ -42,14 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
         overDraw.classList.remove("active");
       });
 
-      themeCheck.addEventListener("change",() => {
-        document.body.classList.toggle("dark")
-      })
-
-
+      themeCheck.addEventListener("change", () => {
+        document.body.classList.toggle("dark");
+      });
     };
   }
-
   const a = azaArea();
   a();
 });

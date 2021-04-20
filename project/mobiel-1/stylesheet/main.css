@@ -81,6 +81,7 @@ header .delta {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  list-style: none;
 }
 
 .main .nav-bar .item {
@@ -277,10 +278,10 @@ header .delta {
 .main .tab-menu .title li .delta {
   width: 0;
   height: 0;
-  border: 6px solid;
+  border: 5px solid;
   border-color: #000 transparent transparent transparent;
-  -webkit-transform: translateY(-2px) translateX(7px);
-          transform: translateY(-2px) translateX(7px);
+  -webkit-transform: translateY(-3px) translateX(6px);
+          transform: translateY(-3px) translateX(6px);
 }
 
 .main .tab-info {
@@ -328,7 +329,7 @@ header .delta {
   color: #ffffff;
 }
 
-footer {
+footer ul {
   width: 100%;
   height: 60px;
   position: fixed;
@@ -338,9 +339,10 @@ footer {
   display: -ms-flexbox;
   display: flex;
   z-index: 3;
+  list-style: none;
 }
 
-footer .item {
+footer ul .item {
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -356,7 +358,7 @@ footer .item {
           align-items: center;
 }
 
-footer .item a {
+footer ul .item a {
   height: 60px;
   color: rgba(0, 0, 0, 0.65);
   text-decoration: none;
@@ -375,18 +377,18 @@ footer .item a {
           align-items: center;
 }
 
-footer .item a i {
+footer ul .item a i {
   -webkit-transform: translateY(4px);
           transform: translateY(4px);
   font-size: 24px;
 }
 
-footer .item a p {
+footer ul .item a p {
   font-size: 14px;
   margin-top: 8px;
 }
 
-footer .item a.active {
+footer ul .item a.active {
   color: #0085ff;
 }
 /*# sourceMappingURL=main.css.map */
