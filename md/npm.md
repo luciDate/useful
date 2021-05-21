@@ -27,9 +27,14 @@ npm install xxx
 
 npm install xxx@0.0.1
 
+npm install xxx@0.0.1 -g
+
 npm update xxx
 
-npm unstall xxx
+npm uninstall xxx
+
+npm uninstall xxx -g
+
 ```
 
 安装生产环境(默认)或开发环境

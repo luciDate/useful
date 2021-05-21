@@ -370,6 +370,8 @@ function i({ item: { id }, number }) {
 
 i(itemPuls);
 
+//斐波那契数列函数
+//也就是前两项的值相加得到第三项的值
 //参数集合与变量复数重新赋值
 function fib(n) {
   if (n == 0) return;
@@ -860,6 +862,25 @@ console.log(arrSort);
 arrMap = arr.map((item, index) => {
   return `<span>${item}</span>`;
 });
+
+//映射结构
+const azaData = [
+    { id: 1, title: "n1" },
+    { id: 2, title: "n2" },
+    { id: 3, title: "n3" },
+    { id: 4, title: "n4" },
+    { id: 5, title: "n5" }
+]
+
+const daftArr = azaData.map(({ id, title }) => {
+    return {
+        xid: id,
+        xtitle: title
+    }
+})
+
+console.log(daftArr)
+
 //数组转字符串
 console.log(arrMap.join(""));
 

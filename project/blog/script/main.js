@@ -12,9 +12,64 @@ document.addEventListener("DOMContentLoaded", () => {
     const overDraw = document.querySelector(".over-draw");
     const closeBtn = document.querySelector(".close-btn");
     const themeCheck = document.querySelector("#theme-check");
-    
+    const loadingBox = document.querySelector(".loading-box");
+    const itemWrapper = document.querySelector(".square .item-wrapper");
+    let flagi = false;
 
-    return () => {
+    return (() => {
+      function addItem() {
+        let tempD = document.createElement("div");
+        tempD.innerHTML = `
+        <div class="item">
+          <a href="#">
+              <div class="title">复用面板</div>
+              <ul class="list-icon">
+                  <li>2018年08月08日</li>
+                  <li><i class="fa fa-thumbs-up fa-fw"></i></li>
+                  <li><i class="fa fa-commenting-o fa-fw"></i></li>
+              </ul>
+          </a>
+        </div>
+        <div class="item">
+          <a href="#">
+              <div class="title">复用面板</div>
+              <ul class="list-icon">
+                  <li>2018年08月08日</li>
+                  <li><i class="fa fa-thumbs-up fa-fw"></i></li>
+                  <li><i class="fa fa-commenting-o fa-fw"></i></li>
+              </ul>
+          </a>
+        </div>
+        <div class="item">
+          <a href="#">
+              <div class="title">复用面板</div>
+              <ul class="list-icon">
+                  <li>2018年08月08日</li>
+                  <li><i class="fa fa-thumbs-up fa-fw"></i></li>
+                  <li><i class="fa fa-commenting-o fa-fw"></i></li>
+              </ul>
+          </a>
+        </div>        
+        `;
+        loadingBox.classList.remove("active")
+        itemWrapper.appendChild(tempD);
+        flagi = false;
+      }
+
+      window.addEventListener("scroll", () => {
+        let {
+          scrollTop,
+          scrollHeight,
+          clientHeight,
+        } = document.documentElement;
+
+        if (clientHeight + scrollTop >= scrollHeight - 60 && flagi === false) {
+          flagi = true;
+          loadingBox.classList.add("active");
+          setTimeout(addItem,1000);
+        }
+      });
+
       featBtn.addEventListener("click", () => {
         featShow.classList.toggle("active");
         delta[0].classList.toggle("active");
@@ -46,8 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
       themeCheck.addEventListener("change", () => {
         document.body.classList.toggle("dark");
       });
-    };
+    })();
   }
-  const a = azaArea();
-  a();
+  azaArea();
 });

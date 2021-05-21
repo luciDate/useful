@@ -78,7 +78,7 @@
         let flag = false
 
         function addItem() {
-
+            //新建dom不能在全局中使用，因为是全局变量js不会再创建不同的节点
             let postElement = document.createElement("div")
             postElement.innerHTML = `
             <div class="item">21</div>
@@ -92,15 +92,11 @@
             <div class="item">29</div>
             <div class="item">30</div>
         `
-
-
             loadingBox.classList.remove("active")
             container.appendChild(postElement)
             flag = false
 
         }
-
-
 
         window.addEventListener("scroll", () => {
             //滚动条距离顶部的距离 滚动条的总高度 网页的总高度
