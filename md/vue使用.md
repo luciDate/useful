@@ -100,7 +100,7 @@ computed 计算属性与监听属性拉一起 A 了
 
 - 关于组件的格式
 
-  > 采用<List /> 格式在cli兼容更好
+  > 采用<List /> 格式在 cli 兼容更好
 
 computed
 
@@ -735,9 +735,11 @@ custom vmodel
       event: "inputChange",
     },
     props: {
-      text: String,
-      default() {
-        return "";
+      text: {
+        type: String,
+        default() {
+          return "";
+        },
       },
     },
   };
@@ -771,6 +773,8 @@ vue 组件是异步渲染的 使用 nexttick 获取最新 dom
         this.list.push(`${Date.now()}`);
         this.list.push(`${Date.now()}`);
         this.list.push(`${Date.now()}`);
+
+        //console.log(ulElem.childNodes.length);
 
         this.$nextTick(() => {
           const ulElem = this.$refs.ul1;
@@ -840,7 +844,84 @@ export default {
 index.vue
 
 ```html
+<template>
+  <div>
+    <p>{{ name }}</p>
+    <custom-v-model v-model="name" />
+    <hr />
+    <next-tick />
+    <hr />
+    <mixin-demo />
+    <hr />
+    <slot-demo>
+      <template v-slot:header>
+        <h1>将插入header slot中</h1>
+      </template>
+      {{ website.title }}
+    </slot-demo>
+    <hr />
+    <scoped-slot-demo :url="website.url">
+      <template v-slot="slotProps"> {{ slotProps.slotData.title }} </template>
+    </scoped-slot-demo>
+    <hr />
+    <button v-for="tab in tabs" :key="tab">{{ tab }}</button>
 
+    <keep-alive>
+      <component :is="currentTab"></component>
+    </keep-alive>
+
+    <hr />
+
+    <AsyncDemo v-show="aFlag" />
+    <button @click="aFlag = true">click me</button>
+  </div>
+</template>
+
+<script>
+  import CustomVModel from "./CustomVModel.vue";
+  import MixinDemo from "./MixinDemo.vue";
+  import NextTick from "./NextTick.vue";
+  import ScopedSlotDemo from "./ScopedSlotDemo.vue";
+  import SlotDemo from "./SlotDemo.vue";
+  import Trendi from "./trendi";
+  import Trendii from "./trendii";
+
+  export default {
+    components: {
+      CustomVModel,
+      NextTick,
+      MixinDemo,
+      SlotDemo,
+      ScopedSlotDemo,
+      Trendi,
+      Trendii,
+      // eslint-disable-next-line vue/no-unused-components
+      AsyncDemo: () => import("./Async"),
+    },
+    data() {
+      return {
+        name: "aza",
+        website: {
+          url: "http://imooc.com/",
+          title: "imooc",
+          subTitle: "233",
+        },
+        showFormDemo: false,
+        current: "i",
+        tabs: ["i", "ii"],
+        aFlag: false,
+      };
+    },
+    methods: {},
+    computed: {
+      currentTab() {
+        return "Trend" + this.current.toLowerCase();
+      },
+    },
+  };
+</script>
+
+<style></style>
 ```
 
 slotDemo.vue
@@ -872,70 +953,120 @@ scopedSlotDemo.vue
 <template>
   <div>
     <a :href="url">
-      <slot :slotData="website">
-        {{ website.subTitle }}
-      </slot>
+      <slot :slotData="website"> {{ website.subTitle }} </slot>
     </a>
   </div>
 </template>
 
 <script>
-export default {
-  props: ["url"],
-  data() {
-    return {
-      website: {
-        url: "https://www.baidu.com",
-        title: "aza",
-        subTitle: "aza编辑器",
-      },
-    };
-  },
-};
+  export default {
+    props: ["url"],
+    data() {
+      return {
+        website: {
+          url: "https://www.baidu.com",
+          title: "aza",
+          subTitle: "aza编辑器",
+        },
+      };
+    },
+  };
 </script>
 
 <style></style>
-
 ```
 
 动态组件与组件缓存（需要频繁切换但不需要重复渲染）
 
-设计个treni和trenii模板
+设计个 treni 和 trenii 模板
 
 ```html
 <template>
   <div>
-      trand-i
+    <p>Posts</p>
   </div>
 </template>
 
 <script>
-export default {
-
-}
+  export default {};
 </script>
 
-<style>
-
-</style>
+<style></style>
 ```
 
 ```html
 <template>
   <div>
-      trand-ii
+    <p>Archive</p>
   </div>
 </template>
 
 <script>
-export default {
-
-}
+  export default {};
 </script>
 
-<style>
+<style></style>
+```
 
-</style>
+index.vue
+
+```html
+<template>
+  <div id="app">
+    <button v-for="tab in tabs" :key="tab" @click="current = tab">
+      {{tab}}
+    </button>
+
+    <keep-alive>
+      <component :is="currentTab"></component>
+    </keep-alive>
+  </div>
+</template>
+
+<script>
+  import TrendPosts from "./components/Trendi.vue";
+  import TrendArchive from "./components/Trendii.vue";
+
+  export default {
+    name: "App",
+    components: {
+      // eslint-disable-next-line vue/no-unused-components
+      TrendPosts,
+      // eslint-disable-next-line vue/no-unused-components
+      TrendArchive,
+    },
+    data() {
+      return {
+        current: "Posts",
+        tabs: ["Posts", "Archive"],
+      };
+    },
+    computed: {
+      currentTab() {
+        return "Trend" + this.current;
+      },
+    },
+    methods: {},
+  };
+</script>
+
+<style></style>
+```
+
+异步组件（什么时候用什么时候加载,针对比较大的组件）
+
+设计一个 async 组件
+
+```html
+<template>
+  <div>async</div>
+</template>
+
+<script>
+  export default {};
+</script>
+
+<style></style>
 ```
 
 index.vue
@@ -958,9 +1089,7 @@ index.vue
     </slot-demo>
     <hr />
     <scoped-slot-demo :url="website.url">
-      <template v-slot="slotProps">
-        {{ slotProps.slotData.title }}
-      </template>
+      <template v-slot="slotProps"> {{ slotProps.slotData.title }} </template>
     </scoped-slot-demo>
     <hr />
     <button v-for="tab in tabs" :key="tab">{{ tab }}</button>
@@ -969,66 +1098,56 @@ index.vue
       <component :is="currentTab"></component>
     </keep-alive>
 
+    <hr />
+
+    <AsyncDemo v-show="aFlag" />
+    <button @click="aFlag = true">click me</button>
   </div>
 </template>
 
 <script>
-import CustomVModel from "./CustomVModel.vue";
-import MixinDemo from "./MixinDemo.vue";
-import NextTick from "./NextTick.vue";
-import ScopedSlotDemo from "./ScopedSlotDemo.vue";
-import SlotDemo from "./SlotDemo.vue";
-import Trendi from "./trendi";
-import Trendii from "./trendii";
+  import CustomVModel from "./CustomVModel.vue";
+  import MixinDemo from "./MixinDemo.vue";
+  import NextTick from "./NextTick.vue";
+  import ScopedSlotDemo from "./ScopedSlotDemo.vue";
+  import SlotDemo from "./SlotDemo.vue";
+  import Trendi from "./trendi";
+  import Trendii from "./trendii";
 
-export default {
-  components: {
-    CustomVModel,
-    NextTick,
-    MixinDemo,
-    SlotDemo,
-    ScopedSlotDemo,
-    Trendi,
-    Trendii,
-  },
-  data() {
-    return {
-      name: "aza",
-      website: {
-        url: "http://imooc.com/",
-        title: "imooc",
-        subTitle: "233",
+  export default {
+    components: {
+      CustomVModel,
+      NextTick,
+      MixinDemo,
+      SlotDemo,
+      ScopedSlotDemo,
+      Trendi,
+      Trendii,
+      // eslint-disable-next-line vue/no-unused-components
+      AsyncDemo: () => import("./Async"),
+    },
+    data() {
+      return {
+        name: "aza",
+        website: {
+          url: "http://imooc.com/",
+          title: "imooc",
+          subTitle: "233",
+        },
+        showFormDemo: false,
+        current: "i",
+        tabs: ["i", "ii"],
+        aFlag: false,
+      };
+    },
+    methods: {},
+    computed: {
+      currentTab() {
+        return "Trend" + this.current.toLowerCase();
       },
-      showFormDemo: false,
-      current:"i",
-      tabs: ["i", "ii"],
-    };
-  },
-  methods: {},
-  computed:{
-    currentTab(){
-      return "Trend" + this.current.toLowerCase()
-    }
-  }
-};
+    },
+  };
 </script>
 
 <style></style>
 ```
-
-异步组件（什么时候用什么时候加载,针对比较大的组件）
-
-设计一个async组件
-
-
-
-
-
-
-
-
-
-
-
-
-

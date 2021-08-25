@@ -1,3 +1,8 @@
+import "./stylesheet/index.css";
+import "lodash";
+import _ from "lodash";
+import commonj from "../../common/common";
+
 document.addEventListener("DOMContentLoaded", () => {
   function azaArea() {
     const featBtn = document.querySelector(".feat-btn");
@@ -15,9 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const loadingBox = document.querySelector(".loading-box");
     const itemWrapper = document.querySelector(".square .item-wrapper");
     const mainBox = document.querySelector(".main");
-
     let flagi = false;
     let loadingCounter = 0;
+    let testArr = ["a", "b", "c", "d"];
 
     return (() => {
       function addItem() {
@@ -111,6 +116,21 @@ document.addEventListener("DOMContentLoaded", () => {
       themeCheck.addEventListener("change", () => {
         document.body.classList.toggle("dark");
       });
+
+      //用于source-map浏览器调式
+      //debugger;
+
+      console.log(_.chunk(testArr, 3));
+
+      console.log(commonj());
+
+      //异步加载文件
+      setTimeout(() => {
+        import("./dynamic-data.js").then((res) => {
+          console.log(res.default.message);
+        });
+      }, 1500);
+      
     })();
   }
   azaArea();

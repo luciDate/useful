@@ -65,7 +65,7 @@ html 可以使用`<!--><-->`来注释
 <ul></ul>
 <li></li>
 <a target="_blank"
-  >a标签有的target属性，代表打开网页的方式。可选值为”_self和_blank”，默认值为_self，代表在当前页面打开链接，_blank代表在新窗口打开链接。</a
+  >a标签有的target属性，代表打开网页的方式。可选值为”self和blank”，默认值为self，代表在当前页面打开链接，blank代表在新窗口打开链接。</a
 >
 <table></table>
 <tr></tr>

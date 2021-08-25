@@ -37,7 +37,13 @@ npm uninstall xxx -g
 
 ```
 
-安装生产环境(默认)或开发环境
+安装生产环境(默认)
+
+```bash
+npm install xxx
+```
+
+安装开发环境
 
 ```bash
 npm install xxx -D

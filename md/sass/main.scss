@@ -1,0 +1,29 @@
+$primaryColor: blue;
+$default-font: 16px;
+
+@function toRem($px) {
+  @return $px / $default-font * 1rem;
+}
+
+@import './block.scss';
+
+.container {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $primaryColor;
+  .btn {
+    color: red;
+    &.btn:hover {
+        color: green;
+    }
+  }
+}
+
+.container-2{
+    width: toRem(300px);
+    height: toRem(300px);
+    background: red;
+}

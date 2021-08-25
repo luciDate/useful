@@ -10,7 +10,7 @@
         color: #d62c2c;
       }
 
-      /* li 下一个兄弟元素 */
+      /* li 下一个兄弟元素  */
       #example2 li + li {
         color: #d62c2c;
       }
@@ -92,44 +92,44 @@
         color: darkred;
       } */
       /* 子元素选择器 不包括子孙元素  */
-      #example10 > li{
+      #example10 > li {
         background-color: blue;
       }
-      #example11{
+      #example11 {
         width: 0;
         height: 0;
         border: 40px solid;
         border-color: transparent transparent red transparent;
       }
-      .search-bar{
+      .search-bar {
         display: flex;
         position: relative;
         justify-content: center;
         align-items: center;
       }
-      .example12{
+      .example12 {
         width: 200px;
         height: 50px;
       }
-      .example12:focus{
+      .example12:focus {
         outline: 1px solid blue;
       }
-      .example12:focus + .search-info{
+      .example12:focus + .search-info {
         display: none;
       }
-      .search-info{
+      .search-info {
         position: absolute;
         /* 海市蜃楼效果 */
         pointer-events: none;
       }
       /* 合法输入 */
-      .example12:valid{
+      .example12:valid {
         background-color: coral;
       }
-      .example13{
+      .example13 {
         color: red;
       }
-      .example14{
+      .example14 {
         /* 计算函数 100% 宽度 减去 100px  */
         width: calc(100% - 100px);
         height: 200px;
@@ -186,24 +186,22 @@
       <li>4</li>
     </ul>
     <ul id="example10">
-      <li>
-        1
-      </li>
+      <li>1</li>
       <ul>
         <li>233</li>
       </ul>
       <li>2</li>
     </ul>
     <div id="example11"></div>
-    <br>
+    <br />
     <div class="search-bar">
-      <input type="text" class="example12" value="">
+      <input type="text" class="example12" value="" />
       <div class="search-info">i am pleceholder</div>
     </div>
-    <div class="example13" style="color: blue;">
+    <div class="example13" style="color: blue">
       标签内的style定义大于id,大于class
     </div>
-    <hr>
+    <hr />
     <div class="example14"></div>
   </body>
 </html>

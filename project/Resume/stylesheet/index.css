@@ -432,7 +432,7 @@ header > .max-width > .menu-btn {
   border-radius: 50%;
   transition: all 2s ease;
 }
-.teams > .max-width > .teams-content > .column:hover .item{
+.teams > .max-width > .teams-content > .column:hover .item {
   transform: rotate(-360deg);
 }
 /* contact */
@@ -679,7 +679,7 @@ footer a {
   .contact > .max-width > .contact-content > .left > .icons > .row .info {
     margin-left: 0;
   }
-  .teams > .max-width > .teams-content > .column{
+  .teams > .max-width > .teams-content > .column {
     width: calc(50% - 10px);
     margin-bottom: 10px;
   }
@@ -700,7 +700,7 @@ footer a {
   .services > .max-width > .services-content > .card {
     width: 100%;
   }
-  .teams > .max-width > .teams-content > .column{
+  .teams > .max-width > .teams-content > .column {
     width: 100%;
   }
 }

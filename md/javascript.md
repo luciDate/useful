@@ -919,6 +919,8 @@ console.log(arr);
 //下标0，删除0个,添加8
 arr.splice(0, 0, 8);
 console.log(arr);
+
+
 ```
 
 类数组转数组操作与数组添加删除

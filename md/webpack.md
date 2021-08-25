@@ -285,6 +285,18 @@ webpack.config.js 编辑
 注意 loader 的加载是从下到上那么会先加载 css-loader,再 style-loader
 
 ```javascript
+const path = require("path");
+
+module.exports = {
+  entry: {
+    index: "./src/index.js",
+    search: "./src/search.js",
+  },
+  output: {
+    path: path.join(__dirname, "dist"),
+    filename: "[name].js",
+  },
+  mode: "production",
   module: {
     rules: [
       {
@@ -292,14 +304,12 @@ webpack.config.js 编辑
         use: "babel-loader",
       },
       {
-        test:/.css$/,
-        use:[
-          'style-loader',
-          'css-loader'
-        ]
-      }
+        test: /.css$/,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
+};
 ```
 
 打包完成后新建一个 html 文件
@@ -403,7 +413,20 @@ webpack.config.js
   },
 ```
 
+解析字体
+
+```javascript
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ["file-loader"],
+      },
+```
+
 url-loader 可以设置较小资源转 base64
+
+```bash
+npm install url-loader -D
+```
 
 ```javascript
       {
@@ -421,42 +444,116 @@ url-loader 可以设置较小资源转 base64
 
 设置热更新
 
+```bash
+npm i webpack-dev-server -D
+```
+
 package.json 设置
 
 ```json
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "dev":"webpack-dev-server --open"
+    "dev":"webpack serve --config webpack.dev.js"
   },
 ```
 
-webpack.config.js
+webpack.dev.js
 
 ```javascript
-mode: "development",
-```
+const path = require("path");
 
-这里遇到了比较不愉快的场景，webpack 更新了一些 api 而我学习的又不是最新版本。只能搬来旧版本的 package.json 安装依赖
-
-webpack.config.js module 之后加上
-
-```javascript
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+module.exports = {
+  entry: {
+    index: "./src/index.js",
+    search: "./src/search.js",
+  },
+  output: {
+    path: path.join(__dirname, "dist"),
+    filename: "[name].js",
+  },
+  mode: "development",
+  module: {
+    rules: [
+      {
+        test: /.js$/,
+        use: "babel-loader",
+      },
+      {
+        test: /.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /.(png|jpg|gif|jpeg)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10240,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ["file-loader"],
+      },
+    ],
+  },
   devServer: {
     contentBase: "./dist",
     hot: true,
   },
+};
 ```
 
-package.json
+webpack.prod.js
 
+```javascript
+const path = require("path");
+
+module.exports = {
+  entry: {
+    index: "./src/index.js",
+    search: "./src/search.js",
+  },
+  output: {
+    path: path.join(__dirname, "dist"),
+    filename: "[name].js",
+  },
+  mode: "production",
+  module: {
+    rules: [
+      {
+        test: /.js$/,
+        use: "babel-loader",
+      },
+      {
+        test: /.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /.(png|jpg|gif|jpeg)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10240,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ["file-loader"],
+      },
+    ],
+  },
+};
+```
+
+```bash
 npm run dev
-
-注意 dist 留着引入 js 的 html 文件
-
-```
-"dev": "webpack-dev-server --open"
 ```
 
 文件指纹
@@ -549,11 +646,6 @@ html css js 文件压缩
 
 ```bash
 npm install optimize-css-assets-webpack-plugin -D
-
-npm install mini-css-extract-plugin@0.6.0 -D
-
-npm install cssnano -D
-
 npm install html-webpack-plugin -D
 ```
 
@@ -568,7 +660,6 @@ plugins: [
   }),
   new OptimizeCssAssetsPlugin({
     assetNameRegExp: /\.css$/g,
-    cssProcessor: require("cssnano"),
   }),
 ];
 ```
@@ -637,7 +728,6 @@ module.exports = {
     }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
-      cssProcessor: require("cssnano"),
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src/index.html"),
@@ -684,7 +774,7 @@ npm install clean-webpack-plugin@2.0.2 -D
 webpack.prod.js 与 webpack.dev 编辑
 
 ```javascript
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 {
   plugins: [new CleanWebpackPlugin()];
@@ -774,7 +864,7 @@ index.html
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    ${ require('raw-loader!./meta.html') }
+    <%= require('raw-loader!./meta.html') %>
     <title>Document</title>
     <script>
       ${ require('raw-loader!babel-loader!../node_modules/lib-flexible/flexible.js') }
@@ -1831,18 +1921,24 @@ server 新建 data.json
 }
 ```
 
-编辑src下的index.html 提供占位符 把渲染好的组件通过占位符嵌套到html里面
+编辑 src 下的 index.html 提供占位符 把渲染好的组件通过占位符嵌套到 html 里面
 
 ```html
 <body>
-    <div id="root"><!--HTML_PLACEHOLDER--></div>
-    <script type="text/javascript" src="https://11.url.cn/now/lib/16.2.0/react.min.js"></script>
-    <script type="text/javascript" src="https://11.url.cn/now/lib/16.2.0/react-dom.min.js"></script>
-    <!--INITIAL_DATA_PLACEHOLDER-->
+  <div id="root"><!--HTML_PLACEHOLDER--></div>
+  <script
+    type="text/javascript"
+    src="https://11.url.cn/now/lib/16.2.0/react.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://11.url.cn/now/lib/16.2.0/react-dom.min.js"
+  ></script>
+  <!--INITIAL_DATA_PLACEHOLDER-->
 </body>
 ```
 
-编辑server文件夹下的index.js
+编辑 server 文件夹下的 index.js
 
 ```javascript
 if (typeof window === "undefined") global.window = {};
@@ -1893,18 +1989,12 @@ server(process.env.PORT || 3000);
 npm install friendly-errors-webpack-plugin -D
 ```
 
-编辑webpack.prod.js与webpack.dev.js
+编辑 webpack.prod.js 与 webpack.dev.js
 
 ```javascript
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 
-new FriendlyErrorsWebpackPlugin()
+new FriendlyErrorsWebpackPlugin();
 ```
 
-webpack错误码见37号视频
-
-
-
-
-
-
+webpack 错误码见 37 号视频
