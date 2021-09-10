@@ -55,26 +55,21 @@ let ii = 100 + "10"; // 10010
 100 == "100"; //100转换为字符串100 true
 0 == ""; //0和空字符串都转换为false true
 null == undefined; // true
+100 === "100"; //false
 
 // if判断
-let a = true;
+let a = 100;
+let b = "";
 
 if (a) {
-  //过
+  console.log("x");
 }
 
-let b = 100;
-if (b) {
-  //过
+if (!b) {
+  console.log("o");
 }
 
-let c = ""; //0或者""
-
-if (!c) {
-  console.log("bingo");
-}
-
-console.log(10 && 0); //0
+console.log(10 && "x"); //0
 console.log("" || "abc"); //abc
 console.log(!window.abc); //true
 
@@ -85,8 +80,9 @@ console.log(!!a); //true
 ```javascript
 // 除了用来判断一个变量是否是null或者undefined使用==。剩下的全部使用 ===
 
+let obj = { b: "b" };
 if (obj.a == null) {
-  console.log("bingo");
+  console.log("x");
 }
 ```
 
@@ -176,12 +172,11 @@ i ? console.log("233") : console.log("666");
 
 //while 循环
 //一般用于不知道循环次数的情况。维持循环的是一个条件表达式，条件成立执行循环体，条件不成立退出循环。
-const c = document.querySelector(".container");
-//复数item
-const items = document.querySelectorAll(".item");
+let i = 1;
 
-while (items.length > 0) {
-  c.removeChild(c.children[0]);
+while(i <= 10){
+  console.log("x")
+  i++;
 }
 
 //do while循环 先执行一次代码块。再按条件真假决定是否继续
@@ -202,15 +197,12 @@ let v = 100;
 
 //展开符
 function i(name, age) {
-  return (...arguments) => {
+  return ((...arguments) => {
     console.log(name);
-  };
+  })();
 }
-const ii = i("aza", 99);
-ii();
+i("j",12);
 
-const result = test("aza", 10);
-result();
 
 const arr = [1, 2, 3];
 const arri = [4, 5, 6];
@@ -245,12 +237,12 @@ if (i === 0) console.log("233");
 
 //箭头函数只有一个形参可以省略()
 //只有一行可以省略{} 和 return
-const test = (x) => x;
-console.log(test("6"));
+const i = x => x;
+console.log(i("aza"));
 
 //函数返回对象一些情况需要()包起来
-const a = (x) => ({ x: 100 });
-console.log(a("number"));
+const i = () => ({ x: 100 });
+console.log(i());
 
 //动态键名
 const i = "name";
@@ -303,8 +295,7 @@ const routes = [
       {
         name: "id-4",
         path: "/id-4",
-        hide: true,
-        children: [{ name: "id-4-1" }],
+        children: [{ name: "id-4-1", hide: true, path: "/id-4-1" }],
       },
     ],
   },
@@ -313,16 +304,15 @@ const routes = [
 //过滤掉数组中hide:true和子数组hide:true
 function formatData(data) {
   const arr = [];
-  for (let index = 0; index < data.length; index++) {
-    if (data[index].name && data[index].children && !data[index].hide) {
-      let newItem = { ...data[index] };
-      delete newItem.children;
-      if (data[index].children && !data[index].children.hide) {
-        newItem.children = formatData(data[index].children);
+  for (let i = 0; i < data.length; i++) {
+    if (data[i].name && data[i].children && !data[i].hide) {
+      let newItem = { ...data[i] };
+      if (data[i].children && !data[i].children.hide) {
+        newItem.children = formatData(data[i].children);
       }
       arr.push(newItem);
-    } else if (!data[index].children && !data[index].hide) {
-      arr.push(data[index]);
+    } else if (!data[i].children && !data[i].hide) {
+      arr.push(data[i]);
     }
   }
   return arr;
@@ -359,6 +349,7 @@ function azaii(num) {
 //对象双重解构
 const item = { id: 1, title: "华为 Mate 20", price: 3999, inventory: 2 };
 const number = 3;
+// item = item , number = number
 const itemPuls = { item, number };
 console.log(itemPuls);
 
@@ -370,23 +361,6 @@ function i({ item: { id }, number }) {
 
 i(itemPuls);
 
-//斐波那契数列函数
-//也就是前两项的值相加得到第三项的值
-//参数集合与变量复数重新赋值
-function fib(n) {
-  if (n == 0) return;
-  console.count("调用次数");
-  console.trace();
-  let a = arguments[1] || 1;
-  let b = arguments[2] || 1;
-  console.log("fib=" + a);
-  [a, b] = [b, a + b];
-  fib(--n, a, b);
-}
-
-fib(6);
-
-// 1 2 / 2 3 / 3 5 / 5 8 / 8 13
 ```
 
 ---
@@ -417,7 +391,7 @@ class People {
     console.log(`${this.name} eat something`);
   }
   speak() {
-    console.log(`my name is ${this.name} , i am ${age} year old`);
+    console.log(`my name is ${this.name} , i am ${this.age} year old`);
   }
 }
 
@@ -598,20 +572,23 @@ Q : 创建 10 个`<a>`标签，点击弹出序号
 A :
 
 ```javascript
-//建立一个空节点避免过多DOM操作
-const u = document.createElement("ul");
-u.addEventListener("click", (e) => {
+const ul = document.createElement("ul");
+
+for (let i = 1; i <= 10; i++) {
+  const li = document.createElement("li");
+  li.innerHTML = i;
+  li.classList.add("item");
+  ul.appendChild(li);
+}
+
+ul.addEventListener("click", (e) => {
   if (e.target.classList.contains("item")) {
     console.log(e.target.innerHTML);
   }
 });
-for (let index = 1; index <= 10; index++) {
-  const l = document.createElement("li");
-  l.innerHTML = index;
-  l.classList.add("item");
-  u.appendChild(l);
-}
-document.body.appendChild(u);
+
+//window 指的是一个文档 window指的是一个浏览器窗口
+document.body.appendChild(ul);
 ```
 
 Q : 如何理解作用域
@@ -768,6 +745,7 @@ d.getSeconds();
 ```javascript
 const str = "helloWorld";
 const result = str.indexOf("hello");
+//找到返回下标，同样适用于数组
 //没有返回-1
 console.log(result);
 
@@ -788,7 +766,8 @@ console.log(newStr);
 
 //字符串数字互转
 let i = "6";
-let ii = +6;
+//字符串转数字
+let ii = +i;
 console.log(typeof ii);
 let iii = ii.toString();
 console.log(typeof iii);
@@ -808,11 +787,11 @@ console.log(formatRandom(5, 1).toFixed(0));
 
 //JavaScript在精度计算上会有偏差
 //parseFloat()解析字符串返回浮点数
-let n = 6.666;
-let nn = 5.123;
-let nnn = n + nn;
-console.log(nnn);
-console.log(parseFloat(nnn.toFixed(0)));
+const i = 6.6666;
+const ii = 1.1111;
+const iii = i + ii;
+//结果竟然是7.777699999999999
+console.log(parseFloat(iii).toFixed(2));
 ```
 
 数组
@@ -834,12 +813,15 @@ for (let index = 0; index < arr.length; index++) {
 }
 
 //item检查
+
+//每一个都是2返回true
 const result = arr.every((item, index) => {
   if (item == 2) {
     return true;
   }
 });
 console.log(result);
+//只有一个是2返回false
 const resolve = arr.some((item, index) => {
   if (item == 2) {
     return true;
@@ -865,21 +847,21 @@ arrMap = arr.map((item, index) => {
 
 //映射结构
 const azaData = [
-    { id: 1, title: "n1" },
-    { id: 2, title: "n2" },
-    { id: 3, title: "n3" },
-    { id: 4, title: "n4" },
-    { id: 5, title: "n5" }
-]
+  { id: 1, title: "n1" },
+  { id: 2, title: "n2" },
+  { id: 3, title: "n3" },
+  { id: 4, title: "n4" },
+  { id: 5, title: "n5" },
+];
 
 const daftArr = azaData.map(({ id, title }) => {
-    return {
-        xid: id,
-        xtitle: title
-    }
-})
+  return {
+    xid: id,
+    xtitle: title,
+  };
+});
 
-console.log(daftArr)
+console.log(daftArr);
 
 //数组转字符串
 console.log(arrMap.join(""));
@@ -900,27 +882,18 @@ const result = arr.find((item) => {
 console.log(result);
 
 //数组深拷贝
-const arr = [1, 2, 3, 4, 5];
-let arri = arr;
-arri[0] = 11;
-
-console.log(arr);
-console.log(arri);
-
 const arrr = Object.assign([], arr);
 arrr[0] = 666;
 console.log(arr);
 console.log(arrr);
 
 let arr = [1, 2, 3, 4, 5];
-//下标1开始，删除一个，再添加9，也就是替换了
+//当前下标1开始，删除一个，再添加9，也就是替换了
 arr.splice(1, 1, 9);
 console.log(arr);
 //下标0，删除0个,添加8
 arr.splice(0, 0, 8);
 console.log(arr);
-
-
 ```
 
 类数组转数组操作与数组添加删除
@@ -936,15 +909,17 @@ console.log(arr);
   </div>
   <script>
     const c = document.querySelector(".container");
-    const items = [...document.querySelectorAll(".item")];
-    const length = items.length;
+    let items = [...document.querySelectorAll(".item")];
     const item = document.createElement("div");
 
     item.className = "item";
-    item.innerText = "new";
+    item.innerHTML = "new";
     items.splice(2, 0, item);
-    for (let index = 0; index < items.length; index++) {
-      c.appendChild(items[index]);
+    let length = items.length;
+
+    //相同dom节点会自行替换
+    for (let i = 0; i < length; i++) {
+      c.appendChild(items[i]);
     }
   </script>
 </body>
@@ -1043,14 +1018,14 @@ Q : DOM 节点操作
 ```html
 <body>
   <div class="test">
-    <input type="text" />
+    <input type="text" value="666" />
   </div>
 
   <script>
     const i = document.querySelector(".test");
     const ii = document.getElementsByTagName("input");
     console.log(i.tagName);
-    console.log(ii);
+    console.log(ii[0].value);
   </script>
 </body>
 ```
