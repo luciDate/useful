@@ -1,0 +1,663 @@
+@charset "UTF-8";
+a,
+abbr,
+acronym,
+address,
+applet,
+article,
+aside,
+audio,
+b,
+big,
+blockquote,
+body,
+button,
+canvas,
+caption,
+center,
+cite,
+code,
+dd,
+del,
+details,
+dfn,
+div,
+dl,
+dt,
+em,
+embed,
+fieldset,
+figcaption,
+figure,
+footer,
+form,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+hgroup,
+html,
+i,
+iframe,
+img,
+input,
+ins,
+kbd,
+label,
+legend,
+li,
+mark,
+menu,
+nav,
+object,
+ol,
+output,
+p,
+pre,
+q,
+ruby,
+s,
+samp,
+section,
+small,
+span,
+strike,
+strong,
+sub,
+summary,
+sup,
+table,
+tbody,
+td,
+textarea,
+tfoot,
+th,
+thead,
+time,
+tr,
+tt,
+u,
+ul,
+li,
+var,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:after,
+blockquote:before,
+q:after,
+q:before {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+body {
+  display: block;
+  background-color: #fff;
+  color: #3c3c3c;
+  font-size: 16px;
+  font-family: PingFang SC, Microsoft Yahei, monospace;
+  -webkit-font-smoothing: antialiased;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  border: none;
+  display: block;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+.clear-fix:after,
+.clear-fix:before {
+  content: "";
+  display: table;
+}
+
+.clear-fix:after {
+  clear: both;
+}
+
+.float-l {
+  float: left;
+}
+
+.float-r {
+  float: right;
+}
+
+.wrapperBox {
+  width: 100%;
+  height: 40px;
+  background: #00848a;
+  /* 两个元素重叠需要position:relative 需笔记 */
+}
+
+.wrapperBox .navBar {
+  /* 需笔记 */
+  width: 1400px;
+  min-width: 1400px;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.wrapperBox .navBar .logo {
+  width: 34px;
+  height: 31px;
+}
+
+.wrapperBox .navBar .logo img {
+  margin: 4px 0 0 0;
+}
+
+.wrapperBox .navBar nav ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.wrapperBox .navBar nav ul li a {
+  display: inline-block;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 10px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.wrapperBox .navBar nav ul li a:hover {
+  color: #008484;
+  background: #fff;
+}
+
+.wrapperBox .bannerBox {
+  width: 100%;
+  height: 640px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #ddd;
+}
+
+.wrapperBox .bannerBox ul .img {
+  position: absolute;
+  width: 100%;
+  height: 640px;
+  opacity: 0;
+  -webkit-transition: all .65s;
+  transition: all .65s;
+  /* 需笔记 同级类向上覆盖 */
+}
+
+.wrapperBox .bannerBox ul .img:nth-child(1) {
+  background: url(../images/banner/banner01.png) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.wrapperBox .bannerBox ul .img:nth-child(2) {
+  background: url(../images/banner/banner02.png) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.wrapperBox .bannerBox ul .img:nth-child(3) {
+  background: url(../images/banner/banner03.png) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.wrapperBox .bannerBox ul .img:nth-child(4) {
+  background: url(../images/banner/banner04.png) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.wrapperBox .bannerBox ul .img:nth-child(5) {
+  background: url(../images/banner/banner05.png) no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.wrapperBox .bannerBox ul .img.current {
+  opacity: 1;
+}
+
+.wrapperBox .bannerBox .dots {
+  position: absolute;
+  width: 130px;
+  bottom: 40px;
+  left: 50%;
+  margin: 0 0 0 -50px;
+}
+
+.wrapperBox .bannerBox .dots span {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border: solid 1px rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+.wrapperBox .bannerBox .dots span:not(:last-child) {
+  margin: 0 5px 0 0;
+}
+
+.wrapperBox .bannerBox .dots span.square {
+  background: #00848a;
+}
+
+.wrapperBox .searchBox {
+  width: 975px;
+  height: 68px;
+  margin: 0 auto;
+  background: #fff;
+  position: relative;
+  margin-top: -30px;
+  border-radius: 5px;
+  /* x轴偏移 y轴偏移 阴影距离 阴影模糊 阴影颜色 */
+  -webkit-box-shadow: 0 0 2px 0 #ccc;
+          box-shadow: 0 0 2px 0 #ccc;
+}
+
+.wrapperBox .searchBox form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /* input框首行缩进 */
+}
+
+.wrapperBox .searchBox form input {
+  width: 907px;
+  height: 68px;
+  text-indent: 20px;
+  border-radius: 5px;
+}
+
+.wrapperBox .searchBox form input[type="submit"] {
+  width: 68px;
+  height: 68px;
+  background: url(../images/icon/searchicon.png) no-repeat center;
+  /* infinite 函数可以让动画无限次运行也可以指定次数  */
+  /* 默认动画从0变为-8以此类推  alternate属性可以让动画0到-8，再又-8到0 动画的过度会更自然 */
+  -webkit-animation: bounce 0.75s infinite alternate;
+          animation: bounce 0.75s infinite alternate;
+}
+
+@-webkit-keyframes bounce {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(0, -8px, 0);
+            transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes bounce {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(0, -8px, 0);
+            transform: translate3d(0, -8px, 0);
+  }
+}
+
+.wrapperBox .oddsBox {
+  width: 1400px;
+  margin: 30px auto;
+}
+
+.wrapperBox .oddsBox .title p {
+  display: inline-block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: #00848a;
+  color: #fff;
+  font-size: 22px;
+}
+
+.wrapperBox .oddsBox .title span {
+  height: 40px;
+  font-size: 22px;
+  display: inline-block;
+  padding: 0 0 0 10px;
+}
+
+.wrapperBox .oddsBox .title span i {
+  display: inline-block;
+  font-style: normal;
+  padding: 0 5px;
+  -webkit-animation: bounce 0.75s infinite alternate;
+          animation: bounce 0.75s infinite alternate;
+  color: #00848a;
+}
+
+.wrapperBox .oddsBox .content {
+  margin-top: 20px;
+}
+
+.wrapperBox .oddsBox .content .list-odds {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.wrapperBox .oddsBox .content .list-odds .list_nav {
+  padding: 15px 45px;
+  background: #fff;
+  -webkit-box-shadow: 0 0 4px 0 #ccc;
+          box-shadow: 0 0 4px 0 #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.wrapperBox .oddsBox .content .list-odds .list_nav.current_option {
+  background: #00848a;
+  color: #fff;
+}
+
+.wrapperBox .productInfo {
+  width: 1410px;
+  margin: 0 auto;
+  display: none;
+}
+
+.wrapperBox .productInfo.current {
+  display: block;
+}
+
+.wrapperBox .productInfo .productBox {
+  margin: 0 -5px 0 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.wrapperBox .productInfo .productBox .infoBox {
+  width: 342.5px;
+  background: #fff;
+  margin: 20px 10px 0 0;
+}
+
+.wrapperBox .productInfo .productBox .infoBox span {
+  font-size: 12px;
+}
+
+.wrapperBox .productInfo .productBox .infoBox p:first-child {
+  width: 343.5px;
+  height: 222px;
+  border: 1px solid #fff;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.wrapperBox .productInfo .productBox .infoBox p:first-child img {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  -webkit-transition: all 0.6s;
+  transition: all 0.6s;
+}
+
+.wrapperBox .productInfo .productBox .infoBox p:first-child img:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+.wrapperBox .productInfo .productBox .infoBox p s {
+  margin: 0 5px;
+}
+
+.wrapperBox .productInfo .productBox .infoBox .title {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.wrapperBox .productInfo .productBox .infoBox ul {
+  margin: 10px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.wrapperBox .productInfo .productBox .infoBox ul li {
+  font-size: 12px;
+}
+
+.wrapperBox .productInfo .productBox .infoBox ul li img {
+  margin: 0 15px 0 0;
+}
+
+.wrapperBox .wantgoBox {
+  width: 1400px;
+  margin: 30px auto 0 auto;
+}
+
+.wrapperBox .wantgoBox .title p {
+  display: inline-block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: #00848a;
+  color: #fff;
+  font-size: 22px;
+}
+
+.wrapperBox .wantgoBox .title span {
+  height: 40px;
+  font-size: 22px;
+  display: inline-block;
+  padding: 0 0 0 10px;
+}
+
+.wrapperBox .wantgoBox ul {
+  margin: 20px 0 0 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.wrapperBox .wantgoBox ul li {
+  width: 193px;
+  height: 241px;
+  position: relative;
+}
+
+.wrapperBox .wantgoBox ul li img {
+  width: 100%;
+  height: 100%;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.wrapperBox .wantgoBox ul li img:hover {
+  -webkit-filter: brightness(0.2);
+          filter: brightness(0.2);
+}
+
+.wrapperBox .wantgoBox ul li p {
+  font-size: 14px;
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  -webkit-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+}
+
+.wrapperBox .wantgoBox ul li p span {
+  display: block;
+  margin: 10px 0 0 0;
+  color: #fff;
+}
+
+.wrapperBox .ensureBox {
+  width: 1400px;
+  margin: 30px auto 0 auto;
+}
+
+.wrapperBox .ensureBox .title p {
+  display: inline-block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background: #00848a;
+  color: #fff;
+  font-size: 22px;
+}
+
+.wrapperBox .ensureBox .title span {
+  height: 40px;
+  font-size: 22px;
+  display: inline-block;
+  padding: 0 0 0 10px;
+}
+
+.wrapperBox .ensureBox .ensureList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.wrapperBox .ensureBox .ensureList dl {
+  width: 433px;
+  margin: 20px 0 0 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  /* 文本超出宽度自动折行 需笔记 */
+}
+
+.wrapperBox .ensureBox .ensureList dl dt {
+  margin: 0 20px 0 0;
+}
+
+.wrapperBox .ensureBox .ensureList dl dd {
+  font-size: 16px;
+  line-height: 1.6;
+  width: 300px;
+}
+
+.wrapperBox .fixBox {
+  width: 100%;
+  background: #00848a;
+}
+
+.wrapperBox .fixBox .listlinkBox {
+  width: 1400px;
+  margin: 30px auto 0px auto;
+  padding: 20px 0 20px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background: #00848a;
+}
+
+.wrapperBox .fixBox .listlinkBox dl {
+  line-height: 32px;
+}
+
+.wrapperBox .fixBox .listlinkBox dl dt {
+  font-weight: 600;
+  color: rgba(201, 201, 201, 0.85);
+}
+
+.wrapperBox .fixBox .listlinkBox dl dd {
+  color: white;
+  font-size: 14px;
+}
+
+.wrapperBox .copyBox {
+  text-align: center;
+  font-size: 14px;
+  background: #00848a;
+  padding: 10px 0;
+  color: #fff;
+}
+/*# sourceMappingURL=index.css.map */

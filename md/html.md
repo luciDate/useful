@@ -67,32 +67,57 @@ html 可以使用`<!--><-->`来注释
 <a target="_blank"
   >a标签有的target属性，代表打开网页的方式。可选值为”self和blank”，默认值为self，代表在当前页面打开链接，blank代表在新窗口打开链接。</a
 >
-<table></table>
-<tr></tr>
-<th></th>
-<td></td>
+<table border="1">
+  <th>1</th>
+  <th>2</th>
+  <th>3</th>
+  <tr>
+    <td>1</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>2</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>3</td>
+    <td>3</td>
+  </tr>
+</table>
 -----------------form包裹-----------------------
-<form method="传送方式" action="服务器地址"></form>
-<label for="name"></label>
+<form action="服务器地址" method="传输方式">
+  <input type="text" />
+  <br />
+  <br />
+  <textarea name="" id="" cols="30" rows="10">文本框</textarea>
+  <br />
+  <br />
+  <select name="" id="">
+    <option value="">下拉选择框</option>
+    <option value="">1</option>
+    <option value="">2</option>
+  </select>
+  <br />
+  <br />
+  <label for="num-1">单选框</label>
+  <input type="radio" name="num-1" id="num-1" />
+  <input type="radio" name="num-1" id="num-1" />
+  <br />
+  <br />
+  <label for="">复选框</label>
+  <input type="checkbox" name="" id="" />
+  <input type="checkbox" name="" id="" />
+  <input type="checkbox" name="" id="" />
+  <br />
+  <br />
+  <input type="submit" value="提交" />
+  <input type="reset" value="重置" />
 
-<input id="name" type="text" placeholder="请输入" />
-<input type="password" />
-<input type="number" />
-<input type="email" />
-<textarea>文本域</textarea>
-<select>
-  <option value=""></option>
-  <option value="">下拉选择框</option>
-  <option value="book">book</option>
-  <option value="food">food</option>
-</select>
-<label for="">
-  <input type="readio" value="单选框" />
-  <input type="checkbox" value="复选框" />
-</label>
-<input type="submit" value="提交" />
-<input type="reset" value="重置" />
-<button>click me</button>
+  <button>click me</button>
+</form>
 
 ------------------------------------------------
 ```
@@ -303,4 +328,59 @@ y 轴对齐 ： `align-items: flex-start | flex-end | center | baseline | stretc
   /* 第一个参数是x轴 之后y轴 */
   transform: translate(-50%, -50%);
 }
+```
+
+整个页面居中
+
+```css
+.box {
+  width: 300px;
+  height: 300px;
+  background: cyan;
+  position: relative;
+}
+.box-c {
+  width: 200px;
+  height: 150px;
+  background: darkblue;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -75px 0 0 -100px;
+}
+```
+
+怎么消除 inline-block 下的空隙
+
+```html
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .container {
+    width: 1000px;
+    height: 300px;
+    background: grey;
+    font-size: 0;
+  }
+  .item {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    background: white;
+  }
+</style>
+<body>
+  <div class="container">
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+  </div>
+  <script></script>
+</body>
 ```

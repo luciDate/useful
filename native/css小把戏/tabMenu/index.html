@@ -1,167 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.css" rel="stylesheet" />
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.2/css/all.css"
+      rel="stylesheet"
+    />
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            background: #17a2b8;
-        }
+      body {
+        background: #17a2b8;
+      }
 
-        .wrapper {
-            max-width: 700px;
-            width: 100%;
-            margin: 130px auto;
-            background: #fff;
-            padding: 25px 30px 30px 30px;
-        }
+      .wrapper {
+        max-width: 700px;
+        width: 100%;
+        margin: 130px auto;
+        background: #fff;
+        padding: 25px 30px 30px 30px;
+      }
 
-        .wrapper>header {
-            font-size: 30px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
+      .wrapper > header {
+        font-size: 30px;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
 
-        .wrapper>nav {
-            position: relative;
-            height: 50px;
-            width: 80%;
-            display: flex;
-            align-items: center;
-        }
+      .wrapper > nav {
+        position: relative;
+        height: 50px;
+        width: 80%;
+        display: flex;
+        align-items: center;
+      }
 
-        .wrapper>nav>label {
-            display: block;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-            line-height: 50px;
-            cursor: pointer;
-            color: #17a2b8;
-            z-index: 1;
-            position: relative;
-            transition: all 0.3s ease;
-        }
+      .wrapper > nav > label {
+        display: block;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        line-height: 50px;
+        cursor: pointer;
+        color: #17a2b8;
+        z-index: 1;
+        position: relative;
+        transition: all 0.3s ease;
+      }
 
-        #home:checked~nav label.home,
-        #blog:checked~nav label.blog,
-        #code:checked~nav label.code,
-        #help:checked~nav label.help,
-        #about:checked~nav label.about {
-            color: #fff;
-        }
+      #home:checked ~ nav label.home,
+      #blog:checked ~ nav label.blog,
+      #code:checked ~ nav label.code,
+      #help:checked ~ nav label.help,
+      #about:checked ~ nav label.about {
+        color: #fff;
+      }
 
-        input[type="radio"] {
-            display: none;
-        }
+      input[type="radio"] {
+        display: none;
+      }
 
-        .wrapper>nav>label>i {
-            padding-right: 7px;
-        }
+      .wrapper > nav > label > i {
+        padding-right: 7px;
+      }
 
-        .wrapper>nav>.slider {
-            position: absolute;
-            height: 100%;
-            width: 20%;
-            background: #17a2b8;
-            border-radius: 5px;
-            z-index: 0;
-            left: 0;
-            bottom: 0;
-            transition: all 0.3s ease;
-        }
+      .wrapper > nav > .slider {
+        position: absolute;
+        height: 100%;
+        width: 20%;
+        background: #17a2b8;
+        border-radius: 5px;
+        z-index: 0;
+        left: 0;
+        bottom: 0;
+        transition: all 0.3s ease;
+      }
 
-        #blog:checked~nav .slider {
-            left: 20%;
-        }
+      #blog:checked ~ nav .slider {
+        left: 20%;
+      }
 
-        #code:checked~nav .slider {
-            left: 40%;
-        }
+      #code:checked ~ nav .slider {
+        left: 40%;
+      }
 
-        #help:checked~nav .slider {
-            left: 60%;
-        }
+      #help:checked ~ nav .slider {
+        left: 60%;
+      }
 
-        #about:checked~nav .slider {
-            left: 80%;
-        }
+      #about:checked ~ nav .slider {
+        left: 80%;
+      }
 
-        section>.content {
-            display: none;
-        }
+      section > .content {
+        display: none;
+      }
 
-        #home:checked~section .content-1,
-        #blog:checked~section .content-2,
-        #code:checked~section .content-3,
-        #help:checked~section .content-4,
-        #about:checked~section .content-5 {
-            display: block;
-        }
+      #home:checked ~ section .content-1,
+      #blog:checked ~ section .content-2,
+      #code:checked ~ section .content-3,
+      #help:checked ~ section .content-4,
+      #about:checked ~ section .content-5 {
+        display: block;
+      }
 
-        section>.content>.title {
-            font-size: 21px;
-            font-weight: 500;
-            margin: 30px 0 10px 0;
-        }
+      section > .content > .title {
+        font-size: 21px;
+        font-weight: 500;
+        margin: 30px 0 10px 0;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="wrapper">
+      <header>Pure CSS Tabs</header>
+      <input type="radio" name="slider" id="home" checked />
+      <input type="radio" name="slider" id="blog" />
+      <input type="radio" name="slider" id="code" />
+      <input type="radio" name="slider" id="help" />
+      <input type="radio" name="slider" id="about" />
 
-        <header>Pure CSS Tabs</header>
-        <input type="radio" name="slider" id="home" checked />
-        <input type="radio" name="slider" id="blog" />
-        <input type="radio" name="slider" id="code" />
-        <input type="radio" name="slider" id="help" />
-        <input type="radio" name="slider" id="about" />
+      <nav>
+        <label for="home" class="home"><i class="fas fa-home"></i>Home</label>
+        <label for="blog" class="blog"><i class="fas fa-blog"></i>Blog</label>
+        <label for="code" class="code"><i class="fas fa-code"></i>Code</label>
+        <label for="help" class="help"
+          ><i class="far fa-envelope"></i>Help</label
+        >
+        <label for="about" class="about"><i class="far fa-user"></i>Aout</label>
+        <div class="slider"></div>
+      </nav>
 
-        <nav>
-            <label for="home" class="home"><i class="fas fa-home"></i>Home</label>
-            <label for="blog" class="blog"><i class="fas fa-blog"></i>Blog</label>
-            <label for="code" class="code"><i class="fas fa-code"></i>Code</label>
-            <label for="help" class="help"><i class="far fa-envelope"></i>Help</label>
-            <label for="about" class="about"><i class="far fa-user"></i>Aout</label>
-            <div class="slider"></div>
-        </nav>
-
-        <section>
-            <div class="content content-1">
-                <div class="title">this is a home page</div>
-                <p>111</p>
-            </div>
-            <div class="content content-2">
-                <div class="title">this is a blog page</div>
-                <p>222</p>
-            </div>
-            <div class="content content-3">
-                <div class="title">this is a code page</div>
-                <p>333</p>
-            </div>
-            <div class="content content-4">
-                <div class="title">this is a help page</div>
-                <p>444</p>
-            </div>
-            <div class="content content-5">
-                <div class="title">this is a about page</div>
-                <p>555</p>
-            </div>
-        </section>
-
-
-
+      <section>
+        <div class="content content-1">
+          <div class="title">this is a home page</div>
+          <p>111</p>
+        </div>
+        <div class="content content-2">
+          <div class="title">this is a blog page</div>
+          <p>222</p>
+        </div>
+        <div class="content content-3">
+          <div class="title">this is a code page</div>
+          <p>333</p>
+        </div>
+        <div class="content content-4">
+          <div class="title">this is a help page</div>
+          <p>444</p>
+        </div>
+        <div class="content content-5">
+          <div class="title">this is a about page</div>
+          <p>555</p>
+        </div>
+      </section>
     </div>
-</body>
-
+  </body>
 </html>

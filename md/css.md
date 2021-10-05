@@ -184,8 +184,9 @@
   .box-3 {
     width: 100px;
     height: 50px;
-    border: 1px solid blue;
-    border-radius: 100px 100px 0 0;
+    background: gold;
+    margin: 50px 0 0 50px;
+    border-radius: 50% / 100% 100% 0 0;
   }
 
   /* 半三角 */

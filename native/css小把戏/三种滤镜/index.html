@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container .item:nth-child(1){
+        width: 1000px;
+        height: 100vh;
+        /* background设定只能在一个类里面设置并不能抽取共性继承 */
+        background: url(./main_visual.jpg);
+        /* 让图片自适应DOM */
+        background-size: cover;
+        /* 图片不重复 */
+        background-repeat: no-repeat;
+        /* 以DOM为容器 让图片向x轴y轴移动 */
+        background-position: -150px 0px;
+        /* 黑色滤镜 */
+        filter: brightness(0.20);
+      }
+      .container .item:nth-child(2){
+        width: 1000px;
+        height: 100vh;
+        /* background设定只能在一个类里面设置并不能抽取共性继承 */
+        background: url(./main_visual.jpg);
+        /* 让图片自适应DOM */
+        background-size: cover;
+        /* 图片不重复 */
+        background-repeat: no-repeat;
+        /* 以DOM为容器 让图片向x轴y轴移动 */
+        background-position: -150px 0px;
+        /* 灰色滤镜 */
+        filter: grayscale(90%);
+      }
+      .container .item:nth-child(3){
+        width: 1000px;
+        height: 100vh;
+        /* background设定只能在一个类里面设置并不能抽取共性继承 */
+        background: url(./main_visual.jpg);
+        /* 让图片自适应DOM */
+        background-size: cover;
+        /* 图片不重复 */
+        background-repeat: no-repeat;
+        /* 以DOM为容器 让图片向x轴y轴移动 */
+        background-position: -150px 0px;
+        /* 模糊滤镜 */
+        filter: blur(5px);
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="item"></div>
+      <div class="item"></div>
+      <div class="item"></div>
+    </div>
+  </body>
+</html>

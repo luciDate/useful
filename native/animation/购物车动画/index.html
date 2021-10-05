@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 1200px;
+        height: 100vh;
+        border: 1px solid blue;
+        margin: 0 auto;
+        position: relative;
+      }
+      .container nav {
+        height: 90px;
+        background: #d9d9d9;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .container .item-wrapper {
+        display: flex;
+        margin: 20px 0 0 0;
+        justify-content: space-evenly;
+      }
+      .container .item-wrapper .item {
+        width: 200px;
+        height: 260px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+      .container .item-wrapper .item button {
+        margin: 10px 0 0 0;
+        padding: 5px 5px;
+      }
+      .zoom {
+        position: absolute;
+        top: 30px;
+        right: 50%;
+        width: 50px;
+        height: 50px;
+        opacity: 0;
+        animation: zoom 1s;
+      }
+      @keyframes zoom {
+        0% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          right: 50px;
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <div class="text-logo">welecom</div>
+        <img
+          src="./images/basket.png"
+          alt=""
+          class="icon"
+          width="48"
+          height="48"
+        />
+      </nav>
+      <section class="item-wrapper">
+        <div class="item">
+          <img src="./images/t-1.jpg" alt="" />
+          <button class="t-btn">add to cart</button>
+        </div>
+        <div class="item">
+          <img src="./images/t-2.jpg" alt="" />
+          <button class="t-btn">add to cart</button>
+        </div>
+        <div class="item">
+          <img src="./images/t-3.jpg" alt="" />
+          <button class="t-btn">add to cart</button>
+        </div>
+      </section>
+    </div>
+    <script>
+      const container = document.querySelector(".item-wrapper");
+      const box = document.querySelector(".container");
+
+      container.addEventListener("click", (e) => {
+        if (e.target.classList.contains("t-btn")) {
+          const img = e.target.previousElementSibling.cloneNode();
+          img.classList.add("zoom");
+          box.appendChild(img);
+
+          setTimeout(() => {
+            box.removeChild(img);
+          }, 1000);
+        }
+      });
+    </script>
+  </body>
+</html>

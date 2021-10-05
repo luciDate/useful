@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      li {
+        list-style: none;
+      }
+      body {
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+      }
+      .carousel {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        margin: -150px 0 0 -250px;
+        width: 500px;
+        height: 300px;
+        overflow: hidden;
+      }
+      .carousel .img-wrapper .item {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        opacity: 0;
+        transition: opacity 1s;
+      }
+      .carousel .img-wrapper .item:nth-child(1) {
+        background: red;
+      }
+      .carousel .img-wrapper .item:nth-child(2) {
+        background: blue;
+      }
+      .carousel .img-wrapper .item:nth-child(3) {
+        background: green;
+      }
+      .carousel .img-wrapper .item.active {
+        opacity: 1;
+        z-index: 2;
+      }
+      .carousel .btn {
+        width: 50px;
+        height: 100px;
+        position: absolute;
+        top: 50%;
+        margin: -50px 0 0 0px;
+        z-index: 100;
+      }
+      #goPre {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        left: 0px;
+        text-align: center;
+        line-height: 100px;
+        background: #d9d9d9;
+        cursor: pointer;
+      }
+      #goPre .triangle {
+        width: 0;
+        height: 0;
+        border: 12px solid;
+        border-color: transparent black transparent transparent;
+        transform: translate(-8px);
+      }
+      #goNext {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 0px;
+        text-align: center;
+        line-height: 100px;
+        background: #d9d9d9;
+        cursor: pointer;
+      }
+      #goNext .triangle {
+        width: 0;
+        height: 0;
+        border: 12px solid;
+        border-color: transparent transparent transparent black;
+        transform: translate(8px);
+      }
+      .point-list {
+        position: absolute;
+        bottom: 20px;
+        left: 15px;
+        z-index: 3;
+        display: flex;
+        left: 50%;
+        transform: translate(-50%);
+      }
+      .point-list .point {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        border: solid 2px rgba(0, 0, 0, 0.3);
+        background: rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+        margin: 0 0 0 5px;
+        transition: all 0.3s;
+      }
+      .point-list .point.active {
+        background: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="carousel">
+      <button class="btn" id="goPre">
+        <div class="triangle"></div>
+      </button>
+      <button class="btn" id="goNext">
+        <div class="triangle"></div>
+      </button>
+      <ul class="img-wrapper">
+        <li class="item active"></li>
+        <li class="item"></li>
+        <li class="item"></li>
+      </ul>
+      <ul class="point-list">
+        <div class="point active" data-index="0"></div>
+        <div class="point" data-index="1"></div>
+        <div class="point" data-index="2"></div>
+      </ul>
+      <script>
+        const items = document.querySelectorAll(".item");
+        const itemsLength = items.length;
+        const points = document.querySelectorAll(".point-list .point");
+        const pointsLength = points.length;
+        const goPreBtn = document.querySelector("#goPre");
+        const goNextBtn = document.querySelector("#goNext");
+        const container = document.querySelector(".carousel");
+        let index = 0;
+        
+
+        function clearActive() {
+          for (let i = 0; i < itemsLength; i++) {
+            items[i].className = "item";
+          }
+          for (let j = 0; j < pointsLength; j++) {
+            points[j].className = "point";
+          }
+        }
+
+        function goIndex() {
+          clearActive();
+          points[index].className = "point active";
+          items[index].className = "item active";
+        }
+
+        function goPre() {
+          if (index === 0) {
+            index = itemsLength - 1;
+          } else {
+            index--;
+          }
+          goIndex();
+        }
+
+        function goNext() {
+          if (index < itemsLength - 1) {
+            index++;
+          } else {
+            index = 0;
+          }
+          goIndex();
+        }
+
+        goPreBtn.addEventListener("click", () => {
+          goPre();
+        });
+
+        goNextBtn.addEventListener("click", () => {
+          goNext();
+        });
+
+        for (let i = 0; i < pointsLength; i++) {
+          points[i].addEventListener("click", () => {
+            let pointIndex = points[i].getAttribute("data-index");
+            index = pointIndex;
+            goIndex();
+          });
+        }
+
+        let interval = setInterval(() => {
+          goNext();
+        }, 10000);
+
+        container.addEventListener("mouseover", () => {
+          clearInterval(interval);
+        });
+
+        container.addEventListener("mouseout", () => {
+          interval = setInterval(() => {
+            goNext();
+          }, 10000);
+        });
+      </script>
+    </div>
+  </body>
+</html>

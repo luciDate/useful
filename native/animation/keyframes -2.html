@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 50px;
+        background: darkred;
+        border-radius: 50% / 100% 100% 0 0;
+        margin: 100px 0 0 0;
+        /* alternate可以让动画在一些指定的场景更加自然 dellay动画需要计算次数这里有4次每次.6s故2.4  */
+        animation: test .6s 4 alternate,test-i .6s 2.4s 1;
+      }
+      @keyframes test{
+        0%{
+          transform: translateY(0);
+        }
+        100%{
+          transform: translateY(-20px);
+        }
+      }
+      @keyframes test-i{
+        0%{
+          transform: translateX(0);
+        }
+        100%{
+          transform: translateX(-150px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 200vh;
+      }
+      .container {
+        width: 1000px;
+        height: 100vh;
+        /* background设定只能在一个类里面设置并不能抽取共性继承 */
+        background: url(./main_visual.jpg);
+        /* 让图片自适应DOM */
+        background-size: cover;
+        /* 图片不重复 */
+        background-repeat: no-repeat;
+        /* 以DOM为容器 让图片向x轴y轴移动 */
+        background-position: -150px 0px;
+        /*图片位置固定，不随着scroll移动而变化*/
+        background-attachment: fixed;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+  </body>
+</html>
