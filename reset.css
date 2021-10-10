@@ -129,7 +129,7 @@ table {
 body {
   display: block;
   background-color: #fff;
-  color: #3c3c3c;
+  color: rgba(0, 0, 0, 0.65);
   font-size: 16px;
   font-family: PingFang SC, Microsoft Yahei, monospace;
   -webkit-font-smoothing: antialiased;

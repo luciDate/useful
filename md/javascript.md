@@ -1391,7 +1391,7 @@ document.body.appendChild(frag);
 </body>
 ```
 
-事件防抖(事件节流)
+事件防抖
 
 ```javascript
   <body>
