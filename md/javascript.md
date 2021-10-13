@@ -1365,26 +1365,27 @@ document.body.appendChild(frag);
 
 ```html
 <body>
-  <button id="myid">click me</button>
+  <button id="test">click me</button>
   <script>
+    const btn = document.querySelector("#test");
+
     function throttle(fn, delay) {
-      let last = 0;
+      let flag = false;
       return (...args) => {
-        const now = new Date().getTime();
-        if (now - last < delay) {
-          return;
+        if (!flag) {
+          flag = true;
+          fn();
+          setTimeout(() => {
+            flag = false;
+          }, delay);
         }
-        last = now;
-        return fn(...args);
       };
     }
 
-    //这里的闭包不需要用变量接结果，是因为addEventListener需要的就是fn
-    const b = document.querySelector("#myid");
-    b.addEventListener(
+    btn.addEventListener(
       "click",
       throttle(() => {
-        console.log("you clicked me");
+        console.log("clicked");
       }, 5000)
     );
   </script>
