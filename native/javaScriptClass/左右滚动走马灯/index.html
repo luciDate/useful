@@ -2,25 +2,41 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./stylesheet/index.css" />
   </head>
   <body>
-    <div class="carousel">
-      <img src="./image/index-d-1.png" alt="" class="item" />
-      <img src="./image/index-d-2.png" alt="" class="item" />
-      <img src="./image/index-d-3.png" alt="" class="item" />
-      <img src="./image/index-d-4.png" alt="" class="item" />
-      <img src="./image/index-d-5.png" alt="" class="item" />
-      <img src="./image/index-d-6.png" alt="" class="item" />
-      <div class="pre-btn"><</div>
-      <div class="next-btn">></div>
-      <div class="dots-container"></div>
+    <div class="gallery-content">
+      <div class="slide-show-container">
+        <div id="play-pause-btn" onclick="playPauseSlides()"></div>
+        <div class="left-arrow" onclick="plusSlides(-1)">
+          <span class="arrow arrow-left"></span>
+        </div>
+        <div class="right-arrow" onclick="plusSlides(1)">
+          <span class="arrow arrow-right"></span>
+        </div>
+        <div class="caption-holder"><p class="caption-text"></p></div>
+        <div class="image-holder">
+          <img src="./images/img_1.jpg" alt="" />
+          <p class="caption-text">Caption text-01</p>
+        </div>
+        <div class="image-holder">
+          <img src="./images/img_2.jpg" alt="" />
+          <p class="caption-text">Caption text-02</p>
+        </div>
+        <div class="image-holder">
+          <img src="./images/img_3.jpg" alt="" />
+          <p class="caption-text">Caption text-03</p>
+        </div>
+        <div class="image-holder">
+          <img src="./images/img_4.jpg" alt="" />
+          <p class="caption-text">Caption text-04</p>
+        </div>
+      </div>
+      <div id="dots-container"></div>
     </div>
-    <script>
-      0;
-    </script>
-    <script src="./script/index.js"></script>
+    <script src="./scripts/index.js"></script>
   </body>
 </html>

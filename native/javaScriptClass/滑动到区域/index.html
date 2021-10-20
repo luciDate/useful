@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      li {
+        list-style: none;
+      }
+      a {
+        text-decoration: none;
+      }
+      .container-hd {
+        width: 100%;
+        display: flex;
+      }
+      .slider {
+        width: 150px;
+        height: 100vh;
+        background: #d9d9d9;
+        position: fixed;
+      }
+      .slider li {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .s-item {
+        cursor: pointer;
+      }
+      .container {
+        width: calc(100% - 150px);
+        background: red;
+        margin: 0 0 0 150px;
+      }
+      .item {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+      }
+      .item:nth-child(1) {
+        background: cornflowerblue;
+      }
+      .item:nth-child(2) {
+        background: darkblue;
+      }
+      .item:nth-child(3) {
+        background: blue;
+      }
+      .item:nth-child(4) {
+        background: rgb(44, 100, 204);
+      }
+      .item:nth-child(5) {
+        background: rgb(0, 55, 156);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-hd">
+      <ul class="slider">
+        <li class="s-item" data-index="0">1</li>
+        <li class="s-item" data-index="1">2</li>
+        <li class="s-item" data-index="2">3</li>
+        <li class="s-item" data-index="3">4</li>
+        <li class="s-item" data-index="4">5</li>
+      </ul>
+      <div class="container">
+        <div class="item" id="section-1">1</div>
+        <div class="item" id="section-2">2</div>
+        <div class="item" id="section-3">3</div>
+        <div class="item" id="section-4">4</div>
+        <div class="item" id="section-5">5</div>
+      </div>
+    </div>
+    <script>
+      const slider = document.querySelector(".slider");
+      let currentHeight;
+      let tempHeight = 0;
+      let start;
+      let stopId;
+      let progress;
+
+      function step(timestamp) {
+        if (start == undefined) start = timestamp;
+        let elapsed = timestamp - start;
+        // let st = document.documentElement.scrollTop;
+        progress = Math.min(0.3 * elapsed, currentHeight);
+        window.scrollTo(0, progress);
+        stopId = window.requestAnimationFrame(step);
+        console.log(progress);
+        if (progress === currentHeight) {
+          window.cancelAnimationFrame(stopId);
+        }
+      }
+
+      slider.addEventListener("click", (e) => {
+        if (e.target.classList.contains("s-item")) {
+          e.stopPropagation();
+          let index = e.target.getAttribute("data-index");
+          currentHeight = window.innerHeight * index;
+          if (currentHeight > tempHeight) {
+            window.requestAnimationFrame(step);
+          }
+          tempHeight = currentHeight;
+        }
+      });
+
+      // let tempHeight = 0;
+      // const c = document.querySelector(".slider");
+      // let setTop = 0;
+      // let start;
+      // let currentHeight;
+
+      // function step(timestamp) {
+      //   if (start == undefined) start = timestamp;
+      //   let elapsed = timestamp - start;
+
+      //   window.scrollTo(0, Math.min(1 * elapsed, currentHeight));
+
+      //   if (elapsed < 10000) {
+      //     window.requestAnimationFrame(step);
+      //   }
+      // }
+
+      // c.addEventListener("click", (e) => {
+      //   if (e.target.classList.contains("s-item")) {
+      //     const index = e.target.getAttribute("data-index");
+      //     currentHeight = window.innerHeight * index;
+
+      //     //window.scrollTo(0, window.innerHeight * index);
+
+      //     if (currentHeight > tempHeight) {
+      //       window.requestAnimationFrame(step);
+      //     } else if (currentHeight < tempHeight) {
+      //       let interval = setInterval(() => {
+      //         setTop -= 6;
+      //         window.scrollTo(0, setTop);
+      //         if (setTop <= currentHeight) {
+      //           clearInterval(interval);
+      //         }
+      //       }, 1);
+      //     }
+
+      //     tempHeight = window.innerHeight * index;
+      //   }
+      // });
+    </script>
+  </body>
+</html>
