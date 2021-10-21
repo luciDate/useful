@@ -56,7 +56,7 @@ function moveSlide(n) {
     dots[n].classList.add("active");
     slideIndex = n;
     captionText.style.display = "none";
-    captionText.className = "caption-text " + slideTextAnimClass;
+    captionText.className = `caption-text ${slideTextAnimClass}`;
     captionText.innerText = slides[n].querySelector(".caption-text").innerText;
     captionText.style.display = "block";
   }
