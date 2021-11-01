@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0 0 0 0;
+        padding: 0 0 0 0;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 100%;
+        overflow: hidden;
+        background: grey;
+        position: relative;
+      }
+      .list {
+        width: 300%;
+        list-style: none;
+        display: flex;
+      }
+      /* display:block 解决图片有黑边 */
+      .item img {
+        width: 100%;
+        height: 187.5px;
+        display: block;
+      }
+      .point {
+        position: absolute;
+        width: 100%;
+        bottom: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        list-style: none;
+      }
+      .point-item {
+        width: 12px;
+        height: 12px;
+        margin: 0px 5px;
+        background: grey;
+        transition: all 0.3s;
+        border-radius: 50%;
+      }
+      .point-item.active {
+        background: #d9d9d9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <ul class="list">
+        <li class="item">
+          <img src="./images/8c28a8f785a79f6c97c8530ef53010ba.jpg" alt="" />
+        </li>
+        <li class="item">
+          <img src="./images/71eb75c42def0487b70fb12447b9afce.jpg" alt="" />
+        </li>
+        <li class="item">
+          <img src="./images/a4ad5e7823be3723d527e093a604d66d.jpg" alt="" />
+        </li>
+      </ul>
+      <ul class="point"></ul>
+    </div>
+    <script>
+      const items = document.querySelectorAll(".item");
+      const list = document.querySelector(".list");
+      const container = document.querySelector(".container");
+      const pointWrap = document.querySelector(".point");
+      let points = [];
+
+      const _createPoint = (i) => {
+        let pointDom = document.createElement("li");
+        pointDom.classList.add("point-item");
+        if (i === 0) pointDom.classList.add("active");
+        points.push(pointDom);
+        pointWrap.appendChild(pointDom);
+      };
+
+      //处理各个手机设备不同宽度，做出的兼容
+      for (let i = 0; i < items.length; i++) {
+        items[i].style.width = window.innerWidth + "px";
+        _createPoint(i);
+      }
+      list.style.width = items.length * window.innerWidth + "px";
+
+      let state = {
+        beginX: 0,
+        endX: 0,
+        nowX: 0,
+        index: 0,
+      };
+
+      const _setIndex = () => {
+        let index = state.index;
+        for (let i = 0; i < points.length; i++) {
+          points[i].classList.remove("active");
+        }
+        points[index].classList.add("active");
+      };
+
+      const _slice = () => {
+        let deltaX = state.nowX - state.beginX;
+        //这个函数在手指按下的情况触发，也就是当前list 的 marginLeft 加上 距离
+        list.style.marginLeft =
+          -(window.innerWidth * state.index) + deltaX + "px";
+      };
+
+      const _reset = () => {
+        list.style.transition = "all 0.3s";
+        list.style.marginLeft = -state.index * window.innerWidth + "px";
+      };
+
+      const _goPrev = () => {
+        if (state.index > 0) {
+          state.index--;
+          list.style.transition = "all 0.3s";
+          list.style.marginLeft = -state.index * window.innerWidth + "px";
+          _setIndex();
+        } else {
+          _reset();
+        }
+      };
+
+      const _goNext = () => {
+        if (state.index < items.length - 1) {
+          state.index++;
+          list.style.transition = "all 0.3s";
+          list.style.marginLeft = -state.index * window.innerWidth + "px";
+          _setIndex();
+        } else {
+          _reset();
+        }
+      };
+
+      const _judgeMove = () => {
+        let deltaX = state.endX - state.beginX;
+
+        //如果差值大于等于屏幕的5分之2
+        if (deltaX >= (window.innerWidth * 2) / 5) {
+          console.log("上一张");
+          _goPrev();
+        } else if (deltaX <= (-window.innerWidth * 2) / 5) {
+          console.log("下一张");
+          _goNext();
+        } else {
+          console.log("不动");
+          _reset();
+        }
+      };
+
+      //手指触摸到屏幕时触发
+      container.addEventListener("touchstart", (e) => {
+        list.style.transition = "none";
+        state.beginX = e.targetTouches[0].clientX;
+      });
+      //手指移动时触发
+      container.addEventListener("touchmove", (e) => {
+        let nowX = e.changedTouches[0].clientX;
+        state.nowX = nowX;
+        _slice();
+      });
+      //手指离开屏幕时触发
+      container.addEventListener("touchend", (e) => {
+        state.endX = e.changedTouches[0].clientX;
+        _judgeMove();
+      });
+    </script>
+  </body>
+</html>
