@@ -1045,6 +1045,10 @@ console.log(isChrome);
 <body>
 
     //返回屏幕可用的宽高
+    console.log(window.screen.width);
+    console.log(window.screen.height);
+
+    //返回文档窗口可用的宽高
     console.log(window.innerWidth);
     console.log(window.innerHeight);
 

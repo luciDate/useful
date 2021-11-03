@@ -1,0 +1,12 @@
+$default-font: 16px;
+
+@function toRem($px) {
+  @return $px / $default-font * 1rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: toRem(16px);
+}
