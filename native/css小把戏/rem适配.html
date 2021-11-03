@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        max-width: 6.4rem;
+        margin: 0 auto;
+      }
+      .news {
+        height: 1.05rem;
+        display: flex;
+        margin: 0.1rem 0 0 0;
+      }
+      .news .figure {
+        height: 100%;
+        flex: 0 0 1.8rem;
+        margin: 0 0.2rem 0 0;
+      }
+      .news .figure .img {
+        height: 100%;
+        background: red;
+      }
+      .news .intro {
+        height: 100%;
+        flex: 1;
+      }
+      .news .intro h2 {
+        font-size: 0.2rem;
+      }
+      .news .intro .badge {
+        font-size: 0.16rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="news">
+        <div class="figure">
+          <div class="img"></div>
+        </div>
+        <div class="intro">
+          <h2>i am xiaoming , i am a good boy</h2>
+          <div class="badge">专题</div>
+        </div>
+      </div>
+      <div class="news">
+        <div class="figure">
+          <div class="img"></div>
+        </div>
+        <div class="intro">
+          <h2>i am xiaoming , i am a good boy</h2>
+          <div class="badge">专题</div>
+        </div>
+      </div>
+      <div class="news">
+        <div class="figure">
+          <div class="img"></div>
+        </div>
+        <div class="intro">
+          <h2>i am xiaoming , i am a good boy</h2>
+          <div class="badge">专题</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // 获取屏幕的宽度
+      console.log("screen.width", window.screen.width);
+      // 浏览器能用的屏幕最大宽度,当window底部下的导航条切换成右边的时候，availWidth会减少
+      console.log("screen.availWidth", window.screen.availWidth);
+      // 返回文档窗口可用的宽度
+      console.log("window.innerWidth", window.innerWidth);
+      // 计算当前设备根元素有多少 640为设计稿宽度 100为倍率，因为chrome 10px会自动计算为12px，所以需要乘以100
+      const remSize = (window.innerWidth / 640) * 100;
+      document.querySelector("html").style.fontSize = remSize + "px";
+
+      //兼容pc resize 用，一般手机端不用
+      //   window.onresize = function () {
+      //     const remSize = (window.innerWidth / 640) * 100;
+      //     document.querySelector("html").style.fontSize = remSize + "px";
+      //   };
+    </script>
+  </body>
+</html>
