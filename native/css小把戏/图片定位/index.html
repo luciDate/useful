@@ -28,9 +28,20 @@
         /*图片位置固定，不随着scroll移动而变化*/
         background-attachment: fixed;
       }
+      /* 图片原尺寸为 40x30 可以用background-size 来放大或者缩小 第一个参数为宽度 第二个为高度也可以设为auto */
+      .icon{
+        position: absolute;
+        top: 100px;
+        right: 50px;
+        width: 60px;
+        height: 50px;
+        background: url(./jdlogo.png) no-repeat;
+        background-size: 60px auto;
+      }
     </style>
   </head>
   <body>
     <div class="container"></div>
+    <div class="icon"></div>
   </body>
 </html>

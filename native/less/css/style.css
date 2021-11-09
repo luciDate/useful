@@ -1,0 +1,56 @@
+* {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  box-sizing: border-box;
+}
+body {
+  font-size: 16px;
+}
+body {
+  background: green;
+}
+.box {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  width: 300px;
+  background: red;
+  border: 20px solid #ccc;
+  background: darkred;
+}
+.triangle {
+  width: 0;
+  height: 0;
+  border-width: 30px;
+  border-color: transparent transparent red transparent;
+  border-style: solid;
+}
+.box-2 {
+  width: 0;
+  height: 0;
+  border-width: 30px;
+  border-color: blue transparent transparent transparent;
+  border-style: solid;
+}
+.box-3 {
+  width: 400px;
+  background: darkred;
+}
+.nav {
+  width: 500px;
+  margin: 10px 0 0 0;
+  border: 10px red solid;
+}
+.nav > li {
+  height: 50px;
+  line-height: 50px;
+}
+.nav > li > a {
+  font-size: 16px;
+}
+.nav > li > a > span {
+  color: blue;
+}
+.nav > li > a:hover {
+  color: darkseagreen;
+}

@@ -1,0 +1,109 @@
+@import './test.less';
+//强制less引入
+@import (less) './index.css';
+
+// 变量
+@win_width: 300px;
+
+body {
+  background: green;
+}
+.box {
+  .pos(a);
+  top: 50px;
+  right: 50px;
+  width: @win_width;
+  background: red;
+  .border(20px);
+}
+// 混合
+// 5px是默认值
+.border (@border_width:5px) {
+  border: @border_width solid #ccc;
+  background: darkred;
+}
+
+// 匹配
+.pos(a) {
+  position: absolute;
+}
+.pos(r) {
+  position: relative;
+}
+.pos(f) {
+  position: fixed;
+}
+
+.triangle {
+  width: 0;
+  height: 0;
+  border-width: 30px;
+  border-color: transparent transparent red transparent;
+  border-style: solid;
+}
+
+// 匹配2
+.box-2 {
+  .triangle(top,30px,blue);
+}
+
+// 预先通用匹配
+.triangle(@_,@width:10px,@c:red) {
+  width: 0;
+  height: 0;
+}
+
+.triangle(top,@width:20px,@c:red) {
+  border-width: @width;
+  border-color: @c transparent transparent transparent;
+  border-style: solid;
+}
+
+.triangle(left,@width:20px,@c:red) {
+  border-width: @width;
+  border-color: transparent transparent transparent @c;
+  border-style: solid;
+}
+
+.triangle(right,@width:20px,@c:red) {
+  border-width: @width;
+  border-color: transparent @c transparent transparent;
+  border-style: solid;
+}
+
+.triangle(bottom,@width:20px,@c:red) {
+  border-width: @width;
+  border-color: transparent transparent @c transparent;
+  border-style: solid;
+}
+
+// 计算
+.box-3 {
+  width: @win_width + 100px;
+  background: darkred;
+}
+
+// 嵌套
+.nav {
+  width: 500px;
+  margin: 10px 0 0 0;
+  .border-2();
+  > li {
+    height: 50px;
+    line-height: 50px;
+    > a {
+      font-size: 16px;
+      > span {
+        color: blue;
+      }
+      &:hover {
+        color: darkseagreen;
+      }
+    }
+  }
+}
+
+// 混合2
+.border-2(@width:10px,@color:red,@style:solid) {
+  border: @arguments;
+}
