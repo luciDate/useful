@@ -724,6 +724,31 @@ formatEach(obj, (key, value) => {
 });
 ```
 
+Q : 写一个切换 class
+
+```html
+<style>
+  .test {
+    color: red;
+  }
+  .test.active {
+    color: blue;
+  }
+</style>
+</head>
+<body>
+<button class="test">click me</button>
+<script>
+  const t = document.querySelector(".test");
+
+  t.addEventListener("click", () => {
+    t.classList.toggle("active");
+  });
+
+</script>
+</body>
+```
+
 自己收集的 API
 
 日期
