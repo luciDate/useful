@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./mescroll/mescroll.css" />
+    <link rel="stylesheet" href="./swiper/swiper-3.3.1.min.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      li {
+        list-style: none;
+      }
+      .container {
+        width: 640px;
+        margin: 0 auto;
+        background: #f2f2f2;
+      }
+      header .search {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 70px;
+      }
+      header .scrollx {
+        position: relative;
+        height: 55px;
+        overflow: hidden;
+      }
+      header .scrollx .scrollx-content {
+        width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+      header .scrollx .scrollx-content .nav {
+        height: 55px;
+        line-height: 55px;
+        /* 隐藏滚动条障眼法 */
+        margin-bottom: 200px;
+      }
+      header .scrollx .scrollx-content .nav li {
+        display: inline-block;
+        padding: 0 15px;
+      }
+      header .scrollx .scrollx-content .nav li.active {
+        color: #ff5c00;
+      }
+      .swiper-container {
+        position: absolute;
+        top: 125px;
+        bottom: 90px;
+        width: 640px;
+        margin: 0 auto;
+      }
+      .swiper-container .temp {
+        /* 内嵌滚动条 在swiper设置高度会让滚动条变为全局滚动条  */
+        height: 1500px;
+      }
+      footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        display: flex;
+        width: 100%;
+        height: 80px;
+        justify-content: space-around;
+        align-items: center;
+        background: #f2f2f2;
+        z-index: 999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="search">search section</div>
+
+        <div class="scrollx mescroll-touch-x">
+          <div id="scrollxContent" class="scrollx-content">
+            <ul id="nav" class="nav">
+              <li class="active" i="0">推荐</li>
+              <li i="1">手机</li>
+              <li i="2">智能</li>
+              <li i="3">电视</li>
+              <li i="4">笔记本</li>
+              <li i="5">生活周边</li>
+              <li i="6">强烈推荐</li>
+              <li i="7">手机周边</li>
+              <li i="8">新款游戏本</li>
+              <li i="9">雅培</li>
+              <li i="10">花王</li>
+              <li i="11">韩蜜</li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <div id="swiper" class="swiper-container">
+        <div id="swiperWrapper" class="swiper-wrapper">
+          <!--首页-->
+          <div
+            id="mescroll0"
+            class="swiper-slide mescroll"
+            style="overflow-x: hidden"
+          >
+            推荐
+            <div class="temp"></div>
+          </div>
+
+          <!--奶粉-->
+          <div id="mescroll1" class="swiper-slide mescroll">手机</div>
+
+          <!--面膜-->
+          <div id="mescroll2" class="swiper-slide mescroll">智能</div>
+
+          <!--图书-->
+          <div id="mescroll3" class="swiper-slide mescroll">电视</div>
+
+          <!--果汁-->
+          <div id="mescroll4" class="swiper-slide mescroll">笔记本</div>
+
+          <!--奶瓶-->
+          <div id="mescroll5" class="swiper-slide mescroll">生活周边</div>
+
+          <!--美素-->
+          <div id="mescroll6" class="swiper-slide mescroll">强烈推荐</div>
+
+          <!--璐拉-->
+          <div id="mescroll7" class="swiper-slide mescroll">手机周边</div>
+
+          <!--启赋-->
+          <div id="mescroll8" class="swiper-slide mescroll">新款游戏本</div>
+
+          <!--雅培-->
+          <div id="mescroll9" class="swiper-slide mescroll">雅培</div>
+
+          <!--花王-->
+          <div id="mescroll10" class="swiper-slide mescroll">花王</div>
+
+          <!--韩蜜-->
+          <div id="mescroll11" class="swiper-slide mescroll">韩蜜</div>
+        </div>
+      </div>
+
+      <footer>footer section</footer>
+    </div>
+    <script src="./zepto/zepto.min.js"></script>
+    <script src="./mescroll/mescroll.js"></script>
+    <script src="./swiper/swiper-3.3.1.min.js"></script>
+    <script>
+      // 存mescroll的数组对象
+      var mescrollArr = [];
+      // 当前菜单的下标
+      var curNavIndex = 0;
+      // 初始化第一个菜单，也就是第一个mescroll
+      mescrollArr[curNavIndex] = initMescroll(curNavIndex);
+
+      function initMescroll(index) {
+        var mescroll = new MeScroll("mescroll" + index, {});
+        return mescroll;
+      }
+
+      var swiper = new Swiper("#swiper", {
+        onTransitionEnd: function (swiper) {
+          var i = swiper.activeIndex;
+          changePage(i);
+        },
+      });
+
+      $("#nav li").on("click", function () {
+        var i = Number($(this).attr("i"));
+        console.log(i);
+        swiper.slideTo(i);
+      });
+
+      function changePage(i) {
+        if (curNavIndex != i) {
+          // 改变菜单状态
+          var curNavDom;
+          $("#nav li").each(function (n, dom) {
+            if (dom.getAttribute("i") == i) {
+              dom.classList.add("active");
+              curNavDom = dom;
+            } else {
+              dom.classList.remove("active");
+            }
+          });
+          $(".all ul li").each(function (n, dom) {
+            if (dom.getAttribute("i") == i) {
+              dom.classList.add("active");
+            } else {
+              dom.classList.remove("active");
+            }
+          });
+          // 居中动画效果
+          var scrollxContent = document.getElementById("scrollxContent");
+          var star = scrollxContent.scrollLeft; //当前位置
+          var end =
+            curNavDom.offsetLeft +
+            curNavDom.clientWidth / 2 -
+            document.body.clientWidth / 2; //居中
+          mescrollArr[curNavIndex].getStep(star, end, function (step, timer) {
+            scrollxContent.scrollLeft = step; //从当前位置逐渐移动到中间位置,默认时长300ms
+          });
+          //隐藏当前回到顶部按钮
+          mescrollArr[curNavIndex].hideTopBtn();
+
+          // 初始化新的mescroll，如果已经初始化过，那就不用初始化了，直接显示
+          if (mescrollArr[i] == null) {
+            mescrollArr[i] = initMescroll(i);
+          } else {
+            //检查是否需要显示回到到顶按钮
+            var curMescroll = mescrollArr[i];
+            var curScrollTop = curMescroll.getScrollTop();
+            if (curScrollTop >= curMescroll.optUp.toTop.offset) {
+              curMescroll.showTopBtn();
+            } else {
+              curMescroll.hideTopBtn();
+            }
+          }
+          // 更新当前mescroll的索引
+          curNavIndex = i;
+        }
+      }
+    </script>
+  </body>
+</html>

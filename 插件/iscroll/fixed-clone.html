@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      li {
+        list-style: none;
+      }
+      /* 整块布局需要一个绝对定位，overflow：hidden 来布局 来隐藏默认滚动条 */
+      .cate {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+      }
+      .cate-left {
+        flex: 0 0 135px;
+        border-right: 3px solid #fff;
+      }
+      .cate-left li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100px;
+      }
+      .cate-left li.active {
+        color: #ff0000;
+      }
+      .cate-right {
+        flex: 1;
+      }
+      .cate-right ul {
+        padding: 0 0 150px 0;
+        background: #fff;
+      }
+      .cate-right li {
+        height: 450px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .cate-right li:nth-child(odd) {
+        background: aquamarine;
+      }
+      .cate-right li:nth-child(even) {
+        background: aqua;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cate">
+      <div class="cate-left">
+        <ul>
+          <li class="item active">1</li>
+          <li class="item">2</li>
+          <li class="item">3</li>
+          <li class="item">4</li>
+          <li class="item">5</li>
+          <li class="item">6</li>
+          <li class="item">7</li>
+          <li class="item">8</li>
+          <li class="item">9</li>
+          <li class="item">10</li>
+          <li class="item">11</li>
+          <li class="item">12</li>
+          <li class="item">13</li>
+          <li class="item">14</li>
+          <li class="item">15</li>
+        </ul>
+      </div>
+
+      <div class="cate-right">
+        <ul>
+          <li class="item">1</li>
+          <li class="item">2</li>
+          <li class="item">3</li>
+          <li class="item">4</li>
+          <li class="item">5</li>
+          <li class="item">6</li>
+          <li class="item">7</li>
+          <li class="item">8</li>
+          <li class="item">9</li>
+          <li class="item">10</li>
+          <li class="item">11</li>
+          <li class="item">12</li>
+          <li class="item">13</li>
+          <li class="item">14</li>
+          <li class="item">15</li>
+        </ul>
+      </div>
+    </div>
+    <script src="./iscroll/iscroll-probe.js"></script>
+    <script>
+      let myScrollLeft;
+      let myScrollRight;
+      // 把区间用数组存起来
+      let positionsTemp = [];
+      const leftItems = document.querySelectorAll(".cate-left > ul > li");
+      const rightItems = document.querySelectorAll(".cate-right > ul > li");
+
+      class CateObj {
+        constructor() {
+          this.positions = positionsTemp;
+        }
+        initPositions() {
+          rightItems.forEach((item, index) => {
+            // y轴偏移，避免左侧ui高亮失准
+            // 数组的区间会影响到onscroll的getindex(),给予合适的区间并且适当给li padding-bottom可以解决这个问题
+            const position = item.offsetTop - 300;
+            this.positions.push(position);
+          });
+          // 添加最后一个区间
+          const positionLast =
+            document.querySelector(".cate-right > ul").clientHeight;
+          this.positions.push(positionLast);
+
+          console.log(this.positions);
+        }
+        initLeftScroll() {
+          myScrollLeft = new IScroll(".cate-left");
+        }
+        initRightScroll() {
+          //probeType会触发滚动的事件，可以返回一个精确到px的位置信息
+          myScrollRight = new IScroll(".cate-right", {
+            probeType: 3,
+          });
+        }
+        dealLeft() {
+          document
+            .querySelector(".cate-left > ul")
+            .addEventListener("click", (e) => {
+              if (e.target.classList.contains("item")) {
+                this.clearActive(leftItems);
+                e.target.classList.add("active");
+                let indexTemp;
+                leftItems.forEach((item, index) => {
+                  if (item == e.target) {
+                    indexTemp = index;
+                  }
+                });
+                myScrollRight.scrollToElement(
+                  `.cate-right > ul > li:nth-child(${indexTemp + 1})`,
+                  300
+                );
+              }
+            });
+        }
+        dealRight() {
+          // iscroll 原生on事件
+          myScrollRight.on("scroll", () => {
+            // 负负得正，哈哈哈
+            let position = -myScrollRight.y;
+            let index = this.getIndex(position);
+            let indexTemp = index + 1;
+
+            this.clearActive(leftItems);
+            document
+              .querySelector(`.cate-left > ul > li:nth-child(${indexTemp})`)
+              .classList.add("active");
+            myScrollLeft.scrollToElement(
+              `.cate-left ul > li:nth-child(${indexTemp})`,
+              500,
+              null,
+              true
+            );
+          });
+        }
+        getIndex(position) {
+          let index = 0;
+          for (let i = 0, len = this.positions.length; i < len; i++) {
+            // 循环整个数组 所以进退都可以
+            if (position < this.positions[i]) {
+              // 当前区间等于position[i]的后一个
+              index = i - 1;
+              break;
+            }
+          }
+          return index;
+        }
+        clearActive(el) {
+          for (let i = 0, len = el.length; i < len; i++) {
+            el[i].classList.remove("active");
+          }
+        }
+      }
+
+      window.onload = () => {
+        const obj = new CateObj();
+        obj.initPositions();
+        obj.initLeftScroll();
+        obj.initRightScroll();
+        obj.dealLeft();
+        obj.dealRight();
+      };
+    </script>
+  </body>
+</html>
