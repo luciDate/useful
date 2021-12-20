@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      li {
+        list-style: none;
+      }
+      .container {
+        position: relative;
+        width: 600px;
+        overflow: hidden;
+        height: 300px;
+        margin: 100px auto 0 auto;
+      }
+      .list {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .list li img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+      .item {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        opacity: 0;
+      }
+      .arrow-left {
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        border: 20px solid;
+        transform: translate(0, -50%);
+        border-color: transparent #d4d4d4 transparent transparent;
+        cursor: pointer;
+      }
+      .arrow-right {
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        top: 50%;
+        right: 0px;
+        border: 20px solid;
+        transform: translate(0, -50%);
+        border-color: transparent transparent transparent #d4d4d4;
+        cursor: pointer;
+      }
+
+      .dots-container {
+        width: 100%;
+        height: 30px;
+        position: absolute;
+        left: 0;
+        bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .dots-container .dot {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        margin-left: 10px;
+        background: #d4d4d4;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .dots-container .dot:first-child {
+        margin-left: 0px;
+      }
+
+      .dots-container .dot:hover {
+        background: #a8a8a8;
+      }
+
+      .dots-container .dot.active {
+        background: #a8a8a8;
+      }
+
+      .move-left-current-slide {
+        animation: move-left-current 0.5s linear forwards;
+      }
+      .move-left-next-slide {
+        animation-name: move-left-next;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+      }
+      .move-right-current-slide {
+        animation-name: move-right-current;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+      }
+      .move-right-next-slide {
+        animation-name: move-right-next;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+      }
+
+      @keyframes move-left-current {
+        from {
+          margin-left: 0;
+          opacity: 1;
+        }
+        to {
+          margin-left: -100%;
+          opacity: 1;
+        }
+      }
+      @keyframes move-left-next {
+        from {
+          margin-left: 100%;
+          opacity: 1;
+        }
+        to {
+          margin-left: 0;
+          opacity: 1;
+        }
+      }
+      @keyframes move-right-current {
+        from {
+          margin-left: 0;
+          opacity: 1;
+        }
+        to {
+          margin-left: 100%;
+          opacity: 1;
+        }
+      }
+      @keyframes move-right-next {
+        from {
+          margin-left: -100%;
+          opacity: 1;
+        }
+        to {
+          margin-left: 0;
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <ul class="list">
+        <li class="item" data-index="0">
+          <img src="./1.png" alt="" />
+        </li>
+        <li class="item" data-index="1">
+          <img src="./2.png" alt="" />
+        </li>
+        <li class="item" data-index="2">
+          <img src="./3.png" alt="" />
+        </li>
+      </ul>
+      <div class="arrow-left"></div>
+      <div class="arrow-right"></div>
+      <div class="dots-container"></div>
+    </div>
+    <script>
+      let slideIndex, slides, dots;
+      const container = document.querySelector(".container");
+      const items = document.querySelectorAll(".item");
+      const arrowLeft = document.querySelector(".arrow-left");
+      const arrowRight = document.querySelector(".arrow-right");
+      let state = {
+        beginX: 0,
+        endX: 0,
+        nowX: 0,
+        index: 0,
+      };
+
+      function initGallery() {
+        slideIndex = 0;
+        slides = document.querySelectorAll(".item");
+        slides[slideIndex].style.opacity = 1;
+
+        dots = [];
+        const dotsContainer = document.querySelector(".dots-container");
+        for (let i = 0, len = slides.length; i < len; i++) {
+          const dot = document.createElement("div");
+          dot.classList.add("dot");
+          dot.setAttribute("onClick", `moveSlide(${i})`);
+          dotsContainer.appendChild(dot);
+          dots.push(dot);
+        }
+        dots[slideIndex].classList.add("active");
+      }
+
+      initGallery();
+
+      function plusSlides(n) {
+        moveSlide(slideIndex + n);
+      }
+
+      // 点击核心函数 其实也就是两段动画拼成一段动画
+      function moveSlide(n) {
+        let current;
+        let next;
+        let moveSlideAnimClass = {
+          forCurrent: "",
+          forNext: "",
+        };
+        if (n > slideIndex) {
+          if (n >= slides.length) n = 0;
+          moveSlideAnimClass.forCurrent = "move-left-current-slide";
+          moveSlideAnimClass.forNext = "move-left-next-slide";
+        } else if (n < slideIndex) {
+          if (n < 0) n = slides.length - 1;
+          moveSlideAnimClass.forCurrent = "move-right-current-slide";
+          moveSlideAnimClass.forNext = "move-right-next-slide";
+        }
+        if (n != slideIndex) {
+          next = slides[n];
+          current = slides[slideIndex];
+          for (let index = 0; index < slides.length; index++) {
+            slides[index].className = "item";
+            slides[index].style.opacity = 0;
+            dots[index].classList.remove("active");
+          }
+          current.classList.add(moveSlideAnimClass.forCurrent);
+          next.classList.add(moveSlideAnimClass.forNext);
+          dots[n].classList.add("active");
+          slideIndex = n;
+          console.log(slideIndex);
+        }
+      }
+
+      arrowLeft.addEventListener("click", () => {
+        plusSlides(-1);
+      });
+      arrowRight.addEventListener("click", () => {
+        plusSlides(1);
+      });
+
+      let timer = null;
+      function setTimer() {
+        timer = setInterval(() => {
+          plusSlides(1);
+        }, 3000);
+      }
+
+      setTimer();
+
+      container.addEventListener("mouseover", () => {
+        clearInterval(timer);
+      });
+
+      container.addEventListener("mouseout", () => {
+        timer = setInterval(() => {
+          plusSlides(1);
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>
