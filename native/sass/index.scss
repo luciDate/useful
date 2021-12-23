@@ -1,0 +1,34 @@
+@import "./reset";
+@import "./varibales";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container-1 {
+  width: 100px;
+  height: 100px;
+  background: $bgColor;
+}
+
+.container {
+  width: 100px;
+  height: 100px;
+  background: #ff0000;
+  &:hover {
+    background: #0000ff;
+  }
+}
+
+@mixin triangle-top($width, $color) {
+  width: 0;
+  height: 0;
+  border: $width solid;
+  border-color: $color transparent transparent transparent;
+}
+
+.triangle {
+  @include triangle-top(40px, #ddd);
+}
