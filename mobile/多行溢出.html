@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .inaline{
+      width: 360px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .intwoline{
+      width: 360px;
+      display: -webkit-box !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+  </style>
+</head>
+<body>
+  <p class="inaline">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus error quis maxime neque id ex alias eaque. In modi, commodi eveniet, excepturi aliquam quia praesentium reiciendis esse necessitatibus a officia!</p>
+  <br>
+  <p class="intwoline">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo optio perspiciatis saepe exercitationem necessitatibus eos, suscipit commodi reiciendis laboriosam velit esse nemo quae accusamus molestias vitae nisi. Fuga, cupiditate quis.</p>
+</body>
+</html>

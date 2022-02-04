@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .touchpad {
+        width: 100%;
+        height: 200px;
+        font-size: 40px;
+        text-align: center;
+        line-height: 200px;
+        background: rgba(0, 0, 0, 0.5);
+        position: relative;
+        color: #ddd;
+        user-select: none;
+      }
+
+      .ball {
+        display: none;
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        border-radius: 15px;
+        background-color: #7ae6ff;
+        top: 0;
+        left: 0;
+      }
+      p {
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <p id="desc"></p>
+    <div id="touchPad" class="touchpad">触摸板</div>
+    <div id="ball" class="ball"></div>
+  </body>
+  <script>
+    const touchPad = document.querySelector("#touchPad");
+    const ball = document.querySelector("#ball");
+    const desc = document.querySelector("#desc");
+    const swipeDistance = 30;
+    const swipeTime = 500;
+    let pointStart;
+    let pointEnd;
+    let timeStart;
+    let timeEnd;
+    let startEvt;
+    let moveEvt;
+    let endEvt;
+
+    //获取touch的点(兼容mouse事件)
+    var getTouchPos = function (e) {
+      var touches = e.touches;
+      if (touches && touches[0]) {
+        return { x: touches[0].clientX, y: touches[0].clientY };
+      }
+      return { x: e.clientX, y: e.clientY };
+    };
+    //计算两点之间距离
+    var getDist = function (p1, p2) {
+      if (!p1 || !p2) return 0;
+      return Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y));
+    };
+    //计算两点之间所成角度
+    var getAngle = function (p1, p2) {
+      var r = Math.atan2(p2.y - p1.y, p2.x - p1.x);
+      var a = (r * 180) / Math.PI;
+      return a;
+    };
+    //获取swipe的方向
+    var getSwipeDirection = function (p2, p1) {
+      var dx = p2.x - p1.x;
+      var dy = -p2.y + p1.y;
+      var angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+      if (angle < 45 && angle > -45) return "right";
+      if (angle >= 45 && angle < 135) return "top";
+      if (angle >= 135 || angle < -135) return "left";
+      if (angle >= -135 && angle <= -45) return "bottom";
+    };
+
+    const startEvtHandler = function (e) {
+      // 得到touchstart的xy轴
+      const pos = getTouchPos(e);
+      ball.style.left = pos.x + "px";
+      ball.style.top = pos.y + "px";
+      ball.style.display = "block";
+
+      const touches = e.touches;
+      // 判断触摸还是pc端的移动，但他们都会走下面这两句
+      if (!touches || touches.length == 1) {
+        pointStart = getTouchPos(e);
+        timeStart = Date.now();
+      }
+    };
+
+    const moveEvtHandler = function (e) {
+      const pos = getTouchPos(e);
+      ball.style.left = pos.x + "px";
+      ball.style.top = pos.y + "px";
+
+      pointEnd = getTouchPos(e);
+      e.preventDefault();
+    };
+
+    const endEvtHandler = function (e) {
+      ball.style.display = "none";
+      let timeEnd = Date.now();
+      // 距离 大于30px 如果成功拖动timeStart - timeEnd 得到的是负数 这里小于500可能是300毫秒延时的兼容
+      if (getDist(pointStart, pointEnd) > swipeDistance && timeStart - timeEnd < swipeTime) {
+        let dir = getSwipeDirection(pointEnd, pointStart);
+        touchPad.innerHTML = "swipe" + dir;
+      }
+    };
+
+    if ("ontouchstart" in window) {
+      startEvt = "touchstart";
+      moveEvt = "touchmove";
+      endEvt = "touchend";
+    } else {
+      startEvt = "mousedown";
+      moveEvt = "mousemove";
+      endEvt = "mouseup";
+    }
+
+    touchPad.addEventListener(startEvt, startEvtHandler);
+    touchPad.addEventListener(moveEvt, moveEvtHandler);
+    touchPad.addEventListener(endEvt, endEvtHandler);
+  </script>
+</html>

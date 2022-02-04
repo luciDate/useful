@@ -56,7 +56,7 @@ npm install xxx -D
 ```bash
 npm config set registry http://registry.npm.taobao.org
 
-config get registry
+npm config get registry
 ```
 
 看到http://registry.npm.taobao.org/说明成功

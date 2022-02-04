@@ -1,9 +1,32 @@
 > 移动端优化
 
-- 设置 meta 标签让浏览器不缩放 html
+- 如果没有设置浏览器会默认缩放我们的逻辑分辨率 设置 meta 标签让浏览器不缩放 html
+
+- 一般 iphone 的 viewport 为 980px 它之所以能够看到完整的 pc 网页，是先排版，再缩放
+
+> 为什么不用默认的 980px 布局
+
+不同设备宽度不可控制
+
+链接不可点，缩小显示不好交互
+
+缩放可能带来滚动
+
+width=device-width // 宽度等于设备的宽度
+
+minimum-scale=1.0 // 最小缩放比
+
+maximum-scale=1.0 // 最大缩放比
+
+initial-scale // 页面初始缩放
+
+user-scalable=0 // 用户是否能缩放
 
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta
+  name="viewport"
+  content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+/>
 ```
 
 - 一般的手机设计稿为 640x1136 和 750x1134
@@ -11,6 +34,8 @@
 - 手机的 1px 作为逻辑分辨率不等于各个设备的 1px，其中有逻辑分辨率与物理分辨率，物理分辨率可以让图片或者文字更加细腻逼真
 
 - 移动端的适配，可以使用 max-width 和 min-width 搭配进行适配
+
+
 
 > rem
 
@@ -32,7 +57,7 @@ html {
 }
 ```
 
-之后根据javascript来兼容各种手机屏幕
+之后根据 javascript 来兼容各种手机屏幕
 
 ```html
 <!DOCTYPE html>
@@ -108,5 +133,35 @@ html {
     </script>
   </body>
 </html>
-
 ```
+
+> touch事件
+
+touchstart: 手指触摸屏幕触发
+
+touchmove: 手指滑动 连续触发
+
+touchend: 手指离开屏幕触发
+
+touches: 跟踪触摸操作的数组
+
+targetTouches: 特定事件目标的touch数组
+
+changeTouches: 上次触摸改变的touch数组
+
+> touches包括
+
+clientX: 触摸目标在视口中的x坐标
+clientY: 触摸目标在视口中的y坐标
+pageX: 触摸目标在页面中的x坐标
+pageyY: 触摸目标在页面中的y坐标
+screenX: 触摸目标在屏幕中的x坐标
+screenY: 触摸目标在屏幕中的y坐标
+target: 触摸的dom节点
+
+
+
+
+
+
+

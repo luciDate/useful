@@ -260,6 +260,13 @@
     height: 300px;
     background: blue;
   }
+  .arrow-left {
+    width: 20px;
+    height: 20px;
+    /* 这里的x轴有点意思 负数就是左边 整数就是右边  y轴同理 负数上边 正数下边  */
+    box-shadow: -2px 2px 0 0 #ff0000;
+    transform: rotate(45deg);
+  }
 </style>
 <ul class="box-1">
   <li>1</li>
@@ -306,8 +313,8 @@
 <br />
 
 <div class="box-7"></div>
-
-<br />
+<br>
+<div class="arrow-left"></div>
 <script>
   const myInput = document.querySelector(".my-input");
   const myInfo = document.querySelector(".info");

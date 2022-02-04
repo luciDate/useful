@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"
+    />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="my">
+        <div class="my-avatar">
+          <img src="./images/avatar.png" alt="" />
+        </div>
+        <div class="my-link"><a href="">登录</a> / <a href="">注册</a></div>
+      </header>
+
+      <ul class="order">
+        <li><a href="">我的订单</a></li>
+        <li><a href="" class="arrow">全部订单</a></li>
+      </ul>
+
+      <ul class="state">
+        <li>
+          <a href="">
+            <i></i>
+            <span>待付款</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i></i>
+            <span>待付款</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i></i>
+            <span>待付款</span>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="listMenu topm">
+        <li class="arrow"><a href="#" class="borderb">会员中心</a></li>
+        <li class="arrow"><a href="#">我的优惠</a></li>
+        <li class="arrow topm"><a href="#" class="borderb">服务中心</a></li>
+        <li class="arrow"><a href="#">小米之家</a></li>
+        <li class="arrow topm"><a href="#">F码通道</a></li>
+        <li class="arrow topm"><a href="#">设置</a></li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <a href="./index.html">
+        <img src="./images/icon-home.png" alt="" />
+        <span>首页</span>
+      </a>
+      <a href="./category.html">
+        <img src="./images/icon-category.png" alt="" />
+        <span>分类</span>
+      </a>
+      <a href="./cart.html">
+        <img src="./images/icon-cart.png" alt="" />
+        <span>购物车</span>
+      </a>
+      <a href="./my.html">
+        <img src="./images/icon-wo-active.png" alt="" />
+        <span>我的</span>
+      </a>
+    </div>
+    <script src="./script/zepto/zepto.js"></script>
+    <script>
+      $(function () {
+        // 页面打开时
+        document.querySelector("html").style.fontSize =
+          (window.screen.width / 640) * 100 + "px";
+      });
+    </script>
+  </body>
+</html>

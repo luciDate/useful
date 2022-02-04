@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      /* body {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      body::-webkit-scrollbar {
+        display: none;
+      } */
+      .container-hd {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        overflow: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .container-hd::-webkit-scrollbar {
+        display: none;
+      }
+
+      .container-hd .item {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        user-select: none;
+      }
+      .container-hd .item:nth-child(1) {
+        background: #585656;
+      }
+      .container-hd .item:nth-child(2) {
+        background: aqua;
+      }
+      .container-hd .item:nth-child(3) {
+        background: brown;
+      }
+      .container-hd .item:nth-child(4) {
+        background: burlywood;
+      }
+      .container-hd .item:nth-child(5) {
+        background: cadetblue;
+      }
+      .list {
+        position: fixed;
+        right: 30px;
+        top: 50%;
+        transform: translate(0, -50%);
+      }
+      .list .u-item {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: whitesmoke;
+        cursor: pointer;
+        transition: background 0.1s;
+      }
+      .list .u-item:not(:first-child) {
+        margin-top: 14px;
+      }
+      .list .u-item.active {
+        background: #d1d1d1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-hd">
+      <div class="item">1</div>
+      <div class="item">2</div>
+      <div class="item">3</div>
+      <div class="item">4</div>
+      <div class="item">5</div>
+    </div>
+    <ul class="list">
+      <div class="u-item active" data-index="0"></div>
+      <div class="u-item" data-index="1"></div>
+      <div class="u-item" data-index="2"></div>
+      <div class="u-item" data-index="3"></div>
+      <div class="u-item" data-index="4"></div>
+    </ul>
+    <script>
+      const c = document.querySelector(".container-hd");
+      const l = document.querySelector(".list");
+      const items = document.querySelectorAll(".item");
+      const itemLength = items.length;
+      const uItems = document.querySelectorAll(".u-item");
+      const uLength = uItems.length;
+      let st = 0;
+      let lastScroll = 0;
+      let flag = false;
+      let flagi = false;
+      let flagii = false;
+      let index = 0;
+      let screenHeight = window.screen.height;
+      let timeoutId;
+      let toTop = false;
+
+      for (let i = 0; i < itemLength; i++) {
+        items[i].style.height = `${screenHeight}px`;
+      }
+
+      function scrollSmoothTo(position) {
+        let scrollTop = c.scrollTop;
+        let step = function () {
+          let distance = position - scrollTop;
+          scrollTop = scrollTop + distance / 14;
+          if (Math.abs(distance) < 1) {
+            c.scrollTo(0, position);
+          } else {
+            c.scrollTo(0, scrollTop);
+            requestAnimationFrame(step);
+          }
+        };
+        step();
+      }
+
+      function clearActive() {
+        for (let i = 0; i < uLength; i++) {
+          uItems[i].classList.remove("active");
+        }
+      }
+
+      function scrollHandler(e) {
+        e.preventDefault();
+        st = c.scrollTop;
+        //console.log(st);
+        //console.log(lastScroll);
+
+        // if (toTop) {
+        //   index = 0;
+        //   st = 0;
+        //   lastScroll = 0;
+        // }
+
+        if (st > lastScroll) {
+          if (!flag) {
+            if (index >= 4) {
+              index = 4;
+              return;
+            } else {
+              flag = true;
+              index++;
+            }
+            let expect = index * screenHeight;
+            scrollSmoothTo(expect);
+            c.style.overflowY = "hidden";
+            clearActive();
+            uItems[index].classList.add("active");
+            setTimeout(() => {
+              flag = false;
+              c.style.overflowY = "scroll";
+            }, 2000);
+          }
+        } else {
+          console.log("up scroll...");
+          if (!flagi) {
+            if (index < 1) {
+              index = 0;
+              return;
+            } else {
+              flagi = true;
+              index--;
+            }
+
+            // if (index == 0) {
+            //   toTop = !toTop;
+            // }
+            let expect = index * screenHeight;
+            scrollSmoothTo(expect);
+
+            c.style.overflowY = "hidden";
+            clearActive();
+            uItems[index].classList.add("active");
+            setTimeout(() => {
+              flagi = false;
+              c.style.overflowY = "auto";
+            }, 2000);
+          }
+        }
+        lastScroll = st < 0 ? 0 : st;
+      }
+
+      c.addEventListener("scroll", scrollHandler);
+
+      l.addEventListener("click", (e) => {
+        if (e.target.classList.contains("u-item")) {
+          if (timeoutId) clearTimeout(timeoutId);
+          c.removeEventListener("scroll", scrollHandler);
+          c.style.overflowY = "hidden";
+          clearActive();
+          let tempIndex = e.target.getAttribute("data-index");
+          index = tempIndex;
+          const expect = index * screenHeight;
+          scrollSmoothTo(expect);
+          uItems[index].classList.add("active");
+
+          st = expect;
+          lastScroll = st < 0 ? 0 : st;
+          flag = false;
+          flagi = false;
+
+          timeoutId = setTimeout(() => {
+            c.addEventListener("scroll", scrollHandler);
+            c.style.overflowY = "auto";
+          }, 2000);
+        }
+      });
+    </script>
+  </body>
+</html>

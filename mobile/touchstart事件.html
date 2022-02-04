@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,user-scalable=no"
+    />
+    <title>Document</title>
+    <style>
+      .touch-pad {
+        width: 100%;
+        height: 200px;
+        font-size: 40px;
+        text-align: center;
+        line-height: 200px;
+        background: rgba(0, 0, 0, 0.5);
+        position: relative;
+        color: #ddd;
+        user-select: none;
+      }
+      .ball {
+        display: none;
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: darkblue;
+        top: 0;
+        left: 0;
+      }
+      p {
+        height: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="desc"></p>
+    <div class="touch-pad">触摸板</div>
+    <div class="ball"></div>
+    <script>
+      const touchPad = document.querySelector(".touch-pad");
+      const ball = document.querySelector(".ball");
+      const desc = document.querySelector(".desc");
+
+
+      const touchHandler = function (e) {
+        const type = e.type;
+
+        // touchend 不支持记录xy轴，故作特殊处理
+        if (type != "touchend") {
+          let pos = {
+            x: e.touches[0].clientX,
+            y: e.touches[0].clientY,
+          };
+
+          ball.style.left = pos.x + "px";
+          ball.style.top = pos.y + "px";
+          desc.innerHTML = `${e.type} -- clientX: ${pos.x},clientY: ${pos.y}`;
+        } else {
+          desc.innerHTML = e.type;
+        }
+
+        switch (type) {
+          case "touchstart":
+            ball.style.display = "block";
+            break;
+          case "touchmove":
+            // 安卓的bug touchmove 之后 touchend 不触发 添加event.preventDefault()
+            event.preventDefault();
+            break;
+          case "touchend":
+            ball.style.display = "none";
+            break;
+        }
+      };
+
+      touchPad.addEventListener("touchstart", touchHandler);
+      touchPad.addEventListener("touchmove", touchHandler);
+      touchPad.addEventListener("touchend", touchHandler);
+    </script>
+  </body>
+</html>

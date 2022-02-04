@@ -2,36 +2,84 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 300vh;
+        background: #f2f2f2;
+      }
+      .return-top {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 50px;
+        right: 30px;
+        border-radius: 50%;
+        background: blue;
+        color: gold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+      }
+      .return-top::after {
+        content: "";
+        display: block;
+        width: 0;
+        height: 0;
+        border: 20px solid;
+        border-color: transparent transparent gold transparent;
+        transform: translate(0, -12px);
+        transition: all 0.3s;
+      }
+      .return-top.active {
+        opacity: 1;
+      }
+    </style>
   </head>
-  <body style="height: 2000px; background: #999999;">
-    <button style="margin-top: 1000px;" id="test">back to top</button>
-    <script>
-      const test = document.querySelector("#test");
+  <body>
+    <div class="return-top"></div>
 
-      class ScrollTo {
-        constructor(dom) {
-          this.dom = dom;
-          this.setTop = dom.offsetTop;
-        }
-        init() {
-          this.dom.addEventListener("click", () => {
-            console.log(this.setTop)
-            let interval = setInterval(() => {
-              this.setTop -= 25;
-              window.scrollTo(0, this.setTop);
-              if (this.setTop <= 0) {
-                clearInterval(interval);
-                this.setTop = this.dom.offsetTop;
-              }
-            }, 10);
-          });
-        }
+    <script>
+      const returnTop = document.querySelector(".return-top");
+
+      function scrollSmoothTo(position) {
+        let scrollTop = document.documentElement.scrollTop;
+        let step = function () {
+          let distance = position - scrollTop;
+          scrollTop = scrollTop + distance / 5;
+          if (Math.abs(distance) < 1) {
+            window.scrollTo(0, position);
+          } else {
+            window.scrollTo(0, scrollTop);
+            requestAnimationFrame(step);
+          }
+        };
+        step();
       }
 
-      const s = new ScrollTo(test);
-      s.init();
+      document.addEventListener("scroll", () => {
+        let scrollTop = document.documentElement.scrollTop;
+
+        if (scrollTop >= 400) {
+          returnTop.classList.add("active");
+        } else if (scrollTop < 400) {
+          returnTop.classList.remove("active");
+        }
+      });
+
+      returnTop.addEventListener("click", () => {
+        scrollSmoothTo(0);
+      });
+
+
     </script>
   </body>
 </html>
