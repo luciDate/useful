@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <p>vuex原理的关键,使用Vue实列管理状态</p>
+    <hr>
+    <p>首先用Vux.use() 加载一个插件，这个插件对应我们写的registerPlugin</p>
+    <p>在插件中，我们定义了一个vuex的对象，vuex._vm本质上就是一个Vue实列</p>
+    <p>创建vuex.state 它指向我们的_vm</p>
+    <p>创建mutations更新state</p>
+    <p>Vue.mixin({beforeCreate:init}) 指的是它会对我们所有的Vue实列都调用这个方法在实列创建之前,这样this.$store就有值了</p>
+    <p>为什么点击change按钮，所有Vue实列都会更新呢</p>
+    <p>_vm.message 被放入Vue Dep全局对象 当message变化的时候 Dep会通知所有Vue实列对应的watcher进行更新</p>
+    <hr>
+    <div id="root">{{data}}</div>
+    <div id="root2">{{data2}}</div>
+    <div id="root3">
+      <button @click="change">change</button>
+    </div>
+    <script>
+      function registerPlugin(Vue) {
+        const vuex = {};
+        vuex._vm = new Vue({
+          data: {
+            message: "hello vue.js"
+          }
+        });
+
+        vuex.state = vuex._vm;
+        vuex.mutations = {
+          setMessage(value) {
+            vuex.state.message = value;
+          }
+        };
+
+        function init() {
+          this.$store = vuex;
+        }
+
+        Vue.mixin({
+          beforeCreate: init
+        });
+      }
+
+      // 加载插件
+      Vue.use(registerPlugin);
+
+      new Vue({
+        el: "#root",
+        computed: {
+          data() {
+            return this.$store.state.message;
+          }
+        }
+      });
+
+      new Vue({
+        el: "#root2",
+        computed: {
+          data2() {
+            return this.$store.state.message;
+          }
+        }
+      });
+
+      new Vue({
+        el: "#root3",
+        methods: {
+          change() {
+            const newValue = this.$store.state.message + ".";
+            this.$store.mutations.setMessage(newValue);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

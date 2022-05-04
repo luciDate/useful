@@ -395,6 +395,7 @@ with (obj) {
     <button id="btn-1">修改hash</button>
 
     <script>
+      //vue-router 本质上是对原生路由实现的一个封装
       //hash的变化包括
       //javascript修改url
       //手动修改url的hash

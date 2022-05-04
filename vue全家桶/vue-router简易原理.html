@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <p>hash test</p>
+    <button id="btn-1">修改hash</button>
+
+    <script>
+      //vue-router 本质上是对原生路由实现的一个封装
+      //hash的变化包括
+      //javascript修改url
+      //手动修改url的hash
+      //浏览器前进，后退
+      //这些操作都不会触发浏览器的刷新
+      window.onhashchange = (event) => {
+        console.log("old url", event.oldURL);
+        console.log("new url", event.newURL);
+
+        console.log("hash:", location.hash);
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("hash:", location.hash);
+      });
+
+      document.getElementById("btn-1").addEventListener("click", () => {
+        location.href = "#/user";
+      });
+    </script>
+  </body>
+</html>
