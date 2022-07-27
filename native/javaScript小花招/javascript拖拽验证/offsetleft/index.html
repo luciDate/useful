@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .photos {
+        position: relative;
+      }
+      #wei {
+        position: absolute;
+        left: 0;
+        top: 0;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>请拖动尾巴到相应位置</h1>
+      <div class="photos">
+        <img id="wei" src="./images/wei.png" alt="" draggable="false" />
+        <img src="./images/lan.png" alt="" draggable="false" />
+      </div>
+    </section>
+    <script>
+      const h1 = document.querySelector("h1");
+      const photos = document.querySelector(".photos");
+      const wei = document.querySelector("#wei");
+      const photoLeft = photos.offsetLeft;
+      const photoTop = photos.offsetTop;
+
+      wei.addEventListener("mousedown", (e) => {
+        // page 代表了鼠标的xy坐标, 以下两句是为了得到鼠标距离小图片的距离
+        const weiLeft = e.pageX - photoLeft - wei.offsetLeft;
+        const weiTop = e.pageY - photoTop - wei.offsetTop;
+
+        function moving(e) {
+          // 处理拖动效果
+          wei.style.left = e.pageX - weiLeft - photoLeft + "px";
+          wei.style.top = e.pageY - weiTop - photoTop + "px";
+        }
+
+        document.addEventListener("mousemove", moving);
+        document.addEventListener("mouseup", (e) => {
+          // 标准测量距离left318top148  各给10xp的偏移值因为实际操作不可能定位这么准，方便用户操作
+          if (wei.offsetLeft > 308 && wei.offsetLeft < 328 && wei.offsetTop > 138 && wei.offsetTop < 158) {
+            h1.innerHTML = "验证成功";
+          } else {
+            h1.innerHTML = "图片摆错啦";
+          }
+          // 移除事件需要具体函数名
+          document.removeEventListener("mousemove", moving);
+        });
+      });
+    </script>
+  </body>
+</html>

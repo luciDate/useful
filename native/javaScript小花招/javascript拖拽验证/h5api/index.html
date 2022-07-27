@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        display: flex;
+        justify-content: center;
+      }
+      .product {
+        width: 500px;
+      }
+      .product .title {
+        height: 50px;
+        color: orangered;
+        display: flex;
+        align-items: center;
+      }
+      .tshirt {
+        position: relative;
+      }
+      .tshirt img {
+        width: 500px;
+        height: 630px;
+        object-fit: cover;
+      }
+      .empty {
+        position: absolute;
+        top: 230px;
+        left: 150px;
+        width: 200px;
+        height: 200px;
+      }
+      .empty img {
+        width: 200px;
+        height: 200px;
+      }
+      .slide {
+        width: 200px;
+        height: 400px;
+        margin: 50px 0 0 10px;
+        overflow-y:scroll;
+        overflow-x:hidden;
+      }
+      .slide img {
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <section class="product">
+        <div class="title">
+          <h3>拖动你喜欢的图案到T-shirt上吧</h3>
+        </div>
+        <div class="tshirt">
+          <img class="prod-img" src="./images/tshirt.jpg" alt="不能拖" />
+          <div class="empty"></div>
+        </div>
+      </section>
+      <section class="slide">
+        <img draggable="true" src="./images/1.png" alt="blue" />
+        <img draggable="true" src="./images/2.png" alt="red" />
+        <img draggable="true" src="./images/3.png" alt="green" />
+      </section>
+    </div>
+    <script>
+      const container = document.querySelector(".container");
+      const empty = document.querySelector(".empty");
+      const title = document.querySelector(".title");
+      const slide = document.querySelector(".slide");
+      const tshirt = document.querySelector(".tshirt");
+      let name;
+
+      container.addEventListener("dragstart", (e) => {
+        if (e.target.classList.contains("prod-img")) {
+          return;
+        } else {
+          name = e.target.alt;
+        }
+      });
+
+      slide.addEventListener("drag", (e) => {
+        e.target.style.border = "3px dashed red";
+        empty.style.border = "3px dashed red";
+      });
+
+      container.addEventListener("dragend", (e) => {
+        e.target.style.border = "none";
+        empty.style.border = "none";
+        if (slide.children.length !== 0) {
+          title.innerHTML = "拖动你喜欢的图案到衣服吧";
+        } else {
+          title.innerHTML = "拖拽次数已经为零";
+        }
+      });
+
+      empty.addEventListener("dragenter", (e) => {
+        if (empty.firstChild) {
+          empty.removeChild(empty.firstChild);
+        }
+        title.innerHTML = name;
+      });
+      empty.addEventListener("dragover", (e) => {
+        e.preventDefault();
+      });
+      empty.addEventListener("drop", (e) => {
+        e.preventDefault();
+        e.target.appendChild(document.querySelector(`img[alt=${name}]`));
+      });
+    </script>
+  </body>
+</html>
