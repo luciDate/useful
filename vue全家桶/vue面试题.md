@@ -62,7 +62,7 @@
 
   export default {
     name: "App",
-    components: { CustomModel },
+    components: { CustomModel }
   };
 </script>
 
@@ -87,9 +87,9 @@
     components: { CustomModel },
     data() {
       return {
-        name: "aza",
+        name: "aza"
       };
-    },
+    }
   };
 </script>
 
@@ -99,11 +99,7 @@
 ```html
 <template>
   <div>
-    <input
-      type="text"
-      :value="name"
-      @input="$emit('inputChange', $event.target.value)"
-    />
+    <input type="text" :value="name" @input="$emit('inputChange', $event.target.value)" />
   </div>
 </template>
 
@@ -111,13 +107,13 @@
   export default {
     model: {
       props: "name",
-      event: "inputChange",
+      event: "inputChange"
     },
     props: {
       name: {
-        type: String,
-      },
-    },
+        type: String
+      }
+    }
   };
 </script>
 
@@ -156,13 +152,13 @@
     data() {
       return {
         name: "aza",
-        major: "webDesign",
+        major: "webDesign"
       };
     },
     methods: {},
     mounted() {
       console.log("component mounted", this.name);
-    },
+    }
   };
 </script>
 
@@ -175,17 +171,17 @@ mixin.js
 export default {
   data() {
     return {
-      city: "北京",
+      city: "北京"
     };
   },
   methods: {
     showName() {
       console.log(this.name);
-    },
+    }
   },
   mounted() {
     console.log("mixin mounted", this.name);
-  },
+  }
 };
 ```
 
@@ -221,13 +217,13 @@ export default {
   export default {
     name: "App",
     components: {
-      CustomAsync: () => import("./components/customAsync.vue"),
+      CustomAsync: () => import("./components/customAsync.vue")
     },
     data() {
       return {
-        flag: false,
+        flag: false
       };
-    },
+    }
   };
 </script>
 
@@ -240,7 +236,7 @@ export default {
 const routes = [
   { path: "/foo", component: RouterDemo, name: "1" },
   { path: "/a", redirect: "/bar" },
-  { path: "*", component: RouterDemo, name: "404" },
+  { path: "*", component: RouterDemo, name: "404" }
 ];
 ```
 
@@ -251,8 +247,8 @@ const routes = [
   {
     path: "/403",
     name: "403",
-    component: () => import(/* webpackChunkName: "other" */ "../views/403.vue"),
-  },
+    component: () => import(/* webpackChunkName: "other" */ "../views/403.vue")
+  }
 ];
 ```
 
@@ -265,9 +261,7 @@ const routes = [
 ```html
 <template>
   <div id="app">
-    <button v-for="tab in tabs" :key="tab" @click="current = tab">
-      {{tab}}
-    </button>
+    <button v-for="tab in tabs" :key="tab" @click="current = tab">{{tab}}</button>
 
     <keep-alive>
       <component :is="currentTab"></component>
@@ -285,20 +279,20 @@ const routes = [
       // eslint-disable-next-line vue/no-unused-components
       TrendPosts,
       // eslint-disable-next-line vue/no-unused-components
-      TrendArchive,
+      TrendArchive
     },
     data() {
       return {
         current: "Posts",
-        tabs: ["Posts", "Archive"],
+        tabs: ["Posts", "Archive"]
       };
     },
     computed: {
       currentTab() {
         return "Trend" + this.current;
-      },
+      }
     },
-    methods: {},
+    methods: {}
   };
 </script>
 
@@ -362,15 +356,15 @@ Trendii.vue
   export default {
     name: "App",
     components: {
-      SlotDemo,
+      SlotDemo
     },
     data() {
       return {
         website: {
-          url: "https://www.baidu.com",
-        },
+          url: "https://www.baidu.com"
+        }
       };
-    },
+    }
   };
 </script>
 
@@ -391,7 +385,7 @@ Trendii.vue
 
 <script>
   export default {
-    props: ["url"],
+    props: ["url"]
   };
 </script>
 
@@ -419,10 +413,10 @@ Trendii.vue
         website: {
           url: "https://www.baidu.com",
           title: "imoc",
-          subTitle: "233",
-        },
+          subTitle: "233"
+        }
       };
-    },
+    }
   };
 </script>
 
@@ -446,10 +440,10 @@ Trendii.vue
         website: {
           url: "https://www.baidu.com",
           title: "aza",
-          subTitle: "aza编辑器",
-        },
+          subTitle: "aza编辑器"
+        }
       };
-    },
+    }
   };
 </script>
 
@@ -496,12 +490,12 @@ Trendii.vue
         tag: "div",
         props: {
           className: "container",
-          id: "div1",
+          id: "div1"
         },
         children: [
           {
             tag: "p",
-            children: "vdom",
+            children: "vdom"
           },
           {
             tag: "ul",
@@ -510,12 +504,12 @@ Trendii.vue
               children: [
                 {
                   tag: "li",
-                  children: "a",
-                },
-              ],
-            },
-          },
-        ],
+                  children: "a"
+                }
+              ]
+            }
+          }
+        ]
       };
     </script>
   </body>
@@ -542,7 +536,7 @@ Object.defineProperty(data, "name", {
   set: function (newValue) {
     console.log("set");
     name = newValue;
-  },
+  }
 });
 
 console.log(data.name);
@@ -563,9 +557,9 @@ const data = {
   name: "zhangsan",
   age: 20,
   info: {
-    address: "北京",
+    address: "北京"
   },
-  nums: [10, 20, 30],
+  nums: [10, 20, 30]
 };
 
 function updateView() {
@@ -610,7 +604,7 @@ function defineReactive(target, key, value) {
         value = newValue;
         updateView();
       }
-    },
+    }
   });
 }
 
@@ -625,8 +619,8 @@ const data = {
   name: "zhangsan",
   age: 20,
   info: {
-    address: "北京",
-  },
+    address: "北京"
+  }
 };
 
 function updateView() {
@@ -653,7 +647,7 @@ function defineReactive(target, key, value) {
         value = newValue;
         updateView();
       }
-    },
+    }
   });
 }
 
@@ -695,21 +689,19 @@ data.x = 1000;
 
 > 返回一个对象即 vnode 数据结构
 
-* patch函数
+- patch 函数
 
 > 创建一个空的 vnode 关联到一个真的 dom
 
-> 更新的时候用新的 vnode 代替旧的 vnode，比如两者在对比的时候，新的vnode有值而旧的vnode没有值则addVnodes(),新的vnode没有值而而旧的vnode有值则removeVnodes()
+> 更新的时候用新的 vnode 代替旧的 vnode，比如两者在对比的时候，新的 vnode 有值而旧的 vnode 没有值则 addVnodes(),新的 vnode 没有值而而旧的 vnode 有值则 removeVnodes()
 
-> updateChildren() 比如两个vnode都有children，要对他们进行比较时就会触发updateChildren().用 key 做两个 dom 中子元素的对比，如果发生变化只是移动，而不是删除插入，key 不能为随机数或者数组下标，会引起排序错误
+> updateChildren() 比如两个 vnode 都有 children，要对他们进行比较时就会触发 updateChildren().用 key 做两个 dom 中子元素的对比，如果发生变化只是移动，而不是删除插入，key 不能为随机数或者数组下标，会引起排序错误
 
-
-
-* diff算法的时间复杂度
+- diff 算法的时间复杂度
 
 > O(n)
 
-> O(n^3) on的3次方上做出的优化,比如说只比较同一层级，只是tag不相同我们就销毁重建，通过tag和key来判断它是不是相同组件
+> O(n^3) on 的 3 次方上做出的优化,比如说只比较同一层级，只是 tag 不相同我们就销毁重建，通过 tag 和 key 来判断它是不是相同组件
 
 > 只比较同一层级，不跨级比较
 
@@ -717,38 +709,28 @@ data.x = 1000;
 
 > tag 和 key，两者相同，则认为是相同节点，不在深度比较
 
-* vnode的特点
+- vnode 的特点
 
-> 基于数据操作视图，优化dom操作
+> 基于数据操作视图，优化 dom 操作
 
-* Vue为什么是异步渲染，$nextTick有什么用
+- Vue 为什么是异步渲染，$nextTick 有什么用
 
-> 异步渲染可以用于合并多个data修改，提高性能
+> 异步渲染可以用于合并多个 data 修改，提高性能
 
-> $nextTick在DOM更新完之后，触发回调，能监听最新的data修改
+> $nextTick 在 DOM 更新完之后，触发回调，能监听最新的 data 修改
 
-* Vue性能优化
+- Vue 性能优化
 
-> 合理使用v-show和v-if
+> 合理使用 v-show 和 v-if
 
-> 合理使用computed
+> 合理使用 computed
 
-> v-for必须带key，v-for比v-if优先级更高，避免同时使用
+> v-for 必须带 key，v-for 比 v-if 优先级更高，避免同时使用
 
-> beforeDestroy之前需要解绑自定义事件，计时器
+> beforeDestroy 之前需要解绑自定义事件，计时器
 
-> 合理使用异步组件，合理使用keep-alive
+> 合理使用异步组件，合理使用 keep-alive
 
-> 因为defineProperty需要递归，所以data不合适层级太深
+> 因为 defineProperty 需要递归，所以 data 不合适层级太深
 
 > 通用的优化方案，懒加载，节流，防抖
-
-
-
-
-
-
-
-
-
-
