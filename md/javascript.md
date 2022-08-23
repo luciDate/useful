@@ -174,8 +174,8 @@ i ? console.log("233") : console.log("666");
 //一般用于不知道循环次数的情况。维持循环的是一个条件表达式，条件成立执行循环体，条件不成立退出循环。
 let i = 1;
 
-while(i <= 10){
-  console.log("x")
+while (i <= 10) {
+  console.log("x");
   i++;
 }
 
@@ -201,8 +201,7 @@ function i(name, age) {
     console.log(name);
   })();
 }
-i("j",12);
-
+i("j", 12);
 
 const arr = [1, 2, 3];
 const arri = [4, 5, 6];
@@ -221,9 +220,7 @@ class People {
     console.log(`${this.name} is eating`);
   }
   speak() {
-    console.log(
-      `my name is ${this.name} , i am ${this.age} year old , aka ${this.aka}`
-    );
+    console.log(`my name is ${this.name} , i am ${this.age} year old , aka ${this.aka}`);
   }
 }
 
@@ -237,7 +234,7 @@ if (i === 0) console.log("233");
 
 //箭头函数只有一个形参可以省略()
 //只有一行可以省略{} 和 return
-const i = x => x;
+const i = (x) => x;
 console.log(i("aza"));
 
 //函数返回对象一些情况需要()包起来
@@ -263,6 +260,18 @@ try {
   console.log(error);
 }
 
+function funny() {
+  try {
+    // 原版Error 采用了 toString(),可以用解构查看具体内容
+    throw new Error();
+    console.log("233");
+  } catch (err) {
+    console.log({ err });
+  }
+}
+
+funny();
+
 //多重数组遍历;
 const i = [1, 2, 3, 4, 5, 6, 7, 8, [1, 2, 3]];
 //length要比index大1，所以用小于
@@ -283,7 +292,7 @@ const routes = [
   {
     name: "home",
     path: "/home",
-    children: [{ name: "admin", path: "/admin" }],
+    children: [{ name: "admin", path: "/admin" }]
   },
   {
     name: "details",
@@ -295,10 +304,10 @@ const routes = [
       {
         name: "id-4",
         path: "/id-4",
-        children: [{ name: "id-4-1", hide: true, path: "/id-4-1" }],
-      },
-    ],
-  },
+        children: [{ name: "id-4-1", hide: true, path: "/id-4-1" }]
+      }
+    ]
+  }
 ];
 
 //过滤掉数组中hide:true和子数组hide:true
@@ -360,7 +369,16 @@ function i({ item: { id }, number }) {
 }
 
 i(itemPuls);
+// 数组对象双重解构
+const obj = [
+  { id: 1, name: "a" },
+  { id: 2, name: "b" },
+  { id: 3, name: "c" }
+];
 
+const [{ id }] = obj;
+
+console.log(id);
 ```
 
 ---
@@ -876,13 +894,13 @@ const azaData = [
   { id: 2, title: "n2" },
   { id: 3, title: "n3" },
   { id: 4, title: "n4" },
-  { id: 5, title: "n5" },
+  { id: 5, title: "n5" }
 ];
 
 const daftArr = azaData.map(({ id, title }) => {
   return {
     xid: id,
-    xtitle: title,
+    xtitle: title
   };
 });
 
@@ -1511,7 +1529,7 @@ XSRF 敏感的网络请求。要添加手机，邮箱验证码
           this.tags.forEach(function (item) {
             console.log(`${self.title}  -- ${item}`);
           });
-        },
+        }
       };
 
       video.showTags();
@@ -1525,7 +1543,7 @@ XSRF 敏感的网络请求。要添加手机，邮箱验证码
               console.log(`${this.title} -- ${item}`);
             }.bind(this)
           );
-        },
+        }
       };
 
       list.showTags();
