@@ -139,11 +139,19 @@ iv.name = "azazel";
 console.log({ iii: `${iii.name}`, iv: `${iv.name}` });
 
 let v = { phone: 188 };
-//let vi = JSON.parse(JSON.stringify(v));
-//对象深拷贝
+// let vi = JSON.parse(JSON.stringify(v));
+// 对象深拷贝
 let vi = Object.assign({}, v);
 vi.phone = 100;
 console.log({ v: `${v.phone}`, vi: `${vi.phone}` });
+
+// 数组转对象
+const arr = [1, 2, 3, 4, 5];
+
+const obj = { arr };
+
+// {arr : [1, 2, 3]}
+console.log(obj);
 ```
 
 Q : 如何理解 JSON
@@ -151,8 +159,9 @@ Q : 如何理解 JSON
 A :
 
 ```javascript
-//JSON和Math都是内置的对象，但不是函数
-//JSON是内置对象JSON.parse(),JSON.stringify()也是一种数据格式{name:aza}
+// JSON和Math都是内置的对象，但不是函数
+// JSON是内置对象JSON.parse(),JSON.stringify()也是一种数据格式{name:aza}
+// 当浏览器显示[object]这种不清晰的数据类型时，可以尝试JSON.tostring()来解析它
 
 //对象JSON
 //键一般为字符串名称。值为指定值或者变量
@@ -220,7 +229,9 @@ class People {
     console.log(`${this.name} is eating`);
   }
   speak() {
-    console.log(`my name is ${this.name} , i am ${this.age} year old , aka ${this.aka}`);
+    console.log(
+      `my name is ${this.name} , i am ${this.age} year old , aka ${this.aka}`
+    );
   }
 }
 
@@ -328,6 +339,25 @@ function formatData(data) {
 }
 
 console.log(formatData(routes));
+
+const arr = [
+  { name: "aran" },
+  { phne: 188 },
+  { email: [{ id: 1, email: [{ id: 11 }] }, { id: 2 }, { id: 3 }] }
+];
+
+function recursion(arr, level = 0, pid = "") {
+  return arr.map((item) => {
+    item.level = level;
+    item.pid = pid;
+    if (item.email && item.email.length > 0) {
+      item.email = recursion(item.email, level + 1, item.id);
+    }
+    return item;
+  });
+}
+
+console.log(recursion(arr));
 
 //条件判断
 const a = 100;
@@ -549,6 +579,25 @@ Q : 变量提升的理解
 2. JavaScript 标准把一段`<script></script>`一段代码（包括函数），执行所需的所有信息定义为：“执行上下文”。
 3. 全局定义的变量定义，函数声明都会拉到最前面
 4. 函数的变量定义，函数声明，this，arguments 拉到最前面
+
+```javascript
+// promise 的上下文会执行全部代码块再resolve
+function tryc() {
+  const obj = { name: "aran" };
+  return new Promise((resolve, reject) => {
+    resolve(obj);
+    try {
+      obj.phone = 188;
+    } catch (error) {
+      throw new Error(error);
+    }
+  });
+}
+
+tryc().then((x) => {
+  console.log(x);
+});
+```
 
 A :
 
@@ -797,6 +846,14 @@ const h = "hello,vue";
 const hh = h.split("").reverse().join("");
 console.log(hh);
 
+// 字符串截取
+const str = "www.baidu.com/dir";
+const i = str.substr(13, 4);
+console.log(i);
+// 字符串替代
+const ii = str.replace("www.baidu.com", "");
+console.log(ii);
+
 //url拼接
 const url = "/api/dashboard/chart";
 const name = url.split("/api/")[1].split("/").join("_");
@@ -924,11 +981,20 @@ const result = arr.find((item) => {
 });
 console.log(result);
 
-//数组深拷贝
-const arrr = Object.assign([], arr);
-arrr[0] = 666;
-console.log(arr);
-console.log(arrr);
+//数组深拷贝可以玩点花活
+const arr = [1, 2, 3, [4, 5, 6]];
+function recursion(arr) {
+  return [].concat(
+    ...arr.map((item) => {
+      if (item instanceof Array) {
+        recursion(item);
+      }
+      return item;
+    })
+  );
+}
+
+console.log(recursion(arr));
 
 let arr = [1, 2, 3, 4, 5];
 //当前下标1开始，删除一个，再添加9，也就是替换了
@@ -1126,8 +1192,14 @@ console.log(isChrome);
     //获取#后面的哈希
     console.log(location.hash);
 
+    // 改变窗口url
     t.addEventListener("click", () => {
       location.href = "https://www.baidu.com?name=aza&password=xixi";
+    });
+
+    // 指定地址打开新窗口
+    x.addEventListener("click", () => {
+      window.open("http://www.baidu.com");
     });
 
     //url字符串转对象
