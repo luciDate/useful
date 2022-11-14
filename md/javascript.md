@@ -38,6 +38,12 @@ console.log(typeof s);
 console.log(a instanceof Array);
 ```
 
+这一句能精准判断数据类型比如 Object.prototype.toString.call(async function) === '[object AsyncFunction]'
+
+```javascript
+return Object.prototype.toString.call(o) === "[object Object]";
+```
+
 ---
 
 Q : 何时使用 === 何时使用 ==
@@ -269,6 +275,8 @@ try {
   i();
 } catch (error) {
   console.log(error);
+} finally {
+  // ...
 }
 
 function funny() {
@@ -541,6 +549,12 @@ class Foo {
 let f = new Foo("aza");
 f.alertName();
 f.toString();
+```
+
+Q : 判断数据是否是自身的 key 而不是原型链上的 key class 防继承关系 extend
+
+```javascript
+model.hasOwnProperty(key);
 ```
 
 Q : 描述 new 一个对象的过程
