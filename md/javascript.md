@@ -2,6 +2,8 @@
 
 ## 大纲
 
+[什么是 javascript](#tip-0)
+
 [值类型和表达式](#tip-1)
 
 [原型和原型链](#tip-2)
@@ -20,6 +22,52 @@
 
 [var 变量](#tip-9)
 
+[模块化](#tip-10)
+
+[Promise](#tip-11)
+
+---
+
+> 什么是 javascript
+
+- 使用 ECMAScript 语法规范，外加 web API
+
+- 两者结合，可以完成 DOM 操作，BOM 操作，事件绑定，Ajax 等大多数客户端操作
+
+> 什么是 nodejs
+
+- 使用 ESMAScript 语法规范，外加 nodejs API
+
+- 两者结合，即可完成 http 处理，文件处理，等大多数 server 端操作
+
+> 什么是 cookie
+
+- 存储在浏览器的一段字符串（5kb）
+
+- 跨域不共享
+
+- 格式如 k1=v1,k2=v2 因此可以存储结构化数据
+
+- 每次发送 http 请求，会将请求域的 cookie 发送给 server
+
+- server 端可以修改 cookie 并返回浏览器
+
+- 浏览器也可以通过 javascript 有限制的修改 cookie
+
+> 什么是 session
+
+- cookie 中存储 userId 来联动 server 端存储的用户信息
+
+- 比如客户端留下一个 Math.random()的随机 userid,userid 对应一个全局变量 SESSION_DATA 的空对象,SESSION_DATA = {userid:{}},登录成功后会变为 SESSION_DATA = {username:'awwwk'},登录验证 if session 里的 username 即可
+
+> session 的缺点
+
+- session 是 nodejs 变量，放在 nodejs 进程内存中
+
+- 如果访问量过大，内存会紧张
+
+- 多线程中，进程之间的内存无法共享
+
 ---
 
 ## <a id="tip-1">值类型和表达式</a>
@@ -30,7 +78,7 @@ A :
 
 ```javascript
 let a = [];
-let s = "233";
+let s = '233';
 
 // typeof 只能判断值类型的变量
 console.log(typeof s);
@@ -41,7 +89,7 @@ console.log(a instanceof Array);
 这一句能精准判断数据类型比如 Object.prototype.toString.call(async function) === '[object AsyncFunction]'
 
 ```javascript
-return Object.prototype.toString.call(o) === "[object Object]";
+return Object.prototype.toString.call(o) === '[object Object]';
 ```
 
 ---
@@ -55,28 +103,28 @@ A :
 
 //字符串拼接
 let i = 100 + 10; // 110
-let ii = 100 + "10"; // 10010
+let ii = 100 + '10'; // 10010
 
 // ==运算符
-100 == "100"; //100转换为字符串100 true
-0 == ""; //0和空字符串都转换为false true
+100 == '100'; //100转换为字符串100 true
+0 == ''; //0和空字符串都转换为false true
 null == undefined; // true
-100 === "100"; //false
+100 === '100'; //false
 
 // if判断
 let a = 100;
-let b = "";
+let b = '';
 
 if (a) {
-  console.log("x");
+  console.log('x');
 }
 
 if (!b) {
-  console.log("o");
+  console.log('o');
 }
 
-console.log(10 && "x"); //0
-console.log("" || "abc"); //abc
+console.log(10 && 'x'); //0
+console.log('' || 'abc'); //abc
 console.log(!window.abc); //true
 
 let iii = 100;
@@ -86,9 +134,9 @@ console.log(!!a); //true
 ```javascript
 // 除了用来判断一个变量是否是null或者undefined使用==。剩下的全部使用 ===
 
-let obj = { b: "b" };
+let obj = { b: 'b' };
 if (obj.a == null) {
-  console.log("x");
+  console.log('x');
 }
 ```
 
@@ -139,9 +187,9 @@ ii += 100;
 console.log({ i: `${i}`, ii: `${ii}` });
 
 // 新建值类型不开辟新的内存地址。所以一个变量编辑会影响另一个变量
-let iii = { name: "aza" };
+let iii = { name: 'aza' };
 let iv = iii;
-iv.name = "azazel";
+iv.name = 'azazel';
 console.log({ iii: `${iii.name}`, iv: `${iv.name}` });
 
 let v = { phone: 188 };
@@ -181,16 +229,16 @@ const obji = '{"aza":888}';
 ```javascript
 const i = 100;
 //二元表达式
-i && console.log("bingo");
+i && console.log('bingo');
 //三元表达式
-i ? console.log("233") : console.log("666");
+i ? console.log('233') : console.log('666');
 
 //while 循环
 //一般用于不知道循环次数的情况。维持循环的是一个条件表达式，条件成立执行循环体，条件不成立退出循环。
 let i = 1;
 
 while (i <= 10) {
-  console.log("x");
+  console.log('x');
   i++;
 }
 
@@ -216,7 +264,7 @@ function i(name, age) {
     console.log(name);
   })();
 }
-i("j", 12);
+i('j', 12);
 
 const arr = [1, 2, 3];
 const arri = [4, 5, 6];
@@ -226,7 +274,7 @@ console.log(remixArr);
 //形参默认值
 
 class People {
-  constructor(name, age, aka = "dahl") {
+  constructor(name, age, aka = 'dahl') {
     this.name = name;
     this.age = age;
     this.aka = aka;
@@ -241,34 +289,34 @@ class People {
   }
 }
 
-const x = new People("aza", 18);
+const x = new People('aza', 18);
 x.eat();
 x.speak();
 
 const i = 0;
 //只返回一行，可以省略花括号
-if (i === 0) console.log("233");
+if (i === 0) console.log('233');
 
 //箭头函数只有一个形参可以省略()
 //只有一行可以省略{} 和 return
 const i = (x) => x;
-console.log(i("aza"));
+console.log(i('aza'));
 
 //函数返回对象一些情况需要()包起来
 const i = () => ({ x: 100 });
 console.log(i());
 
 //动态键名
-const i = "name";
+const i = 'name';
 const ii = {};
-ii[i] = "aza";
+ii[i] = 'aza';
 console.log(ii);
 
 //捕获异常
 // 尝试可能出现错误的代码。 捕获它让它不至于干扰程序运行
 // 也可以运用于一些开源库。不让一些错误提示显示
 function i() {
-  const i = new Error("233");
+  const i = new Error('233');
   console.log(i);
 }
 try {
@@ -283,7 +331,7 @@ function funny() {
   try {
     // 原版Error 采用了 toString(),可以用解构查看具体内容
     throw new Error();
-    console.log("233");
+    console.log('233');
   } catch (err) {
     console.log({ err });
   }
@@ -307,23 +355,23 @@ for (let index = 0; index < i.length; index++) {
 
 //递归
 const routes = [
-  { name: "user", path: "/user", hide: true },
+  { name: 'user', path: '/user', hide: true },
   {
-    name: "home",
-    path: "/home",
-    children: [{ name: "admin", path: "/admin" }]
+    name: 'home',
+    path: '/home',
+    children: [{ name: 'admin', path: '/admin' }]
   },
   {
-    name: "details",
-    path: "/details",
+    name: 'details',
+    path: '/details',
     children: [
-      { name: "id-1", path: "/id-1" },
-      { name: "id-2", path: "/id-2" },
-      { name: "id-3", path: "/id-3" },
+      { name: 'id-1', path: '/id-1' },
+      { name: 'id-2', path: '/id-2' },
+      { name: 'id-3', path: '/id-3' },
       {
-        name: "id-4",
-        path: "/id-4",
-        children: [{ name: "id-4-1", hide: true, path: "/id-4-1" }]
+        name: 'id-4',
+        path: '/id-4',
+        children: [{ name: 'id-4-1', hide: true, path: '/id-4-1' }]
       }
     ]
   }
@@ -349,12 +397,12 @@ function formatData(data) {
 console.log(formatData(routes));
 
 const arr = [
-  { name: "aran" },
+  { name: 'aran' },
   { phne: 188 },
   { email: [{ id: 1, email: [{ id: 11 }] }, { id: 2 }, { id: 3 }] }
 ];
 
-function recursion(arr, level = 0, pid = "") {
+function recursion(arr, level = 0, pid = '') {
   return arr.map((item) => {
     item.level = level;
     item.pid = pid;
@@ -372,7 +420,7 @@ const a = 100;
 //视条件是否发生
 function aza(num) {
   if (num === 100) console.log(666);
-  console.log("still happend");
+  console.log('still happend');
 }
 //条件2选1
 function azai(num) {
@@ -394,7 +442,7 @@ function azaii(num) {
 }
 
 //对象双重解构
-const item = { id: 1, title: "华为 Mate 20", price: 3999, inventory: 2 };
+const item = { id: 1, title: '华为 Mate 20', price: 3999, inventory: 2 };
 const number = 3;
 // item = item , number = number
 const itemPuls = { item, number };
@@ -409,9 +457,9 @@ function i({ item: { id }, number }) {
 i(itemPuls);
 // 数组对象双重解构
 const obj = [
-  { id: 1, name: "a" },
-  { id: 2, name: "b" },
-  { id: 3, name: "c" }
+  { id: 1, name: 'a' },
+  { id: 2, name: 'b' },
+  { id: 3, name: 'c' }
 ];
 
 const [{ id }] = obj;
@@ -462,7 +510,7 @@ class Student extends People {
   }
 }
 
-let aza = new Student("aza", 18, 188);
+let aza = new Student('aza', 18, 188);
 aza.study();
 aza.eat();
 ```
@@ -476,7 +524,7 @@ aza.eat();
     //改变html内容，添加链式操作，添加事件
     class Element {
       constructor() {
-        this.el = document.getElementById("test");
+        this.el = document.getElementById('test');
       }
       html(val) {
         if (val) {
@@ -492,8 +540,8 @@ aza.eat();
     }
 
     const e = new Element();
-    e.html("666").on("click", () => {
-      console.log("666");
+    e.html('666').on('click', () => {
+      console.log('666');
     });
   </script>
 </body>
@@ -546,7 +594,7 @@ class Foo {
   }
 }
 
-let f = new Foo("aza");
+let f = new Foo('aza');
 f.alertName();
 f.toString();
 ```
@@ -597,7 +645,7 @@ Q : 变量提升的理解
 ```javascript
 // promise 的上下文会执行全部代码块再resolve
 function tryc() {
-  const obj = { name: "aran" };
+  const obj = { name: 'aran' };
   return new Promise((resolve, reject) => {
     resolve(obj);
     try {
@@ -609,6 +657,7 @@ function tryc() {
 }
 
 tryc().then((x) => {
+  // {name: 'aran', phone: 188}
   console.log(x);
 });
 ```
@@ -633,8 +682,8 @@ Q : this 的几种场景
 <div id="test">666</div>
 <script>
   //this指向dom
-  const t = document.querySelector("#test");
-  t.addEventListener("click", function () {
+  const t = document.querySelector('#test');
+  t.addEventListener('click', function () {
     console.log(this);
   });
 
@@ -644,7 +693,7 @@ Q : this 的几种场景
   }
 
   //立刻执行函数，并且改变this，向函数传参
-  callName.call({ a: 100 }, "aza");
+  callName.call({ a: 100 }, 'aza');
 </script>
 ```
 
@@ -653,22 +702,22 @@ Q : 创建 10 个`<a>`标签，点击弹出序号
 A :
 
 ```javascript
-const ul = document.createElement("ul");
+const ul = document.createElement('ul');
 
 for (let i = 1; i <= 10; i++) {
-  const li = document.createElement("li");
+  const li = document.createElement('li');
   li.innerHTML = i;
-  li.classList.add("item");
+  li.classList.add('item');
   ul.appendChild(li);
 }
 
-ul.addEventListener("click", (e) => {
-  if (e.target.classList.contains("item")) {
+ul.addEventListener('click', (e) => {
+  if (e.target.classList.contains('item')) {
     console.log(e.target.innerHTML);
   }
 });
 
-//window 指的是一个文档 window指的是一个浏览器窗口
+//window指的是一个浏览器窗口
 document.body.appendChild(ul);
 ```
 
@@ -770,7 +819,7 @@ console.log(dateStr);
 Q : 获取随机数，要求长度是一致的字符串格式
 
 ```javascript
-const temp = "0000000000";
+const temp = '0000000000';
 const n = Math.random();
 const tempN = n + temp;
 const i = tempN.slice(0, 10);
@@ -778,8 +827,6 @@ console.log(i);
 ```
 
 Q : 写一个能遍历对象和数组的 forEach 函数
-
-1. 这个也能比较好的解释回调函数(一个函数需要一个函数作为参数就叫回调函数)
 
 ```javascript
 function formatEach(type, fn) {
@@ -849,37 +896,37 @@ d.getSeconds();
 字符串
 
 ```javascript
-const str = "helloWorld";
-const result = str.indexOf("hello");
+const str = 'helloWorld';
+const result = str.indexOf('hello');
 //找到返回下标，同样适用于数组
 //没有返回-1
 console.log(result);
 
 //字符串反转
-const h = "hello,vue";
-const hh = h.split("").reverse().join("");
+const h = 'hello,vue';
+const hh = h.split('').reverse().join('');
 console.log(hh);
 
 // 字符串截取
-const str = "www.baidu.com/dir";
+const str = 'www.baidu.com/dir';
 const i = str.substr(13, 4);
 console.log(i);
 // 字符串替代
-const ii = str.replace("www.baidu.com", "");
+const ii = str.replace('www.baidu.com', '');
 console.log(ii);
 
 //url拼接
-const url = "/api/dashboard/chart";
-const name = url.split("/api/")[1].split("/").join("_");
+const url = '/api/dashboard/chart';
+const name = url.split('/api/')[1].split('/').join('_');
 console.log(name);
 
 //字母转小写
-const str = "XIxi";
+const str = 'XIxi';
 const newStr = str.toLowerCase();
 console.log(newStr);
 
 //字符串数字互转
-let i = "6";
+let i = '6';
 //字符串转数字
 let ii = +i;
 console.log(typeof ii);
@@ -961,11 +1008,11 @@ arrMap = arr.map((item, index) => {
 
 //映射结构
 const azaData = [
-  { id: 1, title: "n1" },
-  { id: 2, title: "n2" },
-  { id: 3, title: "n3" },
-  { id: 4, title: "n4" },
-  { id: 5, title: "n5" }
+  { id: 1, title: 'n1' },
+  { id: 2, title: 'n2' },
+  { id: 3, title: 'n3' },
+  { id: 4, title: 'n4' },
+  { id: 5, title: 'n5' }
 ];
 
 const daftArr = azaData.map(({ id, title }) => {
@@ -978,7 +1025,7 @@ const daftArr = azaData.map(({ id, title }) => {
 console.log(daftArr);
 
 //数组转字符串
-console.log(arrMap.join(""));
+console.log(arrMap.join(''));
 
 //过虑
 arrFilter = arr.filter((item, index) => {
@@ -1031,12 +1078,12 @@ console.log(arr);
     <div class="item">5</div>
   </div>
   <script>
-    const c = document.querySelector(".container");
-    let items = [...document.querySelectorAll(".item")];
-    const item = document.createElement("div");
+    const c = document.querySelector('.container');
+    let items = [...document.querySelectorAll('.item')];
+    const item = document.createElement('div');
 
-    item.className = "item";
-    item.innerHTML = "new";
+    item.className = 'item';
+    item.innerHTML = 'new';
     items.splice(2, 0, item);
     let length = items.length;
 
@@ -1096,12 +1143,12 @@ A :
 <body>
   <div id="test" data-index="0" style="border: solid 1px #ff0000;">666</div>
   <script>
-    const t = document.querySelector("#test");
-    console.log(t.getAttribute("data-index"));
-    t.setAttribute("data-index", 1);
-    console.log(t.getAttribute("data-index"));
+    const t = document.querySelector('#test');
+    console.log(t.getAttribute('data-index'));
+    t.setAttribute('data-index', 1);
+    console.log(t.getAttribute('data-index'));
 
-    t.style.border = "solid 1px blue";
+    t.style.border = 'solid 1px blue';
   </script>
 </body>
 ```
@@ -1118,10 +1165,10 @@ Q : DOM 节点操作
     <li class="item">5</li>
   </ul>
   <script>
-    const c = document.querySelector(".container");
-    const i = document.querySelectorAll(".item")[2];
-    const li = document.createElement("li");
-    li.classList.add("item");
+    const c = document.querySelector('.container');
+    const i = document.querySelectorAll('.item')[2];
+    const li = document.createElement('li');
+    li.classList.add('item');
     li.innerHTML = 6;
     c.appendChild(li);
     console.log(i);
@@ -1145,8 +1192,8 @@ Q : DOM 节点操作
   </div>
 
   <script>
-    const i = document.querySelector(".test");
-    const ii = document.getElementsByTagName("input");
+    const i = document.querySelector('.test');
+    const ii = document.getElementsByTagName('input');
     console.log(i.tagName);
     console.log(ii[0].value);
   </script>
@@ -1160,7 +1207,7 @@ Q : BOM 操作
 ```javascript
 //检查 url
 const ua = navigator.userAgent;
-const isChrome = ua.indexOf("Chrome");
+const isChrome = ua.indexOf('Chrome');
 console.log(isChrome);
 ```
 
@@ -1240,11 +1287,11 @@ Q : 写一个通用的事件绑定函数
   <a class="test" href="https://www.baidu.com">click me</a>
   <div class="testi">666</div>
   <script>
-    const a = document.querySelector(".test");
-    const d = document.querySelector(".testi");
-    a.addEventListener("click", (e) => {
+    const a = document.querySelector('.test');
+    const d = document.querySelector('.testi');
+    a.addEventListener('click', (e) => {
       e.preventDefault();
-      console.log("bingo");
+      console.log('bingo');
     });
 
     function formatEvent(el, type, fn) {
@@ -1252,9 +1299,9 @@ Q : 写一个通用的事件绑定函数
       el.addEventListener(type, fn);
     }
 
-    formatEvent(d, "click", (e) => {
+    formatEvent(d, 'click', (e) => {
       e.preventDefault();
-      console.log("233");
+      console.log('233');
     });
   </script>
 </body>
@@ -1273,9 +1320,9 @@ Q : 事件代理
   <li class="item">5</li>
 </ul>
 <script>
-  const c = document.querySelector(".container");
-  c.addEventListener("click", (e) => {
-    if (e.target.classList.contains("item")) {
+  const c = document.querySelector('.container');
+  c.addEventListener('click', (e) => {
+    if (e.target.classList.contains('item')) {
       console.log(e.target.innerHTML);
     }
   });
@@ -1294,8 +1341,8 @@ Q : 事件代理
     <p class="item">取消</p>
   </div>
   <script>
-    const c = document.querySelector(".container");
-    const noProxy = document.querySelector("#no-proxy");
+    const c = document.querySelector('.container');
+    const noProxy = document.querySelector('#no-proxy');
 
     //第三个参数选择是否代理
     function formatEvent(elem, type, proxy, fn) {
@@ -1317,10 +1364,10 @@ Q : 事件代理
     }
 
     //如果addEventListener要精准this是不能使用箭头函数的，箭头默认没this，如果使用this会向上下文去寻找
-    formatEvent(c, "click", "item", function () {
+    formatEvent(c, 'click', 'item', function () {
       console.log(this.innerText);
     });
-    formatEvent(noProxy, "click", function (e) {
+    formatEvent(noProxy, 'click', function (e) {
       e.stopPropagation();
       console.log(noProxy.innerText);
     });
@@ -1357,8 +1404,8 @@ Q : 事件代理
   <script>
     //先定义函数再执行JSONP跨域。不然程序会找不到函数定义
     function refreshPrice(data) {
-      const p = document.querySelector("#test-jsonp");
-      p.innerText = "当前价格" + data["0000001"].name + data["0000001"].price;
+      const p = document.querySelector('#test-jsonp');
+      p.innerText = '当前价格' + data['0000001'].name + data['0000001'].price;
     }
   </script>
   <script src="http://api.money.126.net/data/feed/0000001,1399001?callback=refreshPrice"></script>
@@ -1372,12 +1419,12 @@ Q : 事件代理
 
 ```javascript
 //key设定要使用字符串格式
-localStorage.setItem("name", "aza");
-localStorage.setItem("phone", "188");
-console.log(localStorage.getItem("name"));
+localStorage.setItem('name', 'aza');
+localStorage.setItem('phone', '188');
+console.log(localStorage.getItem('name'));
 
-localStorage.removeItem("name");
-console.log(localStorage.getItem("phone"));
+localStorage.removeItem('name');
+console.log(localStorage.getItem('phone'));
 
 localStorage.clear();
 ```
@@ -1390,7 +1437,7 @@ const xhr = new XMLHttpRequest();
 //method：请求的类型；GET 或 POST
 //url：文件在服务器上的位置
 //async：true（异步）或 false（同步）
-xhr.open("GET", "http://jsonplaceholder.typicode.com/posts/1", true);
+xhr.open('GET', 'http://jsonplaceholder.typicode.com/posts/1', true);
 //onreadystatechange是异步的
 xhr.onreadystatechange = () => {
   //存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。
@@ -1416,10 +1463,10 @@ Q : 输入 url 到得到 html 的过程
 
 A :
 
-1. 浏览器根据 DNS 服务器得到域名地址
-2. 向这个 ip 地址发送 http 请求
-3. 服务器收到，处理并返回 http 请求
-4. 浏览器得到返回内容
+1. 浏览器根据 DNS 服务器得到域名地址,建立 TCP 连接(询问服务器是否可用)，发送 http 请求 请求的头部告诉服务端客户端是什么样子的，有什么信息，有什么要求
+2. server 端收到 http 请求，处理并返回
+3. 客户端收到返回数据，开始渲染页面
+   > 请求头可以向 server 端描述客户端有什么要求有什么信息
 
 Q : 浏览器渲染页面过程
 
@@ -1473,7 +1520,7 @@ DOM 查询缓存实列
 
 ```javascript
 //多次查询DOM组会造成性能的浪费
-const items = document.querySelectorAll(".item");
+const items = document.querySelectorAll('.item');
 const length = items.length;
 
 for (let i = 0; i < length; i++) {
@@ -1487,7 +1534,7 @@ DOM 合并插入
 //createDocumentFragment() 需要appendchild 一个真实的DOM不是innerHTML
 const frag = document.createDocumentFragment();
 for (let i = 0; i <= 10; i++) {
-  const d = document.createElement("div");
+  const d = document.createElement('div');
   d.innerHTML = i;
   frag.appendChild(d);
 }
@@ -1500,7 +1547,7 @@ document.body.appendChild(frag);
 <body>
   <button id="test">click me</button>
   <script>
-    const btn = document.querySelector("#test");
+    const btn = document.querySelector('#test');
 
     function throttle(fn, delay) {
       let flag = false;
@@ -1516,9 +1563,9 @@ document.body.appendChild(frag);
     }
 
     btn.addEventListener(
-      "click",
+      'click',
       throttle(() => {
-        console.log("clicked");
+        console.log('clicked');
       }, 5000)
     );
   </script>
@@ -1580,10 +1627,10 @@ XSRF 敏感的网络请求。要添加手机，邮箱验证码
       // 闭包只能在函数里面return function
       //自执行函数 (function(){}())
 
-      const items = document.querySelectorAll(".item");
+      const items = document.querySelectorAll('.item');
       for (var i = 0; i < items.length; i++) {
         items[i].addEventListener(
-          "click",
+          'click',
           ((n) => {
             return () => {
               console.log(n);
@@ -1608,8 +1655,8 @@ XSRF 敏感的网络请求。要添加手机，邮箱验证码
     <script>
       //普通函数的this指向window。绑定self为this
       const video = {
-        title: "a",
-        tags: ["a", "b", "c"],
+        title: 'a',
+        tags: ['a', 'b', 'c'],
         showTags() {
           var self = this;
           this.tags.forEach(function (item) {
@@ -1621,8 +1668,8 @@ XSRF 敏感的网络请求。要添加手机，邮箱验证码
       video.showTags();
 
       const list = {
-        title: "a",
-        tags: ["1", "2", "3"],
+        title: 'a',
+        tags: ['1', '2', '3'],
         showTags() {
           this.tags.forEach(
             function (item) {
@@ -1636,4 +1683,367 @@ XSRF 敏感的网络请求。要添加手机，邮箱验证码
     </script>
   </body>
 </html>
+```
+
+---
+
+## <a id="tip-10">模块化</a>
+
+> commonjs 中的模块化
+
+```javascript
+// 导出
+module.exports = { a, b };
+
+// 导入
+const { a, b } = require('./test.js');
+
+const _ = require('lodash');
+```
+
+> es6 模块化
+
+```javascript
+// 导出
+export default a
+export {a,b}
+
+// 导入
+import a from 'test.js'
+import {a,b as bb} from 'test.js'
+
+//html 模块化导入
+<script type="module" src="./test.js">
+```
+
+<a id="tip-11">Promise</a>
+
+> 什么是回调函数
+
+- nodejs 有大量的非阻塞 io，这些非阻塞 io 的结果是需要通过回调函数莱获取的
+
+```javascript
+// 异常捕获
+function interview(callback) {
+  // 注意 主函数interview 与 setTimeout里的焊条函数完全不在一个调用栈上，所以trycatch不能捕获到回调函数发现的error
+  setTimeout(() => {
+    if (Math.random() < 0.5) {
+      callback(null, 'suceess');
+    } else {
+      callback(new Error('fail'));
+      // 异步任务是不能够被外面的trycatch捕获的
+      // throw new Error('fail');
+    }
+  }, 1000);
+}
+
+// 链式
+interview(function (err) {
+  if (err) {
+    return console.log('cry at 1st round');
+  }
+  interview(function (err) {
+    if (err) {
+      return console.log('cry at 2nd round');
+    }
+    interview(function (err) {
+      if (err) {
+        return console.log('cry at 3rd round');
+      }
+      console.log('smile');
+    });
+  });
+});
+
+// 异常捕获
+// interview(function (res) {
+//   // nodejs规定了一个写回调函数的规范，所有error都作为第一个参数以及第一个判断
+//   if (res) {
+//     return console.log('cry');
+//   }
+//   console.log('smile');
+// });
+
+// try {
+//   interview(function () {
+//     console.log('smlie');
+//   });
+// } catch (e) {
+//   console.log('cry', e);
+// }
+```
+
+> 什么是 Promise
+
+- Promise 是一种异步编程解决方案，其本身也是一个异步函数
+
+- resolve 会回调后面第一个.then
+
+- reject 会回调第一个.catch
+
+- 任何一个 reject 状态且后面的.catch 的 promise，都会造成浏览器或者 node 环境的全局错误，全局错误就意味着程序崩溃
+
+- 执行 then 和 catch 会返回一个新的 promise，该 promise 最终状态根据 then 和 catch 的回调函数的执行结果决定
+
+  - 如果回调的是 throw，该 promise 是 reject 状态
+
+  - 如果回调的是 return 该 promise 是 resolve 状态
+
+  - 但如果 return 了一个 promise，该 promise 会和回调函数 return 的 promise 状态保持一致
+
+```javascript
+// basic
+(function () {
+  const promise = interview();
+  promise
+    .then((res) => {
+      console.log('smile');
+    })
+    .catch((e) => {
+      console.log('cry');
+    });
+
+  function interview() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (Math.random() > 0.5) {
+          resolve('success');
+        } else {
+          reject(new Error('fail'));
+        }
+      }, 1000);
+    });
+  }
+})();
+```
+
+```javascript
+(function () {
+  function errhandler(falg) {
+    return new Promise((resolve, reject) => {
+      // 根据实参改变error捕获场景
+      if (falg === 0) {
+        reject(new Error('fail'));
+      }
+      throw new Error('bad');
+    });
+  }
+
+  try {
+    errhandler(1)
+      .then((resolve) => {})
+      .catch((e) => {
+        //
+        console.log(e);
+      });
+  } catch (e) {
+    console.log(e);
+  }
+})();
+```
+
+```javascript
+// state
+(function () {
+  const promise = interview();
+  const promisei = promise.catch((res) => {
+    return 'accept';
+  });
+
+  setTimeout(() => {
+    console.log(promise);
+    console.log(promisei);
+  }, 800);
+
+  function interview() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // 必须错误
+        if (Math.random() > 1) {
+          resolve('success');
+        } else {
+          reject(new Error('fail'));
+        }
+      }, 500);
+    });
+  }
+})();
+```
+
+```javascript
+// state-i
+
+(function () {
+  const promise = interview();
+  const promisei = promise.then((res) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('accept');
+      }, 400);
+    });
+  });
+
+  // 查看未完成promise的状态
+  setTimeout(() => {
+    console.log(promise);
+    console.log(promisei);
+  }, 800);
+
+  // 检查完成promise的状态
+  setTimeout(() => {
+    console.log(promise);
+    console.log(promisei);
+  }, 1000);
+
+  function interview() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // 必须成功
+        if (Math.random() > 0) {
+          resolve('success');
+        } else {
+          reject(new Error('fail'));
+        }
+      }, 500);
+    });
+  }
+})();
+```
+
+```javascript
+// chainType
+(function () {
+  const promise = interview(1)
+    .then(() => {
+      return interview(2);
+    })
+    .then(() => {
+      return interview(3);
+    })
+    .then(() => {
+      console.log('smile');
+    })
+    .catch((err) => {
+      console.log('cry at ' + err.round + ' round');
+    });
+
+  function interview(round) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // 8成成功
+        if (Math.random() > 0.2) {
+          resolve('success');
+        } else {
+          const error = new Error('fail');
+          error.round = round;
+          reject(error);
+        }
+      }, 500);
+    });
+  }
+})();
+```
+
+```javascript
+// concurrency
+(function () {
+  Promise.all([interview('geekbang'), interview('tencent')])
+    .then(() => {
+      // 同时成功
+      console.log('smile');
+    })
+    .catch((err) => {
+      // 第一个失败就触发
+      console.log('cry for ' + err.name);
+    });
+
+  function interview(name) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        // 8成成功
+        if (Math.random() > 0.2) {
+          resolve('success');
+        } else {
+          const error = new Error('fail');
+          error.name = name;
+          reject(error);
+        }
+      }, 500);
+    });
+  }
+})();
+```
+
+> asnyc 和 await
+
+- async function 是一个 return Promise 的普通函数，是一种 promise 语法糖
+
+```javascript
+console.log(async function () {
+  return 4;
+});
+
+console.log(function () {
+  return new Promise((resolve, reject) => {
+    resolve(4);
+  });
+});
+```
+
+```javascript
+// chainType
+(async function () {
+  try {
+    await interview(1);
+    await interview(2);
+    await interview(3);
+  } catch (e) {
+    // 这里的return用来打断
+    return console.log('cry at ' + e.round);
+  }
+  console.log('smile');
+})();
+
+function interview(round) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // 8成成功
+      if (Math.random() > 0.2) {
+        resolve('success');
+      } else {
+        const error = new Error('fail');
+        error.round = round;
+        reject(error);
+      }
+    }, 500);
+  });
+}
+```
+
+```javascript
+//concurrency
+(async function () {
+  try {
+    await Promise.all([interview(1), interview(2), interview(3)]);
+  } catch (e) {
+    // 这里的return用来打断
+    return console.log('cry at ' + e.round);
+  }
+  console.log('smile');
+})();
+
+function interview(round) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // 8成成功
+      if (Math.random() > 0.2) {
+        resolve('success');
+      } else {
+        const error = new Error('fail');
+        error.round = round;
+        reject(error);
+      }
+    }, 500);
+  });
+}
 ```
