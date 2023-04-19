@@ -232,6 +232,11 @@ const i = 100;
 i && console.log('bingo');
 //三元表达式
 i ? console.log('233') : console.log('666');
+// 多重三元表达式
+function chain(value) {
+  return value > 0 && value < 3 ? '1' : value > 3 && value < 6 ? '2' : 'null';
+}
+console.log(chain(5));
 
 //while 循环
 //一般用于不知道循环次数的情况。维持循环的是一个条件表达式，条件成立执行循环体，条件不成立退出循环。
@@ -268,6 +273,7 @@ i('j', 12);
 
 const arr = [1, 2, 3];
 const arri = [4, 5, 6];
+// 会复制数组的全部值，而不是整个数组
 const remixArr = [...arr, ...arri];
 console.log(remixArr);
 
@@ -465,6 +471,21 @@ const obj = [
 const [{ id }] = obj;
 
 console.log(id);
+
+// 数组与对象合并
+const arri = [{ id: 1, name: 'a' }];
+const arrii = { a: [1, 2, 3] };
+let resolve = [];
+
+arri.forEach((item) => {
+  const { id, name } = item;
+  const temp = arrii[name];
+  resolve.push({
+    id,
+    name: [name, temp]
+  });
+});
+console.log(resolve);
 ```
 
 ---
@@ -772,6 +793,35 @@ console.log(t(99));
 console.log(t(99));
 ```
 
+```javascript
+// 闭包漏洞
+
+// 自执行函数，故返回的是Object
+const o = (() => {
+  const obj = {
+    a: 1,
+    b: 2
+  };
+  // 这里return一个对象非常蠢
+  return {
+    get: (n) => {
+      // 禁止原型链修改
+      if (!obj.hasOwnProperty(n)) {
+        throw new Error('bad request');
+      }
+      return obj[n];
+    }
+  };
+})();
+
+console.log(typeof o);
+console.log(o.get('a'));
+// 拿到闭包对象
+const remixObj = o;
+remixObj.c = 3;
+console.log(o.get('c'));
+```
+
 ---
 
 ## <a id="tip-4">异步</a>
@@ -912,8 +962,13 @@ const str = 'www.baidu.com/dir';
 const i = str.substr(13, 4);
 console.log(i);
 // 字符串替代
-const ii = str.replace('www.baidu.com', '');
-console.log(ii);
+const ss = 'www.baidu.com';
+// 替换返回的第一个匹配
+const ssremix = ss.replace('.', ',');
+// 替换所有匹配
+const ssremixi = ss.replace(/\./g, ',');
+console.log(ssremix);
+console.log(ssremixi);
 
 //url拼接
 const url = '/api/dashboard/chart';
@@ -1115,6 +1170,19 @@ console.log(objI);
 const objII = { d: 4, e: 5, f: 6 };
 const objIII = Object.assign(obj, objII);
 console.log(objIII);
+
+// 对象统计
+const obj = {
+  a: '1,2,3,4,5,6',
+  b: '1,2'
+};
+const objRemix = {};
+
+for (const key in obj) {
+  const sl = obj[key].split(',').length;
+  objRemix[key] = sl;
+}
+console.log(objRemix);
 ```
 
 ---
