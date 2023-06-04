@@ -360,6 +360,19 @@ for (let index = 0; index < i.length; index++) {
 }
 
 //递归
+const arr = [{ id: 1 }, { id: 2, child: [{ id: 3 }, { id: 4 }] }];
+
+function fn(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    console.log(arr[i]);
+    if (arr[i].child) {
+      fn(arr[i].child);
+    }
+  }
+}
+
+fn(arr);
+
 const routes = [
   { name: 'user', path: '/user', hide: true },
   {
@@ -951,6 +964,10 @@ const result = str.indexOf('hello');
 //找到返回下标，同样适用于数组
 //没有返回-1
 console.log(result);
+
+const arr = ["1","2","3"]
+arr.indexOf("1") // 0
+
 
 //字符串反转
 const h = 'hello,vue';
