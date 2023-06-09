@@ -1074,27 +1074,20 @@ let arrSort = arr.sort((a, b) => {
 console.log(arrSort);
 
 //映射
+
+
 arrMap = arr.map((item, index) => {
   return `<span>${item}</span>`;
 });
 
 //映射结构
-const azaData = [
-  { id: 1, title: 'n1' },
-  { id: 2, title: 'n2' },
-  { id: 3, title: 'n3' },
-  { id: 4, title: 'n4' },
-  { id: 5, title: 'n5' }
-];
+const arr = [1, 2, 3];
 
-const daftArr = azaData.map(({ id, title }) => {
-  return {
-    xid: id,
-    xtitle: title
-  };
-});
+// 返回一个对象需要括号包起来
+const remixArr = arr.map((item) => ({ item: item }));
 
-console.log(daftArr);
+console.log(remixArr);
+
 
 //数组转字符串
 console.log(arrMap.join(''));
