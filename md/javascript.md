@@ -1075,12 +1075,23 @@ console.log(arrSort);
 
 //映射
 
+// map() 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值。
 
 arrMap = arr.map((item, index) => {
   return `<span>${item}</span>`;
 });
 
+var numbers = [4, 9, 16, 25];
+
+function myFunction() {
+    x = document.getElementById("demo")
+    x.innerHTML = numbers.map(Math.sqrt);
+}
+
+// 2,3,4,5
+
 //映射结构
+
 const arr = [1, 2, 3];
 
 // 返回一个对象需要括号包起来
