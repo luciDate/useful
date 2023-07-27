@@ -111,6 +111,13 @@ let ii = 100 + '10'; // 10010
 null == undefined; // true
 100 === '100'; //false
 
+// 可选连接符
+const obj = {
+  name: 'aza'
+};
+// console.log(obj.name.gg.zz); // 程序崩溃 Uncaught TypeError: Cannot read properties of undefined (reading 'zz')
+console.log(obj.name?.gg); // 可选连接符 简化对可能为 null 或 undefined 的对象属性或方法的访问 避免程序崩溃
+
 // if判断
 let a = 100;
 let b = '';
@@ -359,6 +366,22 @@ for (let index = 0; index < i.length; index++) {
   console.log(i[index]);
 }
 
+// 多重数组遍历
+const arr = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [1, 2, 3]
+];
+
+arr.forEach(([one, two, three]) => {
+  console.log([one, three]);
+});
+/*
+[ 1, 3 ]
+[ 4, 6 ]
+[ 1, 3 ]
+*/
+
 //递归
 const arr = [{ id: 1 }, { id: 2, child: [{ id: 3 }, { id: 4 }] }];
 
@@ -482,6 +505,16 @@ const obj = [
 ];
 
 const [{ id }] = obj;
+
+// 数组多个值解构
+const obj = { name: 'awwwk', phone: 188 };
+// [ [ 'name', 'awwwk' ], [ 'phone', 188 ] ]
+// key 解构的是第一个参数 value第二个
+const remixObj = Object.entries(obj).map(([key, value]) => {
+  return { key: key, value: value };
+});
+
+console.log(remixObj);
 
 console.log(id);
 
@@ -965,9 +998,8 @@ const result = str.indexOf('hello');
 //没有返回-1
 console.log(result);
 
-const arr = ["1","2","3"]
-arr.indexOf("1") // 0
-
+const arr = ['1', '2', '3'];
+arr.indexOf('1'); // 0
 
 //字符串反转
 const h = 'hello,vue';
@@ -1084,8 +1116,8 @@ arrMap = arr.map((item, index) => {
 var numbers = [4, 9, 16, 25];
 
 function myFunction() {
-    x = document.getElementById("demo")
-    x.innerHTML = numbers.map(Math.sqrt);
+  x = document.getElementById('demo');
+  x.innerHTML = numbers.map(Math.sqrt);
 }
 
 // 2,3,4,5
@@ -1098,7 +1130,6 @@ const arr = [1, 2, 3];
 const remixArr = arr.map((item) => ({ item: item }));
 
 console.log(remixArr);
-
 
 //数组转字符串
 console.log(arrMap.join(''));
@@ -1118,7 +1149,7 @@ const result = arr.find((item) => {
 });
 console.log(result);
 
-//数组深拷贝可以玩点花活
+//数组深拷贝可以玩点花活 数组扁平化
 const arr = [1, 2, 3, [4, 5, 6]];
 function recursion(arr) {
   return [].concat(

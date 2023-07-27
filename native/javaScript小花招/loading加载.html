@@ -1,0 +1,39 @@
+<!-- loading -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p style="color: #ff0000; border: 1px solid grey; width: 200px">233</p>
+    <script>
+      const pageWidth = document.documentElement.clientWidth;
+      const pageHeight = document.documentElement.clientHeight;
+
+      // loading box 宽度为215px 高度为61px
+      const loadingTop = pageHeight > 61 ? (pageHeight - 61) / 2 : 0;
+      const loadingLef = pageWidth > 215 ? (pageWidth - 215) / 2 : 0;
+
+      const loadingHtml = `
+        <div id="loading-div" style="position:absolute;left:0;width:100%;height:${pageHeight}px;top:0;background:rgb(50, 136, 171);opacity:0.8;z-index:1000">
+        <div style="position:absolute;cursor:wait;left:${loadingLef}px;top:${loadingTop}px;width:215px;height:61px;line-height:58px;text-align:center;background:#ffff;font-size:14px;">页面加载中 ...</div>
+        </div>
+        `;
+      window.document.write(loadingHtml);
+
+      function complete() {
+        if (document.readyState === 'complete') {
+          const mask = document.getElementById('loading-div');
+          mask.parentElement.removeChild(mask);
+        }
+      }
+
+      document.onreadystatechange = complete;
+
+      
+    </script>
+  </body>
+</html>
