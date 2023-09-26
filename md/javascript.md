@@ -1552,27 +1552,19 @@ localStorage.clear();
 手写一个 ajax
 
 ```javascript
-//创建 XMLHttpRequest 对象
+// 设置请求方法和 URL
 const xhr = new XMLHttpRequest();
-//method：请求的类型；GET 或 POST
-//url：文件在服务器上的位置
-//async：true（异步）或 false（同步）
 xhr.open('GET', 'http://jsonplaceholder.typicode.com/posts/1', true);
-//onreadystatechange是异步的
-xhr.onreadystatechange = () => {
-  //存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。
-  //每次readyState变化都会触发onreadystatechange
-  if (xhr.readyState == 4) {
-    //200: "OK"
-    //404: 未找到页面
-    if (xhr.status == 200) {
-      //获得字符串形式的响应数据。
-      console.log(xhr.responseText);
-    }
+// 发送请求
+xhr.send();
+// 处理响应
+xhr.onload = () => {
+  if (xhr.status === 200) {
+    console.log(xhr.responseText);
+  } else {
+    console.error(`request fail: ${xhr.status}`);
   }
 };
-//发送请求
-xhr.send(null);
 ```
 
 ---
@@ -1843,6 +1835,15 @@ import {a,b as bb} from 'test.js'
 - nodejs 有大量的非阻塞 io，这些非阻塞 io 的结果是需要通过回调函数莱获取的
 
 ```javascript
+// promise 取值
+const pm = new Promise((resolve, reject) => {
+  resolve({ name: 'aza' });
+});
+
+pm.then((payload) => {
+  console.log(payload);
+});
+
 // 异常捕获
 function interview(callback) {
   // 注意 主函数interview 与 setTimeout里的焊条函数完全不在一个调用栈上，所以trycatch不能捕获到回调函数发现的error

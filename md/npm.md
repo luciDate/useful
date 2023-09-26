@@ -60,3 +60,9 @@ npm config get registry
 ```
 
 看到http://registry.npm.taobao.org/说明成功
+
+清缓存
+
+```
+npm cache clean --force
+```
