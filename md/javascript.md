@@ -505,6 +505,7 @@ const obj = [
 ];
 
 const [{ id }] = obj;
+console.log(id);
 
 // 数组多个值解构
 const obj = { name: 'awwwk', phone: 188 };
@@ -516,7 +517,13 @@ const remixObj = Object.entries(obj).map(([key, value]) => {
 
 console.log(remixObj);
 
-console.log(id);
+const obj = { name: 'capi', ipone: 188 };
+const temp = 'name';
+// temp 不使用动态命名会默认当成属性
+const remixObj = { ...obj, [temp]: 'capi+' };
+console.log(remixObj);
+// 动态命名
+console.log(remixObj[temp]);
 
 // 数组与对象合并
 const arri = [{ id: 1, name: 'a' }];
@@ -1219,6 +1226,10 @@ objI.a = 100;
 console.log(obj);
 console.log(objI);
 
+// 深拷贝数组也可以 JavaScript万物皆对象
+const arr = [1, 2, 3];
+const remixArr = Object.assign([], arr);
+
 const objII = { d: 4, e: 5, f: 6 };
 const objIII = Object.assign(obj, objII);
 console.log(objIII);
@@ -1333,7 +1344,7 @@ console.log(isChrome);
 
 ```html
 <body>
-
+  <script>
     //返回屏幕可用的宽高
     console.log(window.screen.width);
     console.log(window.screen.height);
@@ -1374,23 +1385,23 @@ console.log(isChrome);
     console.log(location.hash);
 
     // 改变窗口url
-    t.addEventListener("click", () => {
-      location.href = "https://www.baidu.com?name=aza&password=xixi";
+    t.addEventListener('click', () => {
+      location.href = 'https://www.baidu.com?name=aza&password=xixi';
     });
 
     // 指定地址打开新窗口
-    x.addEventListener("click", () => {
-      window.open("http://www.baidu.com");
+    x.addEventListener('click', () => {
+      window.open('http://www.baidu.com');
     });
 
     //url字符串转对象
     const i = location.search;
-    const temp = i.split("?")[1].split("&");
+    const temp = i.split('?')[1].split('&');
     console.log(temp);
 
     const obj = {};
     for (let index = 0; index < temp.length; index++) {
-      const ii = temp[index].split("=");
+      const ii = temp[index].split('=');
       console.log(ii);
       obj[ii[0]] = ii[1];
     }
@@ -1835,6 +1846,32 @@ import {a,b as bb} from 'test.js'
 - nodejs 有大量的非阻塞 io，这些非阻塞 io 的结果是需要通过回调函数莱获取的
 
 ```javascript
+// 回调函数
+function i(callback) {
+  setTimeout(() => {
+    if (Math.random() > 0.5) {
+      callback(null, 'success');
+    } else {
+      const err = new Error('bad result');
+      callback(err, 'fail');
+    }
+  }, 500);
+}
+i(function (err, res) {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log(res);
+  }
+  i(function (err, res) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(res);
+    }
+  });
+});
+
 // promise 取值
 const pm = new Promise((resolve, reject) => {
   resolve({ name: 'aza' });
@@ -2093,6 +2130,43 @@ interview(function (err) {
     });
   }
 })();
+//////
+const ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const initApp = async () => {
+  getPostsSerialized(ids);
+};
+document.addEventListener('DOMContentLoaded', initApp);
+const getPost = async (id) => {
+  return await (
+    await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+  ).json();
+};
+const useForEach = (ids) => {
+  // forEach 下的await 顺序会被打乱
+  ids.forEach(async (id) => {
+    const data = await getPost(id);
+    console.log(data);
+  });
+  // 没有await机制
+  console.log("i'll wait on you");
+};
+// 并行
+const getPostConcurrently = async (ids) => {
+  // Promise.all([new Promise,new Promise]) 同时处理多个promise任务,但一个请求错全错
+  // map 将返回一个数组
+  const posts = await Promise.all(ids.map(async (id) => getPost(id)));
+  console.log(posts);
+  console.log("i'll wait on you");
+};
+// 顺序
+const getPostsSerialized = async (ids) => {
+  await ids.reduce(async (pre, curr) => {
+    await pre;
+    const post = await getPost(curr);
+    console.log(post);
+  }, 0);
+  console.log("i'll wait on you");
+};
 ```
 
 > asnyc 和 await
